@@ -1,4 +1,4 @@
-import VehicleMakeList from "./components/NavBar/VehicleMakeList/VehicleMakeList";
+import VehicleMakeList from "./components/VehicleMakeList/VehicleMakeList";
 
 function App() {
   return (

@@ -1,6 +1,7 @@
 import { makeObservable, observable, action } from "mobx";
 import vehicleMakeService from "../services/VehicleMakeService";
-
+import { collection, onSnapshot, query } from "firebase/firestore";
+import db from "../config/firebaseConfig";
 class VehicleMakeStore {
   vehicleMakes = [];
   isLoading = false;
@@ -15,19 +16,31 @@ class VehicleMakeStore {
 
   fetchVehicleMakes = async () => {
     try {
-      this.isLoading = true; // Set loading to true while fetching
+      this.isLoading = true;
+      const vehicleMakesCollection = query(collection(db, "VehicleMake"));
 
-      // Use the service class to fetch data from Firestore
-      const vehicleMakes = await vehicleMakeService.getVehicleMakes();
+      const unsubscribe = onSnapshot(vehicleMakesCollection, (snapshot) => {
+        const makes = [];
+        snapshot.forEach((doc) => {
+          makes.push({ id: doc.id, ...doc.data() });
+        });
 
-      // Update the observable state with the fetched data
-      this.vehicleMakes = vehicleMakes;
+        this.vehicleMakes = makes;
+      });
+
+      this.unsubscribe = unsubscribe;
     } catch (error) {
       console.error("Error fetching VehicleMakes:", error);
     } finally {
-      this.isLoading = false; // Set loading back to false when done
+      this.isLoading = false;
     }
   };
+
+  stopListeningToChanges() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+  }
 }
 
 const vehicleMakeStore = new VehicleMakeStore();

@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import vehicleMakeStore from "../../../stores/VehicleStore";
+import vehicleMakeStore from "../../stores/VehicleStore";
+import vehicleMakeService from "../../services/VehicleMakeService";
 
 const VehicleMakeList = () => {
   useEffect(() => {
@@ -14,7 +15,15 @@ const VehicleMakeList = () => {
       ) : (
         <ul>
           {vehicleMakeStore.vehicleMakes.map((vehicleMake) => (
-            <li key={vehicleMake.id}>{vehicleMake.name}</li>
+            <li key={vehicleMake.name}>
+              {vehicleMake.name}
+              <button
+                onClick={() =>
+                  vehicleMakeService.deleteVehicleMake(vehicleMake.id)
+                }>
+                Delete
+              </button>
+            </li>
           ))}
         </ul>
       )}
