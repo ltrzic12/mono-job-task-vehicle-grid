@@ -40,6 +40,12 @@ class VehicleModelStore {
       this.unsubscribe();
     }
   }
+  toggleEditOpen = (modelId) => {
+    const model = this.vehicleModels.find((m) => m.id === modelId);
+    if (model) {
+      model.isEditOpen = !model.isEditOpen;
+    }
+  };
 }
 
 const vehicleModelStore = new VehicleModelStore();

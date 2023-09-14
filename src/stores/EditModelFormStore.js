@@ -1,17 +1,22 @@
 import { action, makeObservable, observable } from "mobx";
 
-class MakeFormStore {
+class EditFormStore {
+  isOpened = false;
   name = "";
   abrv = "";
-  makeSuccesful = false;
+  makeId = "";
+
   constructor() {
     makeObservable(this, {
+      isOpened: observable,
       name: observable,
       abrv: observable,
-      makeSuccesful: observable,
-      updateField: action,
-      resetForm: action,
+      toggleIsOpened: action,
     });
+  }
+
+  toggleIsOpened() {
+    this.isOpened = !this.isOpened;
   }
   updateField = (fieldName, value) => {
     this[fieldName] = value;
@@ -22,5 +27,5 @@ class MakeFormStore {
   };
 }
 
-const makeFormStore = new MakeFormStore();
-export default makeFormStore;
+const editModelFormStore = new EditFormStore();
+export default editModelFormStore;

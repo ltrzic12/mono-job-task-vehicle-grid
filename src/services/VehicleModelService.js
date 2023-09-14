@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 class VehicleModelService {
   async createModel(makeId, name, abrv) {
@@ -27,6 +27,17 @@ class VehicleModelService {
       console.error("Error deleting", error);
       throw error;
     }
+  }
+  async editVehicleModel(name, abrv, id) {
+    if (!name || !abrv) {
+      console.error("Fill in all fields");
+      return;
+    }
+    try {
+      const docRef = doc(db, "VehicleModel", id);
+      const payload = { name, abrv };
+      await setDoc(docRef, payload);
+    } catch (error) {}
   }
 }
 
