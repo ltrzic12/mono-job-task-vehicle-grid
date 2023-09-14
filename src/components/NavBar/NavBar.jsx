@@ -5,7 +5,10 @@ const NavBar = () => {
     <nav>
       <ul>
         <li>
-          <Link to='/vehicles'>Vehicles</Link>
+          <Link to='/makes'>Makes</Link>
+        </li>
+        <li>
+          <Link to='/models'>Models</Link>
         </li>
       </ul>
     </nav>

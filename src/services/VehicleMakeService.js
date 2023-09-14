@@ -1,5 +1,11 @@
 // VehicleMakeService.js
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+} from "firebase/firestore";
 import db from "../config/firebaseConfig";
 
 class VehicleMakeService {
@@ -16,6 +22,17 @@ class VehicleMakeService {
     } catch (error) {
       console.error("Error deleting", error);
       throw error;
+    }
+  }
+  async addVehicleMake() {
+    let name = prompt("Enter name");
+    let abrv = prompt("Enter abrv");
+    try {
+      const collectionRef = collection(db, "VehicleMake");
+      const payload = { name, abrv };
+      addDoc(collectionRef, payload);
+    } catch (error) {
+      console.error(error);
     }
   }
 }
