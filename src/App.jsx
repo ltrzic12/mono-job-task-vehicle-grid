@@ -8,6 +8,7 @@ import MakesPage from "./pages/MakesPage/MakesPage";
 import ModelsPage from "./pages/ModelsPage/ModelsPage";
 import NewModelFormPage from "./pages/NewModelFormPage/NewModelFormPage";
 import "./app.css";
+import NewMakeFormPage from "./pages/NewMakeFormPage/NewMakeFormPage";
 function App() {
   return (
     <div className='app'>
@@ -17,6 +18,7 @@ function App() {
           <Route path='/makes' element={<MakesPage />}></Route>
           <Route path='/models' element={<ModelsPage />}></Route>
           <Route path='/addmodel' element={<NewModelFormPage />}></Route>
+          <Route path='/addmake' element={<NewMakeFormPage />}></Route>
         </Routes>
       </div>
     </div>

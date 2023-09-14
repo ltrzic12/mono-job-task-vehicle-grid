@@ -14,6 +14,7 @@ const NavBar = () => {
       <ul className='navbar-side'>
         <li>
           <Link to='/addmodel'>Add new model</Link>
+          <Link to='/addmake'>Add new make</Link>
         </li>
       </ul>
     </ul>

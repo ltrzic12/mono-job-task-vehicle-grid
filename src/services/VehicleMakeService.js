@@ -24,15 +24,21 @@ class VehicleMakeService {
       throw error;
     }
   }
-  async addVehicleMake() {
-    let name = prompt("Enter name");
-    let abrv = prompt("Enter abrv");
+  async createMake(name, abrv) {
+    if (!name || !abrv) {
+      console.error("Please fill in all the fields!");
+      return;
+    }
     try {
-      const collectionRef = collection(db, "VehicleMake");
-      const payload = { name, abrv };
-      addDoc(collectionRef, payload);
+      const modelData = {
+        name,
+        abrv,
+      };
+      const makeRef = await addDoc(collection(db, "VehicleMake"), modelData);
+      return makeRef.id;
     } catch (error) {
-      console.error(error);
+      console.error("Error creating make:", error);
+      throw error;
     }
   }
 }
