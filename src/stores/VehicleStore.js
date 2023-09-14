@@ -41,6 +41,10 @@ class VehicleMakeStore {
       this.unsubscribe();
     }
   }
+  findMakeNameById(makeId) {
+    const make = this.vehicleMakes.find((make) => (make.id = makeId));
+    return make ? make.name : "Unknown";
+  }
 }
 
 const vehicleMakeStore = new VehicleMakeStore();

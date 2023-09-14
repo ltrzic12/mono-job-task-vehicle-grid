@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 class VehicleModelService {
   async createModel(makeId, name, abrv) {
@@ -16,6 +16,15 @@ class VehicleModelService {
       return modelRef.id;
     } catch (error) {
       console.error("Error creating model:", error);
+      throw error;
+    }
+  }
+  async deleteVehicleModel(id) {
+    try {
+      const docRef = doc(db, "VehicleModel", id);
+      await deleteDoc(docRef);
+    } catch (error) {
+      console.error("Error deleting", error);
       throw error;
     }
   }
