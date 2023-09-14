@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar/NavBar";
 import VehicleMakeList from "./components/VehicleMakeList/VehicleMakeList";
 import VehicleModelList from "./components/VehicleModelList/VehicleModelList";
 import vehicleMakeService from "./services/VehicleMakeService";
+import AddModelForm from "./components/Forms/AddModelForm";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <button onClick={() => vehicleMakeService.addVehicleMake()}>
         Add make
       </button>
+      <AddModelForm></AddModelForm>
     </div>
   );
 }

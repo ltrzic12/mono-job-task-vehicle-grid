@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import vehicleModelStore from "../../stores/VehicleModelStore";
-import { observable } from "mobx";
 import { observer } from "mobx-react";
 import VehicleModel from "../VehicleModel/VehicleModel";
 
@@ -11,7 +10,7 @@ const VehicleModelList = () => {
   return (
     <ul>
       {vehicleModelStore.vehicleModels.map((vehicle) => (
-        <VehicleModel vehicle={vehicle}></VehicleModel>
+        <VehicleModel vehicle={vehicle} key={vehicle.id}></VehicleModel>
       ))}
     </ul>
   );
