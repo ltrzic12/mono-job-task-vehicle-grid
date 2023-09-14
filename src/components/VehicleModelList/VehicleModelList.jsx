@@ -2,15 +2,17 @@ import { useEffect } from "react";
 import vehicleModelStore from "../../stores/VehicleModelStore";
 import { observer } from "mobx-react";
 import VehicleModel from "../VehicleModel/VehicleModel";
-
+import "./vehicleModelList.css";
 const VehicleModelList = () => {
   useEffect(() => {
     vehicleModelStore.fetchVehicleModels();
   }, []);
   return (
-    <ul>
+    <ul className='model-list'>
       {vehicleModelStore.vehicleModels.map((vehicle) => (
-        <VehicleModel vehicle={vehicle} key={vehicle.id}></VehicleModel>
+        <li key={vehicle.id}>
+          <VehicleModel vehicle={vehicle}></VehicleModel>
+        </li>
       ))}
     </ul>
   );

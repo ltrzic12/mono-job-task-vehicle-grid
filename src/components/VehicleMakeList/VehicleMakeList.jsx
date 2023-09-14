@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import vehicleMakeStore from "../../stores/VehicleStore";
 import vehicleMakeService from "../../services/VehicleMakeService";
 import VehicleMake from "../VehicleMake/VehicleMake";
-
+import "./vehicleMakeList.css";
 const VehicleMakeList = () => {
   useEffect(() => {
     vehicleMakeStore.fetchVehicleMakes();
@@ -14,9 +14,9 @@ const VehicleMakeList = () => {
       {vehicleMakeStore.isLoading ? (
         <p>Loading...</p>
       ) : (
-        <ul>
+        <ul className='make-list'>
           {vehicleMakeStore.vehicleMakes.map((vehicleMake) => (
-            <li key={vehicleMake.name}>
+            <li key={vehicleMake.id}>
               <VehicleMake vehicleMake={vehicleMake}></VehicleMake>
             </li>
           ))}

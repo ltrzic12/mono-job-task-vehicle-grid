@@ -1,0 +1,10 @@
+.navbar {
+  padding: 0 5% 0 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-side {
+  display: flex;
+  gap: 20%;
+}

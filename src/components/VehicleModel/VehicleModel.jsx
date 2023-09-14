@@ -1,13 +1,11 @@
 import { observer } from "mobx-react";
-
+import "./vehicleModel.css";
 const VehicleModel = ({ vehicle }) => {
   return (
-    <li key={vehicle.id}>
-      <div>
-        <h2>{vehicle.name}</h2>
-        <span>{vehicle.makeId}</span>
-      </div>
-    </li>
+    <div className='vehicle-model-item'>
+      <h2>{vehicle.name}</h2>
+      <span>{vehicle.makeId}</span>
+    </div>
   );
 };
 

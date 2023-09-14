@@ -17,3 +17,13 @@ code {
   width: 100vw;
   background-color: red;
 }
+
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  padding: 1% 2% 0 2%;
+}
