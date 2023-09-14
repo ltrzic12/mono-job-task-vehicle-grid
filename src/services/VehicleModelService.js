@@ -2,6 +2,10 @@ import { addDoc, collection } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 class VehicleModelService {
   async createModel(makeId, name, abrv) {
+    if (!makeId || !name || !abrv) {
+      console.error("Please fill in all the fields!");
+      return;
+    }
     try {
       const modelData = {
         makeId,

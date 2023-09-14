@@ -10,6 +10,9 @@ const NavBar = () => {
         <li>
           <Link to='/models'>Models</Link>
         </li>
+        <li>
+          <Link to='/addmodel'>Add new model</Link>
+        </li>
       </ul>
     </nav>
   );

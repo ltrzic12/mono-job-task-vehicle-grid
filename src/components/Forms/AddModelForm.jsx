@@ -7,23 +7,11 @@ import vehicleModelService from "../../services/VehicleModelService";
 const ModelForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // Call the createModel function with form values
-      const newModelId = await vehicleModelService.createModel(
-        modelFormStore.makeId,
-        modelFormStore.name,
-        modelFormStore.abrv,
-      );
-
-      // Reset the form after successful submission
-      modelFormStore.resetForm();
-
-      // Optionally, you can do something with the new model ID
-      console.log("New Model ID:", newModelId);
-    } catch (error) {
-      // Handle any errors here
-      console.error("Error creating model:", error);
-    }
+    vehicleModelService.createModel(
+      modelFormStore.makeId,
+      modelFormStore.name,
+      modelFormStore.abrv,
+    );
   };
 
   return (
