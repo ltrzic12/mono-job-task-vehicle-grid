@@ -15,7 +15,7 @@ function App() {
       <div className='vehicle-app'>
         <NavBar></NavBar>
         <Routes>
-          <Route path='/makes' element={<MakesPage />}></Route>
+          <Route path='/' element={<MakesPage />}></Route>
           <Route path='/models' element={<ModelsPage />}></Route>
           <Route path='/add-model' element={<NewModelFormPage />}></Route>
           <Route path='/add-make' element={<NewMakeFormPage />}></Route>

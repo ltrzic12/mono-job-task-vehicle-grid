@@ -5,7 +5,7 @@ const NavBar = () => {
     <ul className='navbar'>
       <ul className='navbar-side'>
         <li>
-          <Link to='/makes'>Makes</Link>
+          <Link to='/'>Makes</Link>
         </li>
         <li>
           <Link to='/models'>Models</Link>
