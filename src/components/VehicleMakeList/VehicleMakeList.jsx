@@ -4,16 +4,15 @@ import vehicleMakeStore from "../../stores/VehicleMakeStore";
 import vehicleMakeService from "../../services/VehicleMakeService";
 import VehicleMake from "./VehicleMake";
 import "./vehicleMakeList.css";
-const VehicleMakeList = () => {
-  const [selectedSort, setSelectedSort] = useState("");
 
+const VehicleMakeList = () => {
   useEffect(() => {
     vehicleMakeStore.fetchVehicleMakes();
   }, []);
 
   const handleChangeSort = (e) => {
     const sort = e.target.value;
-    setSelectedSort(sort); // Update the selected sorting option
+
     vehicleMakeStore.fetchVehicleMakes(sort); // Pass makeId and sort for filtering and sorting
   };
 

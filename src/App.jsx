@@ -9,6 +9,7 @@ import ModelsPage from "./pages/ModelsPage/ModelsPage";
 import NewModelFormPage from "./pages/NewModelFormPage/NewModelFormPage";
 import "./app.css";
 import NewMakeFormPage from "./pages/NewMakeFormPage/NewMakeFormPage";
+
 function App() {
   return (
     <div className='app'>
