@@ -1,43 +1,48 @@
 import { observer } from "mobx-react";
 import "./vehicleModel.css";
-import editModelFormStore from "../../stores/EditModelFormStore";
 import vehicleModelService from "../../services/VehicleModelService";
-import editStore from "../../stores/EditStore";
-import EditModelForm from "../Forms/EditModelForm";
+import vehicleMakeStore from "../../stores/VehicleStore";
+import { useState } from "react";
 
 const VehicleModel = ({ vehicle }) => {
+  const [isOptionsOpened, setIsOptionsOpened] = useState(false);
+  const [isEditOpened, setIsEditOpened] = useState(false);
+
   const handleOptionsClick = () => {
-    editStore.toggleEditClick();
+    setIsOptionsOpened(!isOptionsOpened);
   };
-  const handleEditClick = () => {
-    editModelFormStore.toggleIsOpened();
+
+  const getVehicleMakerName = (makeId) => {
+    const maker = vehicleMakeStore.vehicleMakes.find(
+      (maker) => maker.id === makeId,
+    );
+    return maker ? maker.name : "Unknown Maker";
   };
+
   return (
     <div>
-      {!editModelFormStore.isOpened ? (
+      {!isEditOpened ? (
         <div className='vehicle-model-item'>
           <h2>{vehicle.name}</h2>
-          <span>{vehicle.makeId}</span>
+          <span>{getVehicleMakerName(vehicle.makeId)}</span>
 
-          {!editStore.isEditClicked ? (
+          {!isOptionsOpened ? (
             <div className='edit' onClick={handleOptionsClick}></div>
           ) : (
-            <div className='edit-menu'>
+            <div className='edit-menu' onMouseLeave={handleOptionsClick}>
               <button
                 onClick={() =>
                   vehicleModelService.deleteVehicleModel(vehicle.id)
                 }>
                 Delete model
               </button>
-              <button onClick={handleEditClick}>Edit model</button>
+              <button>Edit model</button>
               <button onClick={handleOptionsClick}>Close</button>
             </div>
           )}
         </div>
       ) : (
-        <div>
-          <EditModelForm></EditModelForm>
-        </div>
+        <div></div>
       )}
     </div>
   );

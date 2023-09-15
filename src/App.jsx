@@ -17,8 +17,8 @@ function App() {
         <Routes>
           <Route path='/makes' element={<MakesPage />}></Route>
           <Route path='/models' element={<ModelsPage />}></Route>
-          <Route path='/addmodel' element={<NewModelFormPage />}></Route>
-          <Route path='/addmake' element={<NewMakeFormPage />}></Route>
+          <Route path='/add-model' element={<NewModelFormPage />}></Route>
+          <Route path='/add-make' element={<NewMakeFormPage />}></Route>
         </Routes>
       </div>
     </div>

@@ -13,10 +13,10 @@ const NavBar = () => {
       </ul>
       <ul className='navbar-side'>
         <li>
-          <Link to='/addmodel'>Add model</Link>
+          <Link to='/add-model'>Add model</Link>
         </li>
         <li>
-          <Link to='/addmake'>Add make</Link>
+          <Link to='/add-make'>Add make</Link>
         </li>
       </ul>
     </ul>

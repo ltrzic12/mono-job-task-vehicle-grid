@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import vehicleMakeStore from "../../stores/VehicleStore";
 import vehicleMakeService from "../../services/VehicleMakeService";
-import VehicleMake from "../VehicleMake/VehicleMake";
+import VehicleMake from "./VehicleMake";
 import "./vehicleMakeList.css";
 const VehicleMakeList = () => {
   useEffect(() => {

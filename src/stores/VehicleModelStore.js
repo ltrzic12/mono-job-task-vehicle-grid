@@ -1,4 +1,10 @@
-import { collection, onSnapshot, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";
 import db from "../config/firebaseConfig";
 
@@ -14,18 +20,29 @@ class VehicleModelStore {
     });
   }
 
-  fetchVehicleModels = async () => {
+  fetchVehicleModels = async (makeId, sort) => {
     try {
       this.isLoading = true;
-      const vehicleModelCollection = query(collection(db, "VehicleModel"));
+      const collectionRef = collection(db, "VehicleModel");
+      let queryConstraint = collectionRef;
 
-      const unsubscribe = onSnapshot(vehicleModelCollection, (snapshot) => {
+      if (makeId) {
+        queryConstraint = query(queryConstraint, where("makeId", "==", makeId));
+      }
+
+      if (sort) {
+        queryConstraint = query(queryConstraint, orderBy("name", sort));
+      }
+
+      const unsubscribe = onSnapshot(queryConstraint, (snapshot) => {
         const models = [];
         snapshot.forEach((doc) => {
           models.push({ id: doc.id, ...doc.data() });
         });
 
-        this.vehicleModels = models;
+        action(() => {
+          this.vehicleModels.replace(models);
+        })();
       });
 
       this.unsubscribe = unsubscribe;
@@ -35,17 +52,12 @@ class VehicleModelStore {
       this.isLoading = false;
     }
   };
+
   stopListeningToChanges() {
     if (this.unsubscribe) {
       this.unsubscribe();
     }
   }
-  toggleEditOpen = (modelId) => {
-    const model = this.vehicleModels.find((m) => m.id === modelId);
-    if (model) {
-      model.isEditOpen = !model.isEditOpen;
-    }
-  };
 }
 
 const vehicleModelStore = new VehicleModelStore();

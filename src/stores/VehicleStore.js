@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import vehicleMakeService from "../services/VehicleMakeService";
+
 import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 class VehicleMakeStore {
@@ -25,7 +25,9 @@ class VehicleMakeStore {
           makes.push({ id: doc.id, ...doc.data() });
         });
 
-        this.vehicleMakes = makes;
+        action(() => {
+          this.vehicleMakes.replace(makes);
+        })();
       });
 
       this.unsubscribe = unsubscribe;
