@@ -1,8 +1,8 @@
 .app {
   padding: 5% 5% 5% 5%;
+  height: 100%;
 }
 
 .vehicle-app {
-  border: 1px solid black;
-  height: 600px;
+  height: 100%;
 }

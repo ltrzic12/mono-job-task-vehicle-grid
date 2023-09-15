@@ -1,6 +1,6 @@
 import { makeObservable, observable, action } from "mobx";
 
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 class VehicleMakeStore {
   vehicleMakes = [];
@@ -14,12 +14,15 @@ class VehicleMakeStore {
     });
   }
 
-  fetchVehicleMakes = async () => {
+  fetchVehicleMakes = async (sort) => {
     try {
       this.isLoading = true;
-      const vehicleMakesCollection = query(collection(db, "VehicleMake"));
-
-      const unsubscribe = onSnapshot(vehicleMakesCollection, (snapshot) => {
+      const collectionRef = collection(db, "VehicleMake");
+      let queryConstraint = collectionRef;
+      if (sort) {
+        queryConstraint = query(queryConstraint, orderBy("name", sort));
+      }
+      const unsubscribe = onSnapshot(queryConstraint, (snapshot) => {
         const makes = [];
         snapshot.forEach((doc) => {
           makes.push({ id: doc.id, ...doc.data() });

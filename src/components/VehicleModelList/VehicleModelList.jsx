@@ -3,7 +3,7 @@ import vehicleModelStore from "../../stores/VehicleModelStore";
 import { observer } from "mobx-react";
 import VehicleModel from "./VehicleModel";
 import "./vehicleModelList.css";
-import vehicleMakeStore from "../../stores/VehicleStore";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const VehicleModelList = () => {
   const [selectedSort, setSelectedSort] = useState(""); // State to hold the selected sorting option
@@ -28,7 +28,7 @@ const VehicleModelList = () => {
   };
 
   return (
-    <div>
+    <div className='vehicle-model-list'>
       <div className='toolbar'>
         <select name='filterByMake' onChange={handleChangeFilter}>
           <option value=''>All makes</option>

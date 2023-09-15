@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import vehicleStore from "./stores/VehicleStore";
+import vehicleStore from "./stores/VehicleMakeStore";
 import vehicleModelStore from "./stores/VehicleModelStore";
 
 import { Provider } from "mobx-react";

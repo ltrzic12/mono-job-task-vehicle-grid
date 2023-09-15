@@ -3,7 +3,7 @@ import "./vehicleMake.css";
 const VehicleMake = ({ vehicleMake }) => {
   return (
     <div className='vehicle-make-item'>
-      <h3>{vehicleMake.name}</h3>
+      <h1>{vehicleMake.name}</h1>
     </div>
   );
 };

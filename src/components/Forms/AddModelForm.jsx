@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 
 import modelFormStore from "../../stores/ModelFormStore";
 import vehicleModelService from "../../services/VehicleModelService";
-import vehicleMakeStore from "../../stores/VehicleStore";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const ModelForm = () => {
   useEffect(() => {

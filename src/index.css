@@ -12,12 +12,6 @@ code {
     monospace;
 }
 
-.linija {
-  height: 5px;
-  width: 100vw;
-  background-color: red;
-}
-
 li {
   list-style-type: none;
   padding: 0;

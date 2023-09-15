@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import "./vehicleModel.css";
 import vehicleModelService from "../../services/VehicleModelService";
-import vehicleMakeStore from "../../stores/VehicleStore";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 import { useState } from "react";
 
 const VehicleModel = ({ vehicle }) => {
