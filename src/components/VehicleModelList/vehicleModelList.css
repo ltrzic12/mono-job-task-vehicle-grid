@@ -1,8 +1,9 @@
 .model-list {
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 5% 0.5%;
+  padding-bottom: 7%;
 }
 
 .toolbar {

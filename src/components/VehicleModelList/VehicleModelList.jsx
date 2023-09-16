@@ -6,25 +6,24 @@ import "./vehicleModelList.css";
 import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const VehicleModelList = () => {
-  const [selectedSort, setSelectedSort] = useState(""); // State to hold the selected sorting option
-  const [selectedMakeId, setSelectedMakeId] = useState(""); // State to hold the selected makeId for filtering
+  const [selectedSort, setSelectedSort] = useState("");
+  const [selectedMakeId, setSelectedMakeId] = useState("");
 
   useEffect(() => {
-    // Fetch vehicle models initially without sorting or filtering
     vehicleModelStore.fetchVehicleModels();
     vehicleMakeStore.fetchVehicleMakes();
   }, []);
 
   const handleChangeSort = (e) => {
     const sort = e.target.value;
-    setSelectedSort(sort); // Update the selected sorting option
-    vehicleModelStore.fetchVehicleModels(selectedMakeId, sort); // Pass makeId and sort for filtering and sorting
+    setSelectedSort(sort);
+    vehicleModelStore.fetchVehicleModels(selectedMakeId, sort);
   };
 
   const handleChangeFilter = (e) => {
     const makeId = e.target.value;
-    setSelectedMakeId(makeId); // Update the selected makeId for filtering
-    vehicleModelStore.fetchVehicleModels(makeId, selectedSort); // Pass makeId and sort for filtering and sorting
+    setSelectedMakeId(makeId);
+    vehicleModelStore.fetchVehicleModels(makeId, selectedSort);
   };
 
   return (

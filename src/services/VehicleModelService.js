@@ -1,5 +1,6 @@
 import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import db from "../config/firebaseConfig";
+
 class VehicleModelService {
   async createModel(makeId, name, abrv) {
     if (!makeId || !name || !abrv) {
@@ -19,6 +20,7 @@ class VehicleModelService {
       throw error;
     }
   }
+
   async deleteVehicleModel(id) {
     try {
       const docRef = doc(db, "VehicleModel", id);
@@ -28,16 +30,13 @@ class VehicleModelService {
       throw error;
     }
   }
-  async editVehicleModel(name, abrv, id) {
-    if (!name || !abrv) {
-      console.error("Fill in all fields");
-      return;
-    }
+
+  async editVehicleModel(docRef, payload) {
     try {
-      const docRef = doc(db, "VehicleModel", id);
-      const payload = { name, abrv };
       await setDoc(docRef, payload);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

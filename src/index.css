@@ -21,3 +21,11 @@ li {
 ul {
   padding: 1% 2% 0 2%;
 }
+
+button {
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+}

@@ -3,10 +3,11 @@ import "./vehicleModel.css";
 import vehicleModelService from "../../services/VehicleModelService";
 import vehicleMakeStore from "../../stores/VehicleMakeStore";
 import { useState } from "react";
+import form from "../../stores/FormStore";
+import { Link } from "react-router-dom";
 
 const VehicleModel = ({ vehicle }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
-  const [isEditOpened, setIsEditOpened] = useState(false);
 
   const handleOptionsClick = () => {
     setIsOptionsOpened(!isOptionsOpened);
@@ -19,33 +20,43 @@ const VehicleModel = ({ vehicle }) => {
     return maker ? maker.name : "Unknown Maker";
   };
 
-  return (
-    <div>
-      {!isEditOpened ? (
-        <div className='vehicle-model-item'>
-          <h2>{vehicle.name}</h2>
-          <span>{getVehicleMakerName(vehicle.makeId)}</span>
+  const handleEditModelClick = (makeId) => {
+    console.log(makeId);
+    form.setFormType("edit model");
+    form.setEditModelId(vehicle.id);
+    form.populateFormData(vehicle.name, vehicle.abrv, makeId);
+  };
 
-          {!isOptionsOpened ? (
-            <div className='edit' onClick={handleOptionsClick}></div>
-          ) : (
-            <div className='edit-menu' onMouseLeave={handleOptionsClick}>
-              <button
-                onClick={() =>
-                  vehicleModelService.deleteVehicleModel(vehicle.id)
-                }>
-                Delete model
-              </button>
-              <button>Edit model</button>
-              <button onClick={handleOptionsClick}>Close</button>
-            </div>
-          )}
-        </div>
+  return (
+    <div className='vehicle-model-item'>
+      <h2>{vehicle.name}</h2>
+      <span>{getVehicleMakerName(vehicle.makeId)}</span>
+
+      {!isOptionsOpened ? (
+        <div className='edit' onClick={handleOptionsClick}></div>
       ) : (
-        <div></div>
+        <div className='edit-menu' onMouseLeave={handleOptionsClick}>
+          <button
+            onClick={() => vehicleModelService.deleteVehicleModel(vehicle.id)}>
+            Delete model
+          </button>
+          <Link to='/form/edit' onClick={handleEditModelClick(vehicle.makeId)}>
+            Edit model
+          </Link>
+          <button onClick={handleOptionsClick}>Close</button>
+        </div>
       )}
     </div>
   );
 };
 
 export default observer(VehicleModel);
+{
+  /* <div>
+      {!isEditOpened ? (
+        
+      ) : (
+        <div></div>
+      )}
+    </div> */
+}

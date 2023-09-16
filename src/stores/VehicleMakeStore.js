@@ -2,6 +2,7 @@ import { makeObservable, observable, action } from "mobx";
 
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import db from "../config/firebaseConfig";
+
 class VehicleMakeStore {
   vehicleMakes = [];
   isLoading = false;
@@ -46,6 +47,7 @@ class VehicleMakeStore {
       this.unsubscribe();
     }
   }
+
   findMakeNameById(makeId) {
     const make = this.vehicleMakes.find((make) => (make.id = makeId));
     return make ? make.name : "Unknown";

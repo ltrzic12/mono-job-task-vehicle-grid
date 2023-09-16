@@ -24,6 +24,7 @@ class VehicleMakeService {
       throw error;
     }
   }
+
   async createMake(name, abrv) {
     if (!name || !abrv) {
       console.error("Please fill in all the fields!");
