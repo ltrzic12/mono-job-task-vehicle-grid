@@ -7,7 +7,7 @@ class Form {
   makeId = "";
   submitSuccessful = false;
   editModelID = null;
-
+  isLoading = false;
   constructor() {
     makeObservable(this, {
       formType: observable,
@@ -23,6 +23,7 @@ class Form {
       setSubmitSuccessful: action,
       populateFormData: action,
       setEditModelId: action,
+      setIsLoading: action,
     });
   }
 
@@ -64,6 +65,9 @@ class Form {
   setEditMakeId(id) {
     this.editMakeId = id;
   }
+  setIsLoading = (boolean) => {
+    this.isLoading = boolean;
+  };
 }
 
 const form = new Form();

@@ -1,5 +1,6 @@
 import {
   collection,
+  limit,
   onSnapshot,
   orderBy,
   query,
@@ -24,7 +25,7 @@ class VehicleModelStore {
     try {
       this.isLoading = true;
       const collectionRef = collection(db, "VehicleModel");
-      let queryConstraint = collectionRef;
+      let queryConstraint = query(collectionRef);
 
       if (makeId) {
         queryConstraint = query(queryConstraint, where("makeId", "==", makeId));
@@ -42,6 +43,7 @@ class VehicleModelStore {
 
         action(() => {
           this.vehicleModels.replace(models);
+          this.totalItems = this.vehicleModels.length;
         })();
       });
 

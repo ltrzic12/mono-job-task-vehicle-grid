@@ -23,6 +23,7 @@ const VehicleModelList = () => {
   const handleChangeFilter = (e) => {
     const makeId = e.target.value;
     setSelectedMakeId(makeId);
+
     vehicleModelStore.fetchVehicleModels(makeId, selectedSort);
   };
 

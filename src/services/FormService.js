@@ -7,6 +7,7 @@ import db from "../config/firebaseConfig";
 class FormService {
   async submitForm() {
     try {
+      form.setIsLoading(true);
       if (form.formType === "new model") {
         if (!form.name || !form.abrv || !form.makeId) {
           console.error("Please fill in all the fields!");
@@ -63,10 +64,12 @@ class FormService {
         console.log("ID of the model updated:", form.makeId);
         form.setSubmitSuccessful(true);
         form.setMakeId(null);
+        form.setIsLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
     } finally {
+      form.setIsLoading(false);
       form.resetForm();
     }
   }
