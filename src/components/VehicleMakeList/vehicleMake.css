@@ -1,4 +1,5 @@
 .vehicle-make-item {
   text-align: center;
   border: 1px solid black;
+  position: relative;
 }

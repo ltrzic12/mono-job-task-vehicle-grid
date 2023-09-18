@@ -9,7 +9,8 @@
 .toolbar {
   display: flex;
   justify-content: space-between;
-  padding: 0 15% 0 15%;
+  padding: 0 15% 1% 15%;
+  border-bottom: 1px solid gray;
 }
 
 select {

@@ -6,12 +6,18 @@ import db from "../config/firebaseConfig";
 class VehicleMakeStore {
   vehicleMakes = [];
   isLoading = false;
-
+  currentPage = 1;
+  pageSize = 6;
+  totalItems = 0;
   constructor() {
     makeObservable(this, {
       vehicleMakes: observable,
       isLoading: observable,
       fetchVehicleMakes: action,
+      currentPage: observable,
+      pageSize: observable,
+      totalItems: observable,
+      setPage: action,
     });
   }
 
@@ -51,6 +57,11 @@ class VehicleMakeStore {
   findMakeNameById(makeId) {
     const make = this.vehicleMakes.find((make) => (make.id = makeId));
     return make ? make.name : "Unknown";
+  }
+
+  setPage(page) {
+    this.currentPage = page;
+    this.fetchVehicleMakes();
   }
 }
 

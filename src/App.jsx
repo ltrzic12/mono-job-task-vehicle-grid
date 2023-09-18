@@ -3,7 +3,6 @@ import NavBar from "./components/NavBar/NavBar";
 import MakesPage from "./pages/MakesPage/MakesPage";
 import ModelsPage from "./pages/ModelsPage/ModelsPage";
 import "./app.css";
-import Form from "./components/Form/Form";
 import FormPage from "./pages/Form/FormPage";
 
 function App() {
@@ -16,6 +15,7 @@ function App() {
           <Route path='/models' element={<ModelsPage />}></Route>
           <Route path='/form' element={<FormPage />}></Route>
           <Route path='/form/edit' element={<FormPage />}></Route>
+          <Route path='/form/edit-make' element={<FormPage />}></Route>
         </Routes>
       </div>
     </div>

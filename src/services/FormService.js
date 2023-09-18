@@ -30,6 +30,7 @@ class FormService {
           form.abrv,
         );
         console.log("Make created with ID:", makeId);
+        form.setSubmitSuccessful(true);
       }
       if (form.formType === "edit model") {
         if (!form.name || !form.abrv) {
@@ -46,6 +47,22 @@ class FormService {
         console.log("ID of the model updated:", form.modelId);
         form.setSubmitSuccessful(true);
         form.setEditModelId(null);
+      }
+      if (form.formType === "edit make") {
+        console.log(form.makeId);
+        if (!form.name || !form.abrv) {
+          console.error("Please fill in all the fields!");
+          return;
+        }
+        let docRef = doc(db, "VehicleMake", form.makeId);
+        let payload = {
+          name: form.name,
+          abrv: form.abrv,
+        };
+        await vehicleMakeService.editVehicleMake(docRef, payload);
+        console.log("ID of the model updated:", form.makeId);
+        form.setSubmitSuccessful(true);
+        form.setMakeId(null);
       }
     } catch (error) {
       console.error("Error:", error);

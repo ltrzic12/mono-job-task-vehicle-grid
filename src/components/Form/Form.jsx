@@ -3,19 +3,9 @@ import form from "../../stores/FormStore";
 import "./form.css";
 import vehicleMakeStore from "../../stores/VehicleMakeStore";
 import formService from "../../services/FormService";
-import { useParams } from "react-router-dom";
 
 const Form = () => {
-  const { mode } = useParams();
-
-  console.log(mode);
-  let type;
-
-  if (mode === "edit") {
-    type = "edit model";
-  } else {
-    type = form.formType;
-  }
+  let type = form.formType;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,10 +15,11 @@ const Form = () => {
   };
 
   return (
-    <div>
+    <div className='form-page'>
       {form.formType === "new make" && <h2>Add new maker</h2>}
       {form.formType === "new model" && <h2>Add new model</h2>}
       {type === "edit model" && <h2>Edit vehicle info</h2>}
+      {type === "edit make" && <h2>Edit maker info</h2>}
       <form onSubmit={handleSubmit}>
         <label htmlFor='name'>{`Enter new ${form.formType} name`}</label>
         <input

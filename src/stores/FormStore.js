@@ -52,14 +52,17 @@ class Form {
     this.submitSuccessful = !this.submitSuccessful;
   }
 
-  populateFormData(name, abrv, makerId) {
+  populateFormData(name, abrv, makeId) {
     this.name = name;
     this.abrv = abrv;
-    this.makeId = makerId;
+    this.makeId = makeId;
   }
 
   setEditModelId(id) {
     this.editModelID = id;
+  }
+  setEditMakeId(id) {
+    this.editMakeId = id;
   }
 }
 

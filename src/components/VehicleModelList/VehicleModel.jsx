@@ -51,12 +51,3 @@ const VehicleModel = ({ vehicle }) => {
 };
 
 export default observer(VehicleModel);
-{
-  /* <div>
-      {!isEditOpened ? (
-        
-      ) : (
-        <div></div>
-      )}
-    </div> */
-}

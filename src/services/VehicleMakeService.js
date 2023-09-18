@@ -1,10 +1,10 @@
-// VehicleMakeService.js
 import {
   addDoc,
   collection,
   deleteDoc,
   doc,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 
@@ -40,6 +40,13 @@ class VehicleMakeService {
     } catch (error) {
       console.error("Error creating make:", error);
       throw error;
+    }
+  }
+  async editVehicleMake(docRef, payload) {
+    try {
+      await setDoc(docRef, payload);
+    } catch (error) {
+      console.error(error);
     }
   }
 }

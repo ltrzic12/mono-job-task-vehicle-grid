@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import vehicleMakeStore from "../../stores/VehicleMakeStore";
-import vehicleMakeService from "../../services/VehicleMakeService";
 import VehicleMake from "./VehicleMake";
 import "./vehicleMakeList.css";
+import form from "../../stores/FormStore";
 
 const VehicleMakeList = () => {
   useEffect(() => {
@@ -13,12 +13,11 @@ const VehicleMakeList = () => {
   const handleChangeSort = (e) => {
     const sort = e.target.value;
 
-    vehicleMakeStore.fetchVehicleMakes(sort); // Pass makeId and sort for filtering and sorting
+    vehicleMakeStore.fetchVehicleMakes(sort);
   };
 
   return (
     <div>
-      {" "}
       <div className='toolbar'>
         <select name='orderBy' onChange={handleChangeSort}>
           <option value=''>Sort by</option>
@@ -38,6 +37,18 @@ const VehicleMakeList = () => {
             ))}
           </ul>
         )}
+      </div>
+      <div className='pagination'>
+        {Array.from({
+          length: Math.ceil(form.totalItems / form.itemsPerPage),
+        }).map((_, index) => (
+          <button
+            key={index}
+            className={form.currentPage === index + 1 ? "active" : ""}
+            onClick={() => form.setPage(index + 1)}>
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
