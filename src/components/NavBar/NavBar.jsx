@@ -13,24 +13,33 @@ const NavBar = () => {
     form.resetForm();
   };
 
+  const style = {
+    color: "black",
+    textDecoration: "none",
+  };
+
   return (
     <ul className='navbar'>
       <ul className='navbar-side'>
         <li>
-          <Link to='/'>Makes</Link>
+          <Link to='/' style={style}>
+            Makes
+          </Link>
         </li>
         <li>
-          <Link to='/models'>Models</Link>
+          <Link to='/models' style={style}>
+            Models
+          </Link>
         </li>
       </ul>
       <ul className='navbar-side'>
         <li>
-          <Link to='/form' onClick={handleModelFormClick}>
+          <Link to='/form' onClick={handleModelFormClick} style={style}>
             Add model
           </Link>
         </li>
         <li>
-          <Link to='/form' onClick={handleMakeFormClick}>
+          <Link to='/form' onClick={handleMakeFormClick} style={style}>
             Add make
           </Link>
         </li>
