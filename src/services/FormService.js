@@ -6,11 +6,12 @@ import db from "../config/firebaseConfig";
 
 class FormService {
   async submitForm() {
+    form.setIsLoading(true);
     try {
-      form.setIsLoading(true);
       if (form.formType === "new model") {
         if (!form.name || !form.abrv || !form.makeId) {
           console.error("Please fill in all the fields!");
+          form.setFormError(true);
           return;
         }
         const modelId = await vehicleModelService.createModel(
@@ -24,6 +25,7 @@ class FormService {
       if (form.formType === "new make") {
         if (!form.name || !form.abrv) {
           console.error("Please fill in all the fields");
+          form.setFormError(true);
           return;
         }
         const makeId = await vehicleMakeService.createMake(
@@ -36,6 +38,7 @@ class FormService {
       if (form.formType === "edit model") {
         if (!form.name || !form.abrv) {
           console.error("Please fill in all the fields!");
+          form.setFormError(true);
           return;
         }
         let docRef = doc(db, "VehicleModel", form.editModelID);
@@ -46,13 +49,14 @@ class FormService {
         };
         await vehicleModelService.editVehicleModel(docRef, payload);
         console.log("ID of the model updated:", form.modelId);
-        form.setSubmitSuccessful(true);
+        form.setSubmitSuccessful();
         form.setEditModelId(null);
       }
       if (form.formType === "edit make") {
         console.log(form.makeId);
         if (!form.name || !form.abrv) {
           console.error("Please fill in all the fields!");
+          form.setFormError(true);
           return;
         }
         let docRef = doc(db, "VehicleMake", form.makeId);
@@ -62,7 +66,7 @@ class FormService {
         };
         await vehicleMakeService.editVehicleMake(docRef, payload);
         console.log("ID of the model updated:", form.makeId);
-        form.setSubmitSuccessful(true);
+        form.setSubmitSuccessful();
         form.setMakeId(null);
         form.setIsLoading(false);
       }
@@ -70,7 +74,6 @@ class FormService {
       console.error("Error:", error);
     } finally {
       form.setIsLoading(false);
-      form.resetForm();
     }
   }
 }

@@ -2,7 +2,7 @@
   padding: 0 5% 0 5%;
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
+  font-size: xx-large;
 }
 
 .navbar-side {
@@ -10,4 +10,18 @@
   justify-content: space-between;
   gap: 20%;
   text-align: center;
+  text-wrap: nowrap;
+}
+
+.navbar-side li:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
+.link-active {
+  color: blue;
+}
+.link-disabled {
+  color: red;
+  pointer-events: none;
 }

@@ -8,6 +8,8 @@ class Form {
   submitSuccessful = false;
   editModelID = null;
   isLoading = false;
+  formError = false;
+
   constructor() {
     makeObservable(this, {
       formType: observable,
@@ -16,14 +18,16 @@ class Form {
       abrv: observable,
       makeId: observable,
       editModelID: observable,
+      submitSuccessful: observable,
+      formError: observable,
       setName: action,
       setAbrv: action,
       setMakeId: action,
-      submitSuccessful: observable,
-      setSubmitSuccessful: action,
       populateFormData: action,
       setEditModelId: action,
       setIsLoading: action,
+      setFormError: action,
+      setSubmitSuccessful: action,
     });
   }
 
@@ -49,10 +53,6 @@ class Form {
     this.makeId = "";
   }
 
-  setSubmitSuccessful() {
-    this.submitSuccessful = !this.submitSuccessful;
-  }
-
   populateFormData(name, abrv, makeId) {
     this.name = name;
     this.abrv = abrv;
@@ -68,6 +68,16 @@ class Form {
   setIsLoading = (boolean) => {
     this.isLoading = boolean;
   };
+
+  setFormError(a) {
+    this.formError = a;
+  }
+
+  setSubmitSuccessful() {
+    this.submitSuccessful = !form.submitSuccessful;
+    this.setFormError(false);
+    this.resetForm();
+  }
 }
 
 const form = new Form();

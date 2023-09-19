@@ -4,6 +4,8 @@ import {
   onSnapshot,
   orderBy,
   query,
+  startAfter,
+  startAt,
   where,
 } from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";
@@ -12,6 +14,8 @@ import db from "../config/firebaseConfig";
 class VehicleModelStore {
   vehicleModels = [];
   isLoading = false;
+  fetchLimit = 9;
+  startAt = 0;
 
   constructor() {
     makeObservable(this, {

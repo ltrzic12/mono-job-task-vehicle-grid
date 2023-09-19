@@ -1,8 +1,10 @@
 .vehicle-model-item {
   text-align: center;
-  border: 1px solid black;
   height: 100%;
   position: relative;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: rgb(225, 223, 223);
 }
 
 .edit {

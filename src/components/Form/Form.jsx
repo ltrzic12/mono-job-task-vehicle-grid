@@ -19,10 +19,12 @@ const Form = () => {
       <div className='form-page'>
         {!form.submitSuccessful ? (
           <>
-            {form.formType === "new make" && <h2>Add new maker</h2>}
-            {form.formType === "new model" && <h2>Add new model</h2>}
-            {type === "edit model" && <h2>Edit vehicle info</h2>}
-            {type === "edit make" && <h2>Edit maker info</h2>}
+            <div>
+              {form.formType === "new make" && <h2>Add new maker</h2>}
+              {form.formType === "new model" && <h2>Add new model</h2>}
+              {type === "edit model" && <h2>Edit vehicle info</h2>}
+              {type === "edit make" && <h2>Edit maker info</h2>}
+            </div>
             <form onSubmit={handleSubmit}>
               <label htmlFor='name'>{`Enter new ${form.formType} name`}</label>
               <input
@@ -39,7 +41,6 @@ const Form = () => {
               />
               {form.formType === "new model" && (
                 <div>
-                  <label htmlFor='maker'>Pick car maker</label>
                   <select
                     name='maker'
                     id=''
@@ -53,6 +54,9 @@ const Form = () => {
                     ))}
                   </select>
                 </div>
+              )}
+              {form.formError === true && (
+                <span>Please fill in all the fields!</span>
               )}
               <button type='submit'>Submit</button>
             </form>

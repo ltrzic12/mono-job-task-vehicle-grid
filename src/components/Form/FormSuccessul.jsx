@@ -1,56 +1,88 @@
 import { observer } from "mobx-react";
 import form from "../../stores/FormStore";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import formService from "../../services/FormService";
 
 const FormSuccess = () => {
+  useEffect(() => {
+    form.setFormError(false);
+  }, []);
+
+  const linkStyle = {
+    color: "black",
+    textDecoration: "none",
+  };
+
   return (
     <div className='form-success'>
       {form.formType === "new make" && (
         <>
-          <h2>New make added</h2>
-          <button
-            onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
-            Add new
-          </button>
-          <Link
-            to='/'
-            onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
-            Close
-          </Link>
+          <h3>New make added</h3>
+          <div className='success-buttons'>
+            <button
+              onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
+              Add new
+            </button>
+            <button>
+              <Link
+                to='/models'
+                onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}
+                style={linkStyle}>
+                Close
+              </Link>
+            </button>
+          </div>
         </>
       )}
       {form.formType === "new model" && (
         <>
-          <h2>New model added</h2>
-          <button
-            onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
-            Add new
-          </button>
-          <Link
-            to='/models'
-            onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
-            Close
-          </Link>
+          <h3>New model added</h3>
+          <div className='success-buttons'>
+            <button
+              onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
+              Add new
+            </button>
+            <button>
+              <Link
+                to='/models'
+                onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}
+                style={linkStyle}>
+                Close
+              </Link>
+            </button>
+          </div>
         </>
       )}
       {form.formType === "edit model" && (
         <>
-          <h2>Edit successful</h2>
-          <Link
-            to='/models'
-            onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
-            Close
-          </Link>
+          <h3>Edit successful</h3>
+          <div className='success-buttons'>
+            <button>
+              <Link
+                to='/models'
+                onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}
+                style={linkStyle}>
+                Close
+              </Link>
+            </button>
+          </div>
         </>
       )}
       {form.formType === "edit make" && (
         <>
-          <h2>Edit successful</h2>
-          <Link
-            to='/'
-            onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}>
-            Close
-          </Link>
+          <h3>Edit successful</h3>
+          <div className='success-buttons'>
+            <button>
+              {" "}
+              <Link
+                to='/'
+                onClick={() => form.setSubmitSuccessful(!form.submitSuccessful)}
+                style={linkStyle}>
+                Close
+              </Link>
+            </button>
+          </div>
         </>
       )}
     </div>

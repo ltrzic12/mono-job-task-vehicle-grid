@@ -1,10 +1,64 @@
 form {
   display: flex;
-  width: 20%;
+  width: 100%;
   flex-direction: column;
+  font-size: x-large;
+
+  align-items: center;
 }
 
 .form-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+label {
+  width: 50%;
+  margin-top: 20px;
+  text-align: center;
+  font-size: xx-large;
+}
+
+select {
+  margin-top: 20px;
+  text-align: center;
+  font-size: xx-large;
+  border: 1px solid black;
+}
+
+input {
+  margin-top: 20px;
+  font-size: xx-large;
+  width: 50%;
+}
+
+form button {
+  margin-top: 20px;
+  padding: 1%;
+  font-size: x-large;
+  width: 20%;
+}
+form span {
+  color: red;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.form-success {
+  font-size: xx-large;
+  position: absolute;
+  top: 10%;
+}
+
+.form-success button {
+  font-size: xx-large;
+}
+
+.success-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }

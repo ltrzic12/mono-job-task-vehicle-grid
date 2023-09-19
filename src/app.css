@@ -1,8 +1,9 @@
 .app {
   padding: 5% 5% 5% 5%;
-  height: 100%;
 }
 
 .vehicle-app {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
 }
