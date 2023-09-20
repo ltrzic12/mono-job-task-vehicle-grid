@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import vehicleMakeService from "../../services/VehicleMakeService";
 import form from "../../stores/FormStore";
 import { useState } from "react";
-import vehicleModelStore from "../../stores/VehicleModelStore";
 
 const VehicleMake = ({ vehicleMake }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
