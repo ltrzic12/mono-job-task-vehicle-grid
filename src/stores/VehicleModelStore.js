@@ -1,11 +1,8 @@
 import {
   collection,
-  limit,
   onSnapshot,
   orderBy,
   query,
-  startAfter,
-  startAt,
   where,
 } from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";

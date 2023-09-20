@@ -1,53 +1,58 @@
+import { useEffect, useState } from "react";
+import vehicleModelStore from "../../stores/VehicleModelStore";
 import { observer } from "mobx-react";
 import "./vehicleModel.css";
-import vehicleModelService from "../../services/VehicleModelService";
 import vehicleMakeStore from "../../stores/VehicleMakeStore";
-import { useState } from "react";
-import form from "../../stores/FormStore";
-import { Link } from "react-router-dom";
+import VehicleModelModul from "./VehicleModelModul";
 
-const VehicleModel = ({ vehicle }) => {
-  const [isOptionsOpened, setIsOptionsOpened] = useState(false);
+const VehicleModelList = () => {
+  const [selectedSort, setSelectedSort] = useState("");
+  const [selectedMakeId, setSelectedMakeId] = useState("");
 
-  const handleOptionsClick = () => {
-    setIsOptionsOpened(!isOptionsOpened);
+  useEffect(() => {
+    vehicleModelStore.fetchVehicleModels();
+    vehicleMakeStore.fetchVehicleMakes();
+  }, []);
+
+  const handleChangeSort = (e) => {
+    const sort = e.target.value;
+    setSelectedSort(sort);
+    vehicleModelStore.fetchVehicleModels(selectedMakeId, sort);
   };
 
-  const getVehicleMakerName = (makeId) => {
-    const maker = vehicleMakeStore.vehicleMakes.find(
-      (maker) => maker.id === makeId,
-    );
-    return maker ? maker.name : "Unknown Maker";
-  };
+  const handleChangeFilter = (e) => {
+    const makeId = e.target.value;
+    setSelectedMakeId(makeId);
 
-  const handleEditModelClick = (makeId) => {
-    console.log(makeId);
-    form.setFormType("edit model");
-    form.setEditModelId(vehicle.id);
-    form.populateFormData(vehicle.name, vehicle.abrv, makeId);
+    vehicleModelStore.fetchVehicleModels(makeId, selectedSort);
   };
 
   return (
-    <div className='vehicle-model-item'>
-      <h2>{vehicle.name}</h2>
-      <span>{getVehicleMakerName(vehicle.makeId)}</span>
-
-      {!isOptionsOpened ? (
-        <div className='edit' onClick={handleOptionsClick}></div>
-      ) : (
-        <div className='edit-menu' onMouseLeave={handleOptionsClick}>
-          <button
-            onClick={() => vehicleModelService.deleteVehicleModel(vehicle.id)}>
-            Delete model
-          </button>
-          <Link to='/form/edit' onClick={handleEditModelClick(vehicle.makeId)}>
-            Edit model
-          </Link>
-          <button onClick={handleOptionsClick}>Close</button>
-        </div>
-      )}
+    <div className='vehicle-model-list'>
+      <div className='toolbar'>
+        <select name='filterByMake' onChange={handleChangeFilter}>
+          <option value=''>All makes</option>
+          {vehicleMakeStore.vehicleMakes.map((vehicle) => (
+            <option name={vehicle.name} value={vehicle.id} key={vehicle.id}>
+              {vehicle.name}
+            </option>
+          ))}
+        </select>
+        <select name='orderBy' onChange={handleChangeSort}>
+          <option value=''>Sort by</option>
+          <option value='asc'>Ascending</option>
+          <option value='desc'>Descending</option>
+        </select>
+      </div>
+      <ul className='model-list'>
+        {vehicleModelStore.vehicleModels.map((vehicle) => (
+          <li key={vehicle.id}>
+            <VehicleModelModul vehicle={vehicle}></VehicleModelModul>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default observer(VehicleModel);
+export default observer(VehicleModelList);

@@ -1,43 +1,44 @@
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
+import VehicleMakeModul from "./VehicleMakeModul";
 import "./vehicleMake.css";
-import { Link } from "react-router-dom";
-import vehicleMakeService from "../../services/VehicleMakeService";
-import form from "../../stores/FormStore";
-import { useState } from "react";
 
-const VehicleMake = ({ vehicleMake }) => {
-  const [isOptionsOpened, setIsOptionsOpened] = useState(false);
+const VehicleMakeList = () => {
+  useEffect(() => {
+    vehicleMakeStore.fetchVehicleMakes();
+  }, []);
 
-  const handleOptionsClick = () => {
-    setIsOptionsOpened(!isOptionsOpened);
-  };
-  const handleEditMakeClick = () => {
-    form.setFormType("edit make");
-    form.setMakeId(vehicleMake.id);
-    form.populateFormData(vehicleMake.name, vehicleMake.abrv, vehicleMake.id);
+  const handleChangeSort = (e) => {
+    const sort = e.target.value;
+
+    vehicleMakeStore.fetchVehicleMakes(sort);
   };
 
   return (
-    <div className='vehicle-make-item'>
-      <h1>{vehicleMake.name}</h1>
-      {!isOptionsOpened ? (
-        <div className='edit' onClick={handleOptionsClick}></div>
-      ) : (
-        <div className='edit-menu' onMouseLeave={handleOptionsClick}>
-          <button
-            onClick={() =>
-              vehicleMakeService.deleteVehicleMake(vehicleMake.id)
-            }>
-            Delete make
-          </button>
-          <Link to='/form/edit-make' onClick={handleEditMakeClick}>
-            Edit make
-          </Link>
-          <button onClick={handleOptionsClick}>Close</button>
-        </div>
-      )}
+    <div>
+      <div className='toolbar'>
+        <select name='orderBy' onChange={handleChangeSort}>
+          <option value=''>Sort by</option>
+          <option value='asc'>Ascending</option>
+          <option value='desc'>Descending</option>
+        </select>
+      </div>
+      <div>
+        {vehicleMakeStore.isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <ul className='make-list'>
+            {vehicleMakeStore.vehicleMakes.map((vehicleMake) => (
+              <li key={vehicleMake.id}>
+                <VehicleMakeModul vehicleMake={vehicleMake}></VehicleMakeModul>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
 
-export default observer(VehicleMake);
+export default observer(VehicleMakeList);

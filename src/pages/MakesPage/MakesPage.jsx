@@ -1,10 +1,10 @@
 import { observer } from "mobx-react";
-import VehicleMakeList from "../../components/VehicleMakeList/VehicleMakeList";
+import VehicleMake from "../../components/VehicleMakeList/VehicleMake";
 
 const MakesPage = () => {
   return (
     <div className='makes-page'>
-      <VehicleMakeList></VehicleMakeList>
+      <VehicleMake></VehicleMake>
     </div>
   );
 };

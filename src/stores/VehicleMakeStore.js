@@ -1,5 +1,4 @@
 import { makeObservable, observable, action } from "mobx";
-
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 

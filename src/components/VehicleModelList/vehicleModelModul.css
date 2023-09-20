@@ -1,0 +1,33 @@
+.vehicle-model-item {
+  text-align: center;
+  height: 100%;
+  position: relative;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: rgb(225, 223, 223);
+}
+
+.edit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2%;
+  cursor: pointer;
+}
+
+.edit-model {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2%;
+  padding: 1% 2.4% 0 0;
+  cursor: pointer;
+}
+.edit-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}

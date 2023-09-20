@@ -51,6 +51,7 @@ class Form {
     this.name = "";
     this.abrv = "";
     this.makeId = "";
+    this.setFormError(false);
   }
 
   populateFormData(name, abrv, makeId) {

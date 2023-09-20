@@ -1,0 +1,42 @@
+.vehicle-make-item {
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  position: relative;
+  background-color: rgb(225, 223, 223);
+}
+
+.edit {
+  padding: 1%;
+  cursor: pointer;
+}
+
+.fa-gear:hover {
+  animation: heartBeat 0.8s infinite;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(1.2);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1.2);
+  }
+
+  80% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

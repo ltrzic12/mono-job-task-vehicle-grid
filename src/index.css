@@ -30,8 +30,26 @@ select {
   cursor: pointer;
   border: none;
   background-color: transparent;
+  border-radius: 7px;
 }
 
 .flex {
   display: flex;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+.edit-menu {
+  gap: 3px;
+}
+.edit-menu button {
+  font-size: x-large;
+  border: none;
+  background-color: none;
+}
+
+.uppercase {
+  text-transform: capitalize;
 }

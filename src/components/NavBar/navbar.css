@@ -15,13 +15,5 @@
 
 .navbar-side li:hover {
   text-decoration: underline;
-  color: blue;
-}
-
-.link-active {
-  color: blue;
-}
-.link-disabled {
-  color: red;
-  pointer-events: none;
+  color: #333;
 }
