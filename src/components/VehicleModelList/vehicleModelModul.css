@@ -22,6 +22,7 @@
   width: 2%;
   padding: 1% 2.4% 0 0;
   cursor: pointer;
+  text-transform: uppercase;
 }
 .edit-menu {
   position: absolute;

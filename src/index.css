@@ -31,6 +31,11 @@ select {
   border: none;
   background-color: transparent;
   border-radius: 7px;
+  padding: 2px;
+}
+
+select:focus {
+  color: rgb(37, 37, 37);
 }
 
 .flex {
