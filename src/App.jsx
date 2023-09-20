@@ -33,7 +33,7 @@ function App() {
             <Route path='/' element={<MakesPage />}></Route>
             <Route path='/models' element={<ModelsPage />}></Route>
             <Route path='/form' element={<FormPage />}></Route>
-            <Route path='/form/edit' element={<FormPage />}></Route>
+            <Route path='/form/edit-model' element={<FormPage />}></Route>
             <Route path='/form/edit-make' element={<FormPage />}></Route>
           </Routes>
         )}

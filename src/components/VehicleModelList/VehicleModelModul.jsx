@@ -29,7 +29,7 @@ const VehicleModel = ({ vehicle }) => {
 
   return (
     <div className='vehicle-model-item'>
-      <h2 className='uppercase'>{vehicle.name}</h2>
+      <h2>{vehicle.name}</h2>
       <span>{getVehicleMakerName(vehicle.makeId)}</span>
 
       {!isOptionsOpened ? (
@@ -45,7 +45,7 @@ const VehicleModel = ({ vehicle }) => {
           <button>
             {" "}
             <Link
-              to='/form/edit'
+              to='/form/edit-model'
               onClick={handleEditModelClick(vehicle.makeId)}
               className='link'>
               Edit model
