@@ -26,12 +26,16 @@ const VehicleModelList = () => {
     vehicleStore.fetchVehicleModels(makeId, selectedSort);
   };
 
+  const style = {
+    color: "rgb(101 103 107)",
+  };
+
   return (
     <div className='vehicle-model-list'>
       <div className='toolbar'>
         <div>
           <label htmlFor=''>
-            <i className='fa-solid fa-filter'></i>
+            <i className='fa-solid fa-filter' style={style}></i>
           </label>
           <select name='filterByMake' onChange={handleChangeFilter}>
             <option value=''>All makes</option>
@@ -45,9 +49,9 @@ const VehicleModelList = () => {
         <div>
           <label htmlFor='orderBy'>
             {selectedSort === "asc" ? (
-              <i className='fa-solid fa-arrow-down-a-z'></i>
+              <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
             ) : (
-              <i className='fa-solid fa-arrow-down-z-a'></i>
+              <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
             )}
           </label>
           <select name='orderBy' onChange={handleChangeSort}>

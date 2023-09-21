@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import form from "../../stores/FormStore";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { linkStyle } from "../../utils/styles";
+import { linkStyle } from "../../utils/mics/styles";
 
 const FormSuccess = () => {
   useEffect(() => {

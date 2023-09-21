@@ -5,7 +5,7 @@ import "./vehicleMake.css";
 import vehicleStore from "../../stores/VehicleStore";
 
 const VehicleMakeList = () => {
-  const [sort, setSort] = useState("asc");
+  const [selectedSort, setSelectedSort] = useState("asc");
 
   useEffect(() => {
     vehicleStore.fetchVehicleMakes();
@@ -13,20 +13,27 @@ const VehicleMakeList = () => {
 
   const handleChangeSort = (e) => {
     const sort = e.target.value;
-    setSort(sort);
+    setSelectedSort(sort);
 
     vehicleStore.fetchVehicleMakes(sort);
+  };
+
+  const style = {
+    color: "rgb(101 103 107)",
   };
 
   return (
     <div>
       <div className='toolbar'>
         <div>
-          <label htmlFor=''>
-            <i className='fa-solid fa-filter'></i>
+          <label htmlFor='orderBy'>
+            {selectedSort === "asc" ? (
+              <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
+            ) : (
+              <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
+            )}
           </label>
           <select name='orderBy' onChange={handleChangeSort}>
-            <option value=''>Sort by</option>
             <option value='asc'>Ascending</option>
             <option value='desc'>Descending</option>
           </select>

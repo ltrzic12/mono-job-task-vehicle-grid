@@ -28,14 +28,18 @@ button {
 
 select {
   cursor: pointer;
-
+  color: rgb(101 103 107);
   background-color: transparent;
   border-radius: 7px;
   padding: 2px;
 }
 
+select:checked {
+  color: "rgb(101 103 107)";
+}
+
 select:focus {
-  color: rgb(37, 37, 37);
+  color: "rgb(101 103 107)";
 }
 
 .flex {

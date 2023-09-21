@@ -5,7 +5,7 @@ import { useState } from "react";
 import form from "../../stores/FormStore";
 import { Link } from "react-router-dom";
 import vehicleStore from "../../stores/VehicleStore";
-import { linkStyle } from "../../utils/styles";
+import { linkStyle } from "../../utils/mics/styles";
 
 const VehicleModel = ({ vehicle }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);

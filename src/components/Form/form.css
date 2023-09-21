@@ -32,6 +32,8 @@ input {
   margin-top: 20px;
   font-size: xx-large;
   width: 45%;
+  border-radius: 5px;
+  text-align: center;
 }
 
 form button {
@@ -39,6 +41,8 @@ form button {
   padding: 1%;
   font-size: x-large;
   width: 20%;
+  border-radius: 7px;
+  color: black;
 }
 form span {
   color: red;

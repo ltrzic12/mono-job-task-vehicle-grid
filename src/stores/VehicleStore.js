@@ -12,6 +12,7 @@ class VehicleStore {
   vehicleMakes = [];
   vehicleModels = [];
   isLoading = false;
+
   constructor() {
     makeObservable(this, {
       vehicleMakes: observable,
