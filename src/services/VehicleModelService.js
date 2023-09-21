@@ -1,4 +1,13 @@
-import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import db from "../config/firebaseConfig";
 
 class VehicleModelService {
@@ -27,6 +36,26 @@ class VehicleModelService {
       await deleteDoc(docRef);
     } catch (error) {
       console.error("Error deleting", error);
+      throw error;
+    }
+  }
+  async deleteVehicleModelsByMakeId(makeId) {
+    try {
+      const collectionRef = collection(db, "VehicleModel");
+      const queryConstraint = query(
+        collectionRef,
+        where("makeId", "==", makeId),
+      );
+      const querySnapshot = await getDocs(queryConstraint);
+
+      // Delete all models with the specified makeId
+      querySnapshot.forEach(async (modelDoc) => {
+        const modelId = modelDoc.id;
+        const docRef = doc(db, "VehicleModel", modelId);
+        await deleteDoc(docRef);
+      });
+    } catch (error) {
+      console.error("Error deleting models by makeId", error);
       throw error;
     }
   }

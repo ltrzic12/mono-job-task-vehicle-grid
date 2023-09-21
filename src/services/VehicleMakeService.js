@@ -7,6 +7,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import db from "../config/firebaseConfig";
+import vehicleModelService from "./VehicleModelService";
 
 class VehicleMakeService {
   async getVehicleMakes() {
@@ -17,6 +18,10 @@ class VehicleMakeService {
 
   async deleteVehicleMake(id) {
     try {
+      // Delete the associated VehicleModels first
+      await vehicleModelService.deleteVehicleModelsByMakeId(id);
+
+      // Then delete the VehicleMake
       const docRef = doc(db, "VehicleMake", id);
       await deleteDoc(docRef);
     } catch (error) {
