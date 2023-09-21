@@ -39,6 +39,7 @@ class VehicleModelService {
       throw error;
     }
   }
+
   async deleteVehicleModelsByMakeId(makeId) {
     try {
       const collectionRef = collection(db, "VehicleModel");
@@ -47,8 +48,6 @@ class VehicleModelService {
         where("makeId", "==", makeId),
       );
       const querySnapshot = await getDocs(queryConstraint);
-
-      // Delete all models with the specified makeId
       querySnapshot.forEach(async (modelDoc) => {
         const modelId = modelDoc.id;
         const docRef = doc(db, "VehicleModel", modelId);

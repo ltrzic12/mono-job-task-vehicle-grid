@@ -18,10 +18,7 @@ class VehicleMakeService {
 
   async deleteVehicleMake(id) {
     try {
-      // Delete the associated VehicleModels first
       await vehicleModelService.deleteVehicleModelsByMakeId(id);
-
-      // Then delete the VehicleMake
       const docRef = doc(db, "VehicleMake", id);
       await deleteDoc(docRef);
     } catch (error) {
@@ -47,6 +44,7 @@ class VehicleMakeService {
       throw error;
     }
   }
+
   async editVehicleMake(docRef, payload) {
     try {
       await setDoc(docRef, payload);
