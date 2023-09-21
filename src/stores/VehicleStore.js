@@ -26,7 +26,10 @@ class VehicleStore {
     try {
       this.isLoading = true;
       const collectionRef = collection(db, "VehicleMake");
-      let queryConstraint = collectionRef;
+      let queryConstraint = query(collectionRef);
+      if (!sort) {
+        queryConstraint = query(collectionRef, orderBy("name", "asc"));
+      }
       if (sort) {
         queryConstraint = query(queryConstraint, orderBy("name", sort));
       }
@@ -54,6 +57,10 @@ class VehicleStore {
       this.isLoading = true;
       const collectionRef = collection(db, "VehicleModel");
       let queryConstraint = query(collectionRef);
+
+      if (!sort) {
+        queryConstraint = query(collectionRef, orderBy("name", "asc"));
+      }
 
       if (makeId) {
         queryConstraint = query(queryConstraint, where("makeId", "==", makeId));
