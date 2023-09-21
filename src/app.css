@@ -1,5 +1,6 @@
 .app {
-  padding: 5% 5% 5% 5%;
+  background-color: rgb(240, 242, 245);
+  height: 100vh;
 }
 
 .vehicle-app {

@@ -1,10 +1,11 @@
 import { observer } from "mobx-react";
 import "./vehicleModelModul.css";
 import vehicleModelService from "../../services/VehicleModelService";
-import vehicleMakeStore from "../../stores/VehicleMakeStore";
 import { useState } from "react";
 import form from "../../stores/FormStore";
 import { Link } from "react-router-dom";
+import vehicleStore from "../../stores/VehicleStore";
+import { linkStyle } from "../../utils/styles";
 
 const VehicleModel = ({ vehicle }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
@@ -14,7 +15,7 @@ const VehicleModel = ({ vehicle }) => {
   };
 
   const getVehicleMakerName = (makeId) => {
-    const maker = vehicleMakeStore.vehicleMakes.find(
+    const maker = vehicleStore.vehicleMakes.find(
       (maker) => maker.id === makeId,
     );
     return maker ? maker.name : "Unknown Maker";
@@ -38,18 +39,19 @@ const VehicleModel = ({ vehicle }) => {
         </div>
       ) : (
         <div className='edit-menu' onMouseLeave={handleOptionsClick}>
-          <button
-            onClick={() => vehicleModelService.deleteVehicleModel(vehicle.id)}>
-            Delete model
-          </button>
           <button>
             {" "}
             <Link
               to='/form/edit-model'
               onClick={handleEditModelClick(vehicle.makeId)}
-              className='link'>
-              Edit model
+              className='link'
+              style={linkStyle}>
+              <i className='fa-solid fa-pen-to-square'></i>
             </Link>
+          </button>
+          <button
+            onClick={() => vehicleModelService.deleteVehicleModel(vehicle.id)}>
+            <i className='fa-solid fa-trash'></i>
           </button>
         </div>
       )}

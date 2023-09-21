@@ -5,19 +5,14 @@ import ModelsPage from "./pages/ModelsPage/ModelsPage";
 import "./app.css";
 import FormPage from "./pages/Form/FormPage";
 import { useEffect, useState } from "react";
-import vehicleMakeStore from "./stores/VehicleMakeStore";
-import vehicleModelStore from "./stores/VehicleModelStore";
 import Loader from "./components/Loader/Loader";
 import form from "./stores/FormStore";
+import vehicleStore from "./stores/VehicleStore";
 
 function App() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (
-      vehicleModelStore.isLoading ||
-      vehicleMakeStore.isLoading ||
-      form.isLoading
-    ) {
+    if (vehicleStore.isLoading || form.isLoading) {
       setLoading(true);
     }
   }, []);

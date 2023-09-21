@@ -1,51 +1,63 @@
 import { useEffect, useState } from "react";
-import vehicleModelStore from "../../stores/VehicleModelStore";
 import { observer } from "mobx-react";
 import "./vehicleModel.css";
-import vehicleMakeStore from "../../stores/VehicleMakeStore";
 import VehicleModelModul from "./VehicleModelModul";
+import vehicleStore from "../../stores/VehicleStore";
 
 const VehicleModelList = () => {
-  const [selectedSort, setSelectedSort] = useState("");
+  const [selectedSort, setSelectedSort] = useState("asc");
   const [selectedMakeId, setSelectedMakeId] = useState("");
 
   useEffect(() => {
-    vehicleModelStore.fetchVehicleModels();
-    vehicleMakeStore.fetchVehicleMakes();
+    vehicleStore.fetchVehicleModels();
+    vehicleStore.fetchVehicleMakes();
   }, []);
 
   const handleChangeSort = (e) => {
     const sort = e.target.value;
     setSelectedSort(sort);
-    vehicleModelStore.fetchVehicleModels(selectedMakeId, sort);
+    vehicleStore.fetchVehicleModels(selectedMakeId, sort);
   };
 
   const handleChangeFilter = (e) => {
     const makeId = e.target.value;
     setSelectedMakeId(makeId);
 
-    vehicleModelStore.fetchVehicleModels(makeId, selectedSort);
+    vehicleStore.fetchVehicleModels(makeId, selectedSort);
   };
 
   return (
     <div className='vehicle-model-list'>
       <div className='toolbar'>
-        <select name='filterByMake' onChange={handleChangeFilter}>
-          <option value=''>All makes</option>
-          {vehicleMakeStore.vehicleMakes.map((vehicle) => (
-            <option name={vehicle.name} value={vehicle.id} key={vehicle.id}>
-              {vehicle.name}
-            </option>
-          ))}
-        </select>
-        <select name='orderBy' onChange={handleChangeSort}>
-          <option value=''>Sort by</option>
-          <option value='asc'>Ascending</option>
-          <option value='desc'>Descending</option>
-        </select>
+        <div>
+          <label htmlFor=''>
+            <i className='fa-solid fa-filter'></i>
+          </label>
+          <select name='filterByMake' onChange={handleChangeFilter}>
+            <option value=''>All makes</option>
+            {vehicleStore.vehicleMakes.map((vehicle) => (
+              <option name={vehicle.name} value={vehicle.id} key={vehicle.id}>
+                {vehicle.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor='orderBy'>
+            {selectedSort === "asc" ? (
+              <i className='fa-solid fa-arrow-down-a-z'></i>
+            ) : (
+              <i className='fa-solid fa-arrow-down-z-a'></i>
+            )}
+          </label>
+          <select name='orderBy' onChange={handleChangeSort}>
+            <option value='asc'>Ascending</option>
+            <option value='desc'>Descending</option>
+          </select>
+        </div>
       </div>
       <ul className='model-list'>
-        {vehicleModelStore.vehicleModels.map((vehicle) => (
+        {vehicleStore.vehicleModels.map((vehicle) => (
           <li key={vehicle.id}>
             <VehicleModelModul vehicle={vehicle}></VehicleModelModul>
           </li>

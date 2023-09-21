@@ -14,7 +14,7 @@ const NavBar = () => {
   };
 
   const style = {
-    color: "black",
+    color: "rgb(101 103 107)",
     textDecoration: "none",
   };
 

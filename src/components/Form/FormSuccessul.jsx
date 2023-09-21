@@ -2,16 +2,12 @@ import { observer } from "mobx-react";
 import form from "../../stores/FormStore";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { linkStyle } from "../../utils/styles";
 
 const FormSuccess = () => {
   useEffect(() => {
     form.setFormError(false);
   }, []);
-
-  const linkStyle = {
-    color: "black",
-    textDecoration: "none",
-  };
 
   return (
     <div className='wrapper'>

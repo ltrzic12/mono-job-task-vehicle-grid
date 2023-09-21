@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import vehicleMakeService from "../../services/VehicleMakeService";
 import form from "../../stores/FormStore";
 import { useState } from "react";
+import { linkStyle } from "../../utils/styles";
 
 const VehicleMake = ({ vehicleMake }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
@@ -27,19 +28,20 @@ const VehicleMake = ({ vehicleMake }) => {
         </div>
       ) : (
         <div className='edit-menu' onMouseLeave={handleOptionsClick}>
-          <button
-            onClick={() =>
-              vehicleMakeService.deleteVehicleMake(vehicleMake.id)
-            }>
-            Delete make
-          </button>
           <button>
             <Link
               to='/form/edit-make'
               onClick={handleEditMakeClick}
-              className='link'>
-              Edit make
+              className='link'
+              style={linkStyle}>
+              <i className='fa-solid fa-pen-to-square'></i>
             </Link>
+          </button>
+          <button
+            onClick={() =>
+              vehicleMakeService.deleteVehicleMake(vehicleMake.id)
+            }>
+            <i className='fa-solid fa-trash'></i>
           </button>
         </div>
       )}

@@ -28,7 +28,7 @@ button {
 
 select {
   cursor: pointer;
-  border: none;
+
   background-color: transparent;
   border-radius: 7px;
   padding: 2px;
@@ -44,7 +44,6 @@ select:focus {
 
 .link {
   text-decoration: none;
-  color: black;
 }
 .edit-menu {
   gap: 3px;
