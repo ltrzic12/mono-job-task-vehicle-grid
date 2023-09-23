@@ -26,6 +26,17 @@ const VehicleModelList = () => {
     vehicleStore.fetchVehicleModels(makeId, selectedSort);
   };
 
+  const next = () => {
+    console.log("next");
+    vehicleStore.nextIndex();
+    vehicleStore.fetchVehicleModels(selectedMakeId, selectedSort);
+  };
+  const prev = () => {
+    console.log("next");
+    vehicleStore.previousIndex();
+    vehicleStore.fetchVehicleModels(selectedMakeId, selectedSort);
+  };
+
   const style = {
     color: "rgb(101 103 107)",
   };
@@ -67,6 +78,8 @@ const VehicleModelList = () => {
           </li>
         ))}
       </ul>
+      <button onClick={prev}>p</button>
+      <button onClick={next}>n</button>
     </div>
   );
 };

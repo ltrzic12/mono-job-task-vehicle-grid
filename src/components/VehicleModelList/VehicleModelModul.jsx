@@ -6,6 +6,7 @@ import form from "../../stores/FormStore";
 import { Link } from "react-router-dom";
 import vehicleStore from "../../stores/VehicleStore";
 import { linkStyle } from "../../utils/mics/styles";
+import vehicleMakeService from "../../services/VehicleMakeService";
 
 const VehicleModel = ({ vehicle }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
@@ -35,12 +36,11 @@ const VehicleModel = ({ vehicle }) => {
 
       {!isOptionsOpened ? (
         <div className='edit-model' onClick={handleOptionsClick}>
-          <i className='fa-solid fa-gear fa-lg'></i>
+          asd
         </div>
       ) : (
         <div className='edit-menu' onMouseLeave={handleOptionsClick}>
           <button>
-            {" "}
             <Link
               to='/form/edit-model'
               onClick={handleEditModelClick(vehicle.makeId)}
