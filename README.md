@@ -15,8 +15,6 @@ This is a web application for managing vehicle makes and models. It allows you t
 
 ## Features
 
-List the key features of your React.js project. You can use bullet points for this section.
-
 - View a list of vehicle makes and models.
 - Sort vehicle makes and models in ascending or descending order.
 - Filter vehicle models by make.
