@@ -1,12 +1,12 @@
 import { observer } from "mobx-react";
-import "./vehicleMakeModul.css";
+import "./vehicleMakeModal.css";
 import { Link } from "react-router-dom";
 import vehicleMakeService from "../../services/VehicleMakeService";
 import form from "../../stores/FormStore";
 import { useState } from "react";
 import { linkStyle } from "../../utils/mics/styles";
 
-const VehicleMake = ({ vehicleMake }) => {
+const VehicleMakeModal = ({ vehicleMake }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
 
   const handleOptionsClick = () => {
@@ -49,4 +49,4 @@ const VehicleMake = ({ vehicleMake }) => {
   );
 };
 
-export default observer(VehicleMake);
+export default observer(VehicleMakeModal);

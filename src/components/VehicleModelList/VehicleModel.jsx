@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import "./vehicleModel.css";
-import VehicleModelModul from "./VehicleModelModul";
 import vehicleStore from "../../stores/VehicleStore";
+import VehicleModelModal from "./VehicleModelModal";
 
 const VehicleModelList = () => {
   const [selectedSort, setSelectedSort] = useState("asc");
@@ -74,7 +74,7 @@ const VehicleModelList = () => {
       <ul className='model-list'>
         {vehicleStore.vehicleModels.map((vehicle) => (
           <li key={vehicle.id}>
-            <VehicleModelModul vehicle={vehicle}></VehicleModelModul>
+            <VehicleModelModal vehicle={vehicle}></VehicleModelModal>
           </li>
         ))}
       </ul>
