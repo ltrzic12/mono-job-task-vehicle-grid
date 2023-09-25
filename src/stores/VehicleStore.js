@@ -5,12 +5,10 @@ import {
   orderBy,
   query,
   startAfter,
-  startAt,
   where,
 } from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";
 import db from "../config/firebaseConfig";
-import { act } from "react-dom/test-utils";
 
 class VehicleStore {
   vehicleMakes = [];
@@ -18,7 +16,7 @@ class VehicleStore {
   lastElements = [];
   isLoading = false;
   start = 0;
-  limit = 5;
+  limit = 9;
   lastVisible = null;
   pageIndex = 1;
 

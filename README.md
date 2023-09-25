@@ -6,7 +6,7 @@
 2. [Features](#features)
 3. [Installation](#installation)
 4. [Usage](#usage)
-5. [Folder Structure](#folder-structure)
+
 
 
 ## Introduction
@@ -54,50 +54,4 @@ npm start
 - Use the sorting and filtering options to refine your results.
 - Use pagination to navigate through multiple pages of results.
 
-## Folder Structure
 
-src/
-|-- components/
-|   |-- Form/
-|   |   |-- form.css
-|   |   |-- Form.js
-|   |   |-- FormSuccessful.js
-|   |-- Loader/
-|   |   |-- loader.css
-|   |   |-- Loader.jsx
-|   |-- Navbar/
-|   |   |-- navbar.css
-|   |   |-- NavBar.jsx
-|   |-- Vehiclemakelist/
-|   |   |-- vehicleMake.css
-|   |   |-- vehicleMakeModal.css
-|   |   |-- VehicleMakeModal.jsx
-|   |   |-- VehicleMake.jsx
-|   |-- VehicleModelList/
-|   |   |-- vehicleModel.css
-|   |   |-- vehicleModelModal.css
-|   |   |-- vehicleModelModal.jsx
-|   |   |-- vehicleModel.jsx
-|-- config/
-|   |-- firebaseConfig.js
-|-- pages/
-|   |-- FormPage/
-|   |   |-- FormPage.jsx
-|   |-- Makes/
-|   |   |-- MakesPage.jsx
-|   |-- Models/
-|   |   |-- ModelsPage.jsx
-|-- services/
-|   |-- FormService.js
-|   |-- VehicleMakeService.js
-|   |-- VehicleModelService.js
-|-- stores/
-|   |-- FormStore.js
-|   |-- VehicleStore.js
-|-- utils/
-|   |-- misc/
-|   |   |-- styles.js
-|-- App.jsx
-|-- app.css
-|-- index.css
-|-- index.js

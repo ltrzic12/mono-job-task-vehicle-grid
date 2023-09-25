@@ -24,7 +24,7 @@ const FormSuccess = () => {
               </button>
               <button>
                 <Link
-                  to='/models'
+                  to='/'
                   onClick={() =>
                     form.setSubmitSuccessful(!form.submitSuccessful)
                   }
