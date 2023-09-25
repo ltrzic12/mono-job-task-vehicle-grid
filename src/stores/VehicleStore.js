@@ -139,7 +139,9 @@ class VehicleStore {
   }
 
   previousIndex() {
-    this.pageIndex -= 1;
+    if (this.pageIndex > 1) {
+      this.pageIndex -= 1;
+    }
   }
 }
 

@@ -35,7 +35,7 @@ const VehicleModelModal = ({ vehicle }) => {
 
       {!isOptionsOpened ? (
         <div className='edit-model' onClick={handleOptionsClick}>
-          asd
+          <i className='fa-solid fa-gear fa-lg'></i>
         </div>
       ) : (
         <div className='edit-menu' onMouseLeave={handleOptionsClick}>

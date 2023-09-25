@@ -33,19 +33,19 @@ This is a web application for managing vehicle makes and models. It allows you t
 
 ## Installation
 
-<!--
-# Clone the repository
+
+#Clone the repository
 git clone git@github.com:ltrzic12/vehicle-grid.git
 
-# Navigate to the project directory
+#Navigate to the project directory
 cd vehicle-grid
 
-# Install dependencies
+#Install dependencies
 npm install
 
 #Start development server
 npm start  
--->
+
 
 ## Usage
 
