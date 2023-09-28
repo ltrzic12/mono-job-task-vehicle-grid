@@ -1,10 +1,11 @@
 .app {
   background-color: rgb(240, 242, 245);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .vehicle-app {
   display: flex;
   flex-direction: column;
   height: fit-content;
+  background-color: rgb(240, 242, 245);
 }

@@ -4,7 +4,6 @@ import {
   onSnapshot,
   orderBy,
   query,
-  startAfter,
   where,
 } from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";
@@ -13,27 +12,21 @@ import db from "../config/firebaseConfig";
 class VehicleStore {
   vehicleMakes = [];
   vehicleModels = [];
-  lastElements = [];
+  page = "makes";
   isLoading = false;
-  start = 0;
-  limit = 9;
-  lastVisible = null;
-  pageIndex = 1;
+
+  limit = 6;
 
   constructor() {
     makeObservable(this, {
       vehicleMakes: observable,
       vehicleModels: observable,
       isLoading: observable,
-      start: observable,
-      lastVisible: observable,
-      lastElements: observable,
-      pageIndex: observable,
       limit: observable,
+      page: observable,
       fetchVehicleMakes: action,
       fetchVehicleModels: action,
-      nextIndex: action,
-      previousIndex: action,
+      fetchMore: action,
     });
   }
 
@@ -41,12 +34,15 @@ class VehicleStore {
     try {
       this.isLoading = true;
       const collectionRef = collection(db, "VehicleMake");
-      let queryConstraint = query(collectionRef);
+      let queryConstraint;
 
+      if (this.page === "makes")
+        queryConstraint = query(collectionRef, limit(this.limit));
+      else queryConstraint = query(collectionRef);
       if (sort) {
         queryConstraint = query(queryConstraint, orderBy("name", sort));
       } else {
-        queryConstraint = query(collectionRef, orderBy("name", "asc"));
+        queryConstraint = query(queryConstraint, orderBy("name", "asc"));
       }
       const unsubscribe = onSnapshot(queryConstraint, (snapshot) => {
         const makes = [];
@@ -71,7 +67,7 @@ class VehicleStore {
     try {
       this.isLoading = true;
       const collectionRef = collection(db, "VehicleModel");
-      let queryConstraint = query(collectionRef);
+      let queryConstraint = query(collectionRef, limit(this.limit));
 
       if (makeId) {
         queryConstraint = query(queryConstraint, where("makeId", "==", makeId));
@@ -83,40 +79,20 @@ class VehicleStore {
         queryConstraint = query(queryConstraint, orderBy("name", "asc"));
       }
 
-      let frameIndex = this.pageIndex - 1;
-
-      if (frameIndex <= 0) {
-        queryConstraint = query(queryConstraint, limit(this.limit));
-      } else {
-        queryConstraint = query(
-          queryConstraint,
-          startAfter(this.lastElements[frameIndex - 1]),
-          limit(this.limit),
-        );
-      }
-
       const unsubscribe = onSnapshot(queryConstraint, (snapshot) => {
         const models = [];
-        const lastVisible = snapshot.docs[snapshot.docs.length - 1];
-
         snapshot.forEach((doc) => {
-          console.log(queryConstraint);
-          console.log(doc);
           models.push({ id: doc.id, ...doc.data() });
         });
 
         action(() => {
           this.vehicleModels.replace(models);
-          if (this.pageIndex > this.lastElements.length) {
-            this.lastVisible = lastVisible;
-            this.lastElements.push(this.lastVisible);
-          }
         })();
       });
 
       this.unsubscribe = unsubscribe;
     } catch (error) {
-      console.error("Error fetching VehicleMakes:", error);
+      console.error("Error fetching Vehicle Models:", error);
     } finally {
       this.isLoading = false;
     }
@@ -132,14 +108,19 @@ class VehicleStore {
     return make ? make.name : "Unknown";
   }
 
-  nextIndex() {
-    this.pageIndex += 1;
+  fetchMore() {
+    this.limit += 6;
   }
 
-  previousIndex() {
-    if (this.pageIndex > 1) {
-      this.pageIndex -= 1;
-    }
+  resetPageLimit() {
+    this.limit = 6;
+  }
+
+  replaceMakes(makes) {
+    this.vehicleMakes.replace(makes);
+  }
+  changePage(page) {
+    this.page = page;
   }
 }
 

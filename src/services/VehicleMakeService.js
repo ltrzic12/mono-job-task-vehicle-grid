@@ -8,11 +8,13 @@ import {
 } from "firebase/firestore";
 import db from "../config/firebaseConfig";
 import vehicleModelService from "./VehicleModelService";
+import vehicleStore from "../stores/VehicleStore";
 
 class VehicleMakeService {
   async getVehicleMakes() {
     const vehicleMakesCollection = collection(db, "VehicleMake");
     const querySnapshot = await getDocs(vehicleMakesCollection);
+    vehicleStore.replaceMakes(querySnapshot.docs.map((doc) => doc.data()));
     return querySnapshot.docs.map((doc) => doc.data());
   }
 

@@ -1,7 +1,11 @@
 .make-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2%;
-  height: 100%;
+  gap: 24px;
+
   padding-bottom: 1%;
+}
+
+.list-wrap {
+  height: min-content;
 }

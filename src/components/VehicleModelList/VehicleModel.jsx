@@ -3,12 +3,16 @@ import { observer } from "mobx-react";
 import "./vehicleModel.css";
 import vehicleStore from "../../stores/VehicleStore";
 import VehicleModelModal from "./VehicleModelModal";
+import PaginationButton from "../PaginationButton/PaginationButton";
+import { fetchMoreModels } from "../../utils/functions/helperMethods";
 
 const VehicleModelList = () => {
   const [selectedSort, setSelectedSort] = useState("asc");
   const [selectedMakeId, setSelectedMakeId] = useState("");
 
   useEffect(() => {
+    vehicleStore.resetPageLimit();
+    vehicleStore.changePage("models");
     vehicleStore.fetchVehicleModels();
     vehicleStore.fetchVehicleMakes();
   }, []);
@@ -16,6 +20,7 @@ const VehicleModelList = () => {
   const handleChangeSort = (e) => {
     const sort = e.target.value;
     setSelectedSort(sort);
+
     vehicleStore.fetchVehicleModels(selectedMakeId, sort);
   };
 
@@ -24,17 +29,6 @@ const VehicleModelList = () => {
     setSelectedMakeId(makeId);
 
     vehicleStore.fetchVehicleModels(makeId, selectedSort);
-  };
-
-  const next = () => {
-    console.log("next");
-    vehicleStore.nextIndex();
-    vehicleStore.fetchVehicleModels(selectedMakeId, selectedSort);
-  };
-  const prev = () => {
-    console.log("next");
-    vehicleStore.previousIndex();
-    vehicleStore.fetchVehicleModels(selectedMakeId, selectedSort);
   };
 
   const style = {
@@ -78,8 +72,12 @@ const VehicleModelList = () => {
           </li>
         ))}
       </ul>
-      <button onClick={prev}>p</button>
-      <button onClick={next}>n</button>
+      {vehicleStore.vehicleModels.length !== 0 && (
+        <PaginationButton
+          fetch={() =>
+            fetchMoreModels(selectedMakeId, selectedSort)
+          }></PaginationButton>
+      )}
     </div>
   );
 };

@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import "./vehicleMake.css";
 import vehicleStore from "../../stores/VehicleStore";
 import VehicleMakeModal from "./VehicleMakeModal";
+import PaginationButton from "../PaginationButton/PaginationButton";
+import { fetchMoreMakes } from "../../utils/functions/helperMethods";
+import Loader from "../Loader/Loader";
 
 const VehicleMakeList = () => {
   const [selectedSort, setSelectedSort] = useState("asc");
 
   useEffect(() => {
+    vehicleStore.resetPageLimit();
     vehicleStore.fetchVehicleMakes();
   }, []);
 
@@ -39,9 +43,9 @@ const VehicleMakeList = () => {
           </select>
         </div>
       </div>
-      <div>
+      <div className='list-wrap'>
         {vehicleStore.isLoading ? (
-          <p>Loading...</p>
+          <Loader></Loader>
         ) : (
           <ul className='make-list'>
             {vehicleStore.vehicleMakes.map((vehicleMake) => (
@@ -52,6 +56,8 @@ const VehicleMakeList = () => {
           </ul>
         )}
       </div>
+      <PaginationButton
+        fetch={() => fetchMoreMakes(selectedSort)}></PaginationButton>
     </div>
   );
 };

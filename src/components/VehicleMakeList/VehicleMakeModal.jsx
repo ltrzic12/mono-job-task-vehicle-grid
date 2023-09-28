@@ -23,7 +23,6 @@ const VehicleMakeModal = ({ vehicleMake }) => {
       <h1 className='uppercase'>{vehicleMake.name}</h1>
       {!isOptionsOpened ? (
         <div className='edit' onClick={handleOptionsClick}>
-          {" "}
           <i className='fa-solid fa-gear fa-lg'></i>
         </div>
       ) : (

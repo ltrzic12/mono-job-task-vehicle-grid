@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import "./navbar.css";
 import form from "../../stores/FormStore";
+import NavigationLink from "../Link/Link";
+import { navLinkStyle } from "../../utils/mics/styles";
+import vehicleStore from "../../stores/VehicleStore";
 
 const NavBar = () => {
   const handleModelFormClick = () => {
@@ -13,35 +16,46 @@ const NavBar = () => {
     form.resetForm();
   };
 
-  const style = {
-    color: "rgb(101 103 107)",
-    textDecoration: "none",
+  const handleMakesClick = () => {
+    vehicleStore.changePage("makes");
+  };
+
+  const handleModelsClick = () => {
+    vehicleStore.changePage("models");
   };
 
   return (
     <ul className='navbar'>
       <ul className='navbar-side'>
         <li>
-          <Link to='/' style={style}>
-            Makes
-          </Link>
+          <NavigationLink
+            path={"/"}
+            text={"Makes"}
+            style={navLinkStyle}
+            click={handleMakesClick}></NavigationLink>
         </li>
         <li>
-          <Link to='/models' style={style}>
-            Models
-          </Link>
+          <NavigationLink
+            path={"/models"}
+            text={"Models"}
+            style={navLinkStyle}
+            click={handleModelsClick}></NavigationLink>
         </li>
       </ul>
       <ul className='navbar-side'>
         <li>
-          <Link to='/form' onClick={handleModelFormClick} style={style}>
-            Add model
-          </Link>
+          <NavigationLink
+            path={"/form"}
+            text={"Add model"}
+            click={handleModelFormClick}
+            style={navLinkStyle}></NavigationLink>
         </li>
         <li>
-          <Link to='/form' onClick={handleMakeFormClick} style={style}>
-            Add make
-          </Link>
+          <NavigationLink
+            path={"/form"}
+            click={handleMakeFormClick}
+            style={navLinkStyle}
+            text={"Add make"}></NavigationLink>
         </li>
       </ul>
     </ul>
