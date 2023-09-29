@@ -3,9 +3,10 @@ import "./vehicleModelModal.css";
 import vehicleModelService from "../../services/VehicleModelService";
 import { useState } from "react";
 import form from "../../stores/FormStore";
-import { Link } from "react-router-dom";
 import vehicleStore from "../../stores/VehicleStore";
 import { linkStyle } from "../../utils/mics/styles";
+import DeleteButton from "../DeleteButton/DeleteButton";
+import EditButton from "../EditButton/EditButton";
 
 const VehicleModelModal = ({ vehicle }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
@@ -39,19 +40,15 @@ const VehicleModelModal = ({ vehicle }) => {
         </div>
       ) : (
         <div className='edit-menu' onMouseLeave={handleOptionsClick}>
-          <button>
-            <Link
-              to='/form/edit-model'
-              onClick={handleEditModelClick(vehicle.makeId)}
-              className='link'
-              style={linkStyle}>
-              <i className='fa-solid fa-pen-to-square'></i>
-            </Link>
-          </button>
-          <button
-            onClick={() => vehicleModelService.deleteVehicleModel(vehicle.id)}>
-            <i className='fa-solid fa-trash'></i>
-          </button>
+          <EditButton
+            path={"/form/edit-model"}
+            func={handleEditModelClick}
+            id={vehicle.makeId}
+            style={linkStyle}></EditButton>
+
+          <DeleteButton
+            id={vehicle.id}
+            func={vehicleModelService.deleteVehicleModel}></DeleteButton>
         </div>
       )}
     </div>

@@ -4,6 +4,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  startAt,
   where,
 } from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";
@@ -13,6 +14,7 @@ class VehicleStore {
   vehicleMakes = [];
   vehicleModels = [];
   page = "makes";
+  start = 0;
   isLoading = false;
 
   limit = 6;
@@ -23,6 +25,7 @@ class VehicleStore {
       vehicleModels: observable,
       isLoading: observable,
       limit: observable,
+      start: observable,
       page: observable,
       fetchVehicleMakes: action,
       fetchVehicleModels: action,
@@ -67,7 +70,7 @@ class VehicleStore {
     try {
       this.isLoading = true;
       const collectionRef = collection(db, "VehicleModel");
-      let queryConstraint = query(collectionRef, limit(this.limit));
+      let queryConstraint = query(collectionRef);
 
       if (makeId) {
         queryConstraint = query(queryConstraint, where("makeId", "==", makeId));
@@ -78,6 +81,12 @@ class VehicleStore {
       } else {
         queryConstraint = query(queryConstraint, orderBy("name", "asc"));
       }
+
+      queryConstraint = query(
+        queryConstraint,
+
+        limit(this.limit),
+      );
 
       const unsubscribe = onSnapshot(queryConstraint, (snapshot) => {
         const models = [];
