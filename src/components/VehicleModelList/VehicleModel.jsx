@@ -5,7 +5,6 @@ import vehicleStore from "../../stores/VehicleStore";
 import VehicleModelModal from "./VehicleModelModal";
 import PaginationButton from "../PaginationButton/PaginationButton";
 import { fetchMoreModels } from "../../utils/functions/helperMethods";
-import vehicleMakeService from "../../services/VehicleMakeService";
 
 const VehicleModelList = () => {
   const [selectedSort, setSelectedSort] = useState("asc");

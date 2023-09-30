@@ -4,7 +4,6 @@ import {
   onSnapshot,
   orderBy,
   query,
-  startAt,
   where,
 } from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";
@@ -44,8 +43,6 @@ class VehicleStore {
       else queryConstraint = query(collectionRef);
       if (sort) {
         queryConstraint = query(queryConstraint, orderBy("name", sort));
-      } else {
-        queryConstraint = query(queryConstraint, orderBy("name", "asc"));
       }
       const unsubscribe = onSnapshot(queryConstraint, (snapshot) => {
         const makes = [];
