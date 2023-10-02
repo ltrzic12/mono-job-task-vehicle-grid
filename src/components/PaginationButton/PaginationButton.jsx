@@ -2,19 +2,21 @@ import { observer } from "mobx-react";
 import "./paginationButton.css";
 import vehicleStore from "../../stores/VehicleStore";
 
-const PaginationButton = ({ fetch }) => {
-  let show = true;
-  if (vehicleStore.page === "makes") {
-    if (vehicleStore.vehicleMakes.length < vehicleStore.limit) {
-      show = false;
-    }
-  }
-  if (vehicleStore.vehicleModels.length < vehicleStore.limit) {
-    show = false;
-  }
+const PaginationButton = () => {
+  const next = () => {
+    console.log("Next");
+    vehicleStore.incrementPageIndex();
+    vehicleStore.fetchVehicleModels();
+  };
+  const prev = () => {
+    console.log("Prev");
+    vehicleStore.decrementPageIndex();
+    vehicleStore.fetchVehicleModels();
+  };
   return (
     <div className='pagination'>
-      {show && <button onClick={fetch}>See more</button>}
+      <button onClick={prev}>PREV</button>
+      <button onClick={next}>NEXT</button>
     </div>
   );
 };

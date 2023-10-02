@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react";
 import "./vehicleModel.css";
 import vehicleStore from "../../stores/VehicleStore";
 import VehicleModelModal from "./VehicleModelModal";
 import PaginationButton from "../PaginationButton/PaginationButton";
-import { fetchMoreModels } from "../../utils/functions/helperMethods";
 
 const VehicleModelList = () => {
-  const [selectedSort, setSelectedSort] = useState("asc");
-  const [selectedMakeId, setSelectedMakeId] = useState("");
-
   useEffect(() => {
-    vehicleStore.resetPageLimit();
     vehicleStore.changePage("models");
     vehicleStore.fetchVehicleModels();
     vehicleStore.fetchVehicleMakes();
@@ -19,16 +14,19 @@ const VehicleModelList = () => {
 
   const handleChangeSort = (e) => {
     const sort = e.target.value;
-    setSelectedSort(sort);
-
-    vehicleStore.fetchVehicleModels(selectedMakeId, sort);
+    vehicleStore.resetSeenElements();
+    vehicleStore.changeSelectedDirection(sort);
+    vehicleStore.resetPageIndex();
+    vehicleStore.fetchVehicleModels();
   };
 
   const handleChangeFilter = (e) => {
     const makeId = e.target.value;
-    setSelectedMakeId(makeId);
-
-    vehicleStore.fetchVehicleModels(makeId, selectedSort);
+    vehicleStore.resetSeenElements();
+    vehicleStore.resetPageIndex();
+    vehicleStore.changeStartAt("");
+    vehicleStore.changeSelectedMakeID(makeId);
+    vehicleStore.fetchVehicleModels();
   };
 
   const style = {
@@ -53,7 +51,7 @@ const VehicleModelList = () => {
         </div>
         <div>
           <label htmlFor='orderBy'>
-            {selectedSort === "asc" ? (
+            {vehicleStore.selectedDirection === "asc" ? (
               <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
             ) : (
               <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
@@ -72,12 +70,8 @@ const VehicleModelList = () => {
           </li>
         ))}
       </ul>
-      {vehicleStore.vehicleModels.length !== 0 && (
-        <PaginationButton
-          fetch={() =>
-            fetchMoreModels(selectedMakeId, selectedSort)
-          }></PaginationButton>
-      )}
+
+      <PaginationButton></PaginationButton>
     </div>
   );
 };

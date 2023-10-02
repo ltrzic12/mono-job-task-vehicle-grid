@@ -11,7 +11,7 @@ const VehicleMakeList = () => {
   const [selectedSort, setSelectedSort] = useState("asc");
 
   useEffect(() => {
-    vehicleStore.resetPageLimit();
+    // vehicleStore.resetPageLimit();
     vehicleStore.fetchVehicleMakes();
   }, []);
 
@@ -56,8 +56,6 @@ const VehicleMakeList = () => {
           </ul>
         )}
       </div>
-      <PaginationButton
-        fetch={() => fetchMoreMakes(selectedSort)}></PaginationButton>
     </div>
   );
 };
