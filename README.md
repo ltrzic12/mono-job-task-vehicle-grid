@@ -33,6 +33,9 @@ This is a web application for managing vehicle makes and models. It allows you t
 
 ## Installation
 
+#Requirements:
+npm
+Node.js v18.16.0.
 
 #Clone the repository
 git clone git@github.com:ltrzic12/vehicle-grid.git
