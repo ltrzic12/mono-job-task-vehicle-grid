@@ -14,17 +14,14 @@ const VehicleModelList = () => {
 
   const handleChangeSort = (e) => {
     const sort = e.target.value;
-    vehicleStore.resetSeenElements();
-    vehicleStore.changeSelectedDirection(sort);
     vehicleStore.resetPageIndex();
+    vehicleStore.changeSelectedDirection(sort);
     vehicleStore.fetchVehicleModels();
   };
 
   const handleChangeFilter = (e) => {
     const makeId = e.target.value;
-    vehicleStore.resetSeenElements();
     vehicleStore.resetPageIndex();
-    vehicleStore.changeStartAt("");
     vehicleStore.changeSelectedMakeID(makeId);
     vehicleStore.fetchVehicleModels();
   };

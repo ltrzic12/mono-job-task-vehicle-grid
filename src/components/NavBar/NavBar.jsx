@@ -17,12 +17,10 @@ const NavBar = () => {
 
   const handleMakesClick = () => {
     vehicleStore.changePage("makes");
-    vehicleStore.changeStartAt("");
   };
 
   const handleModelsClick = () => {
     vehicleStore.changePage("models");
-    vehicleStore.changeStartAt("");
   };
 
   return (

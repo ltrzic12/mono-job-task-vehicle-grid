@@ -3,19 +3,22 @@ import "./paginationButton.css";
 import vehicleStore from "../../stores/VehicleStore";
 
 const PaginationButton = () => {
-  const next = () => {
+  const next = async () => {
     console.log("Next");
-    vehicleStore.incrementPageIndex();
-    vehicleStore.fetchVehicleModels();
+    if (vehicleStore.lastPageIndex !== vehicleStore.pageIndex) {
+      await vehicleStore.incrementPageIndex();
+    }
   };
-  const prev = () => {
+
+  const prev = async () => {
     console.log("Prev");
-    vehicleStore.decrementPageIndex();
-    vehicleStore.fetchVehicleModels();
+    await vehicleStore.decrementPageIndex();
   };
+
   return (
     <div className='pagination'>
       <button onClick={prev}>PREV</button>
+      <h2>{vehicleStore.pageIndex}</h2>
       <button onClick={next}>NEXT</button>
     </div>
   );

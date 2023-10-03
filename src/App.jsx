@@ -10,18 +10,11 @@ import form from "./stores/FormStore";
 import vehicleStore from "./stores/VehicleStore";
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (vehicleStore.isLoading || form.isLoading) {
-      setLoading(true);
-    }
-  }, []);
-
   return (
     <div className='app'>
       <div className='vehicle-app'>
         <NavBar></NavBar>
-        {loading ? (
+        {vehicleStore.isLoading || form.isLoading ? (
           <Loader></Loader>
         ) : (
           <Routes>
