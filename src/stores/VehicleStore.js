@@ -118,7 +118,7 @@ class VehicleStore {
         } else {
           queryConstraint = query(
             queryConstraint,
-            endBefore(this.vehicleModelsDocs.docs[0]),
+            limitToLast(this.vehicleModelsDocs.docs[0]),
           );
         }
       }
