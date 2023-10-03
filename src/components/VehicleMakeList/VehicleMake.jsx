@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import "./vehicleMake.css";
 import vehicleStore from "../../stores/VehicleStore";
 import VehicleMakeModal from "./VehicleMakeModal";
-import PaginationButton from "../PaginationButton/PaginationButton";
-import { fetchMoreMakes } from "../../utils/functions/helperMethods";
+
 import Loader from "../Loader/Loader";
 
 const VehicleMakeList = () => {
