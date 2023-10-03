@@ -1,31 +1,26 @@
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
-import db from "../config/firebaseConfig";
 import vehicleModelService from "./VehicleModelService";
 import vehicleStore from "../stores/VehicleStore";
+import supabase from "../config/supabaseClient";
 
 class VehicleMakeService {
   async getVehicleMakes() {
-    const vehicleMakesCollection = collection(db, "VehicleMake");
-    const querySnapshot = await getDocs(vehicleMakesCollection);
-    vehicleStore.replaceMakes(querySnapshot.docs.map((doc) => doc.data()));
-    return querySnapshot.docs.map((doc) => doc.data());
+    vehicleStore.fetchVehicleMakes();
   }
 
   async deleteVehicleMake(id) {
-    try {
-      await vehicleModelService.deleteVehicleModelsByMakeId(id);
-      const docRef = doc(db, "VehicleMake", id);
-      await deleteDoc(docRef);
-    } catch (error) {
-      console.error("Error deleting", error);
-      throw error;
+    const { data, error } = await supabase
+      .from("VehicleMake")
+      .delete()
+      .eq("id", id)
+      .select();
+    if (error) {
+      console.error("Error: ", error);
+    }
+
+    if (data) {
+      console.log(data, "ID:", id);
+      vehicleModelService.deleteVehicleModelsByMakeId(id);
+      vehicleStore.fetchVehicleMakes();
     }
   }
 
@@ -34,24 +29,33 @@ class VehicleMakeService {
       console.error("Please fill in all the fields!");
       return;
     }
-    try {
-      const modelData = {
-        name,
-        abrv,
-      };
-      const makeRef = await addDoc(collection(db, "VehicleMake"), modelData);
-      return makeRef.id;
-    } catch (error) {
-      console.error("Error creating make:", error);
-      throw error;
+    const { data, error } = await supabase
+      .from("VehicleMake")
+      .insert([{ name, abrv }])
+      .select();
+
+    if (error) {
+      console.error("Error: ", error);
+    }
+
+    if (data) {
+      console.log(data);
     }
   }
 
-  async editVehicleMake(docRef, payload) {
-    try {
-      await setDoc(docRef, payload);
-    } catch (error) {
-      console.error(error);
+  async editVehicleMake(name, abrv, id) {
+    const { data, error } = await supabase
+      .from("VehicleMake")
+      .update({ name, abrv })
+      .eq("id", id)
+      .select();
+
+    if (error) {
+      console.error("Error: ", error);
+    }
+
+    if (data) {
+      console.log(data);
     }
   }
 }

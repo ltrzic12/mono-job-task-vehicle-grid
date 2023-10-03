@@ -23,7 +23,6 @@ const VehicleModelModal = ({ vehicle }) => {
   };
 
   const handleEditModelClick = (makeId) => {
-    console.log(makeId);
     form.setFormType("edit model");
     form.setEditModelId(vehicle.id);
     form.populateFormData(vehicle.name, vehicle.abrv, makeId);
@@ -32,8 +31,8 @@ const VehicleModelModal = ({ vehicle }) => {
   return (
     <div className='vehicle-model-item'>
       <h2>{vehicle.name}</h2>
+      <span>{vehicle.id}</span> <br />
       <span>{getVehicleMakerName(vehicle.makeId)}</span>
-
       {!isOptionsOpened ? (
         <div className='edit-model' onClick={handleOptionsClick}>
           <i className='fa-solid fa-gear fa-lg'></i>

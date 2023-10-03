@@ -4,6 +4,7 @@ import "./form.css";
 import formService from "../../services/FormService";
 import FormSuccessul from "./FormSuccessul";
 import vehicleStore from "../../stores/VehicleStore";
+import Loader from "../Loader/Loader";
 
 const Form = () => {
   let type = form.formType;
@@ -46,7 +47,7 @@ const Form = () => {
                     id=''
                     value={form.makeId}
                     onChange={(e) => form.setMakeId(e.target.value)}>
-                    <option value='none'>Select maker</option>
+                    <option value=''>Select maker</option>
                     {vehicleStore.vehicleMakes.map((vehicle) => (
                       <option value={vehicle.id} key={vehicle.id}>
                         {vehicle.name}
@@ -67,7 +68,7 @@ const Form = () => {
       </div>
     </>
   ) : (
-    <>Loading...</>
+    <Loader></Loader>
   );
 };
 

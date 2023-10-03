@@ -4,7 +4,6 @@ import MakesPage from "./pages/MakesPage/MakesPage";
 import ModelsPage from "./pages/ModelsPage/ModelsPage";
 import "./app.css";
 import FormPage from "./pages/Form/FormPage";
-import { useEffect, useState } from "react";
 import Loader from "./components/Loader/Loader";
 import form from "./stores/FormStore";
 import vehicleStore from "./stores/VehicleStore";

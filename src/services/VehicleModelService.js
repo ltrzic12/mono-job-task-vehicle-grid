@@ -1,69 +1,68 @@
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
-import db from "../config/firebaseConfig";
+import supabase from "../config/supabaseClient";
+import vehicleStore from "../stores/VehicleStore";
 
 class VehicleModelService {
-  async createModel(makeId, name, abrv) {
+  async createModel(name, abrv, makeId) {
     if (!makeId || !name || !abrv) {
       console.error("Please fill in all the fields!");
       return;
     }
-    try {
-      const modelData = {
-        makeId,
-        name,
-        abrv,
-      };
-      const modelRef = await addDoc(collection(db, "VehicleModel"), modelData);
-      return modelRef.id;
-    } catch (error) {
-      console.error("Error creating model:", error);
-      throw error;
+    const { data, error } = await supabase
+      .from("VehicleModel")
+      .insert([{ name, makeId, abrv }])
+      .select();
+
+    if (error) {
+      console.error("Error: ", error);
+    }
+
+    if (data) {
+      console.log(data);
     }
   }
 
   async deleteVehicleModel(id) {
-    try {
-      const docRef = doc(db, "VehicleModel", id);
-      await deleteDoc(docRef);
-    } catch (error) {
-      console.error("Error deleting", error);
-      throw error;
+    const { data, error } = await supabase
+      .from("VehicleModel")
+      .delete()
+      .eq("id", id)
+      .select();
+    if (error) {
+      console.error("Error: ", error);
+    }
+
+    if (data) {
+      console.log(data, "ID:", id);
+      vehicleStore.fetchVehicleModels();
     }
   }
 
   async deleteVehicleModelsByMakeId(makeId) {
-    try {
-      const collectionRef = collection(db, "VehicleModel");
-      const queryConstraint = query(
-        collectionRef,
-        where("makeId", "==", makeId),
-      );
-      const querySnapshot = await getDocs(queryConstraint);
-      querySnapshot.forEach(async (modelDoc) => {
-        const modelId = modelDoc.id;
-        const docRef = doc(db, "VehicleModel", modelId);
-        await deleteDoc(docRef);
-      });
-    } catch (error) {
-      console.error("Error deleting models by makeId", error);
-      throw error;
+    const { data, error } = await supabase
+      .from("VehicleModel")
+      .delete()
+      .eq("makeId", makeId)
+      .select();
+    if (error) {
+      console.error("Error: ", error);
+    }
+    if (data) {
+      console.log(data);
     }
   }
 
-  async editVehicleModel(docRef, payload) {
-    try {
-      await setDoc(docRef, payload);
-    } catch (error) {
-      console.error(error);
+  async editVehicleModel(name, abrv, id) {
+    const { data, error } = await supabase
+      .from("VehicleModel")
+      .update({ name, abrv })
+      .eq("id", id)
+      .select();
+    if (error) {
+      console.error("Error: ", error);
+    }
+
+    if (data) {
+      console.log(data);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./vehicleMake.css";
 import vehicleStore from "../../stores/VehicleStore";
 import VehicleMakeModal from "./VehicleMakeModal";
@@ -7,18 +7,27 @@ import VehicleMakeModal from "./VehicleMakeModal";
 import Loader from "../Loader/Loader";
 
 const VehicleMakeList = () => {
-  const [selectedSort, setSelectedSort] = useState("asc");
-
   useEffect(() => {
     // vehicleStore.resetPageLimit();
     vehicleStore.fetchVehicleMakes();
   }, []);
 
-  const handleChangeSort = (e) => {
-    const sort = e.target.value;
-    setSelectedSort(sort);
+  const handleChangeFilter = (e) => {
+    const filter = e.target.value;
 
-    vehicleStore.fetchVehicleMakes(sort);
+    vehicleStore.changeSelectedSort(filter);
+    vehicleStore.fetchVehicleMakes();
+  };
+
+  const handleChangeDirection = (e) => {
+    const sort = e.target.value;
+
+    if (sort === true) {
+      vehicleStore.changeSelectedSort(true);
+    } else {
+      vehicleStore.changeSelectedSort(false);
+    }
+    vehicleStore.fetchVehicleMakes();
   };
 
   const style = {
@@ -29,18 +38,25 @@ const VehicleMakeList = () => {
     <div>
       <div className='toolbar'>
         <div>
-          <label htmlFor='orderBy'>
-            {selectedSort === "asc" ? (
-              <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
-            ) : (
-              <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
-            )}
+          <label htmlFor='sort'>
+            <i className='fa-solid fa-filter' style={style}></i>
           </label>
-          <select name='orderBy' onChange={handleChangeSort}>
-            <option value='asc'>Ascending</option>
-            <option value='desc'>Descending</option>
+          <select name='orderBy' onChange={handleChangeFilter}>
+            <option value='name'>Name</option>
+            <option value='created_at'>Time</option>
           </select>
         </div>
+        <label htmlFor='orderBy'>
+          {vehicleStore.ascending === true ? (
+            <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
+          ) : (
+            <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
+          )}
+        </label>
+        <select name='sort' onChange={handleChangeDirection}>
+          <option value='true'>Ascending</option>
+          <option value='false'>Descending</option>
+        </select>
       </div>
       <div className='list-wrap'>
         {vehicleStore.isLoading ? (

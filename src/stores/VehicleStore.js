@@ -1,33 +1,15 @@
-import {
-  collection,
-  endBefore,
-  getDocsFromServer,
-  getCountFromServer,
-  limitToLast,
-  onSnapshot,
-  orderBy,
-  query,
-  startAfter,
-  startAt,
-  where,
-} from "firebase/firestore";
 import { action, makeObservable, observable } from "mobx";
-import db from "../config/firebaseConfig";
+import supabase from "../config/supabaseClient";
 
 class VehicleStore {
   isLoading = false;
   vehicleMakes = [];
   vehicleModels = [];
-  vehicleModelsDocs;
-  lastPageIndex = -1;
-
+  fetchError = null;
+  ascending = true;
   page = "makes";
   selectedSort = "name";
-  selectedDirection = "asc";
   selectedMakeID = "";
-  pageSize = 6;
-  startAt = "";
-  pageIndex = 1;
 
   constructor() {
     makeObservable(this, {
@@ -35,141 +17,90 @@ class VehicleStore {
       vehicleModels: observable,
       isLoading: observable,
       page: observable,
-      // true increment, false decrement
       selectedSort: observable,
       selectedMakeID: observable,
-      pageSize: observable,
-      startAt: observable,
-      selectedDirection: observable,
       fetchVehicleMakes: action,
       fetchVehicleModels: action,
       changeSelectedDirection: action,
       incrementPageIndex: action,
       decrementPageIndex: action,
-
       replaceModels: action,
       replaceMakes: action,
       changePage: action,
-      changeSelectedMakeID: action,
-      resetPageIndex: action,
+      changeFilter: action,
+      setSelectedSort: action,
     });
   }
 
-  fetchVehicleMakes = async (sort) => {
-    try {
-      this.isLoading = true;
-      const collectionRef = collection(db, "VehicleMake");
-      let queryConstraint;
+  fetchVehicleMakes = async () => {
+    const { data, error } = await supabase
+      .from("VehicleMake")
+      .select()
+      .order("name", { ascending: this.ascending });
 
-      if (this.page === "makes")
-        queryConstraint = query(collectionRef, limitToLast(this.limit));
-      else queryConstraint = query(collectionRef);
-      if (sort) {
-        queryConstraint = query(queryConstraint, orderBy("name", sort));
-      }
-      const unsubscribe = onSnapshot(queryConstraint, (snapshot) => {
-        const makes = [];
-        snapshot.forEach((doc) => {
-          makes.push({ id: doc.id, ...doc.data() });
-        });
-
-        action(() => {
-          this.vehicleMakes.replace(makes);
-        })();
-      });
-
-      this.unsubscribe = unsubscribe;
-    } catch (error) {
-      console.error("Error fetching VehicleMakes:", error);
-    } finally {
-      this.isLoading = false;
+    if (error) {
+      this.setFetchError("Error");
+      this.replaceMakes(null);
+      console.log(error);
+    }
+    if (data) {
+      this.replaceMakes(data);
+      this.setFetchError(null);
     }
   };
 
-  fetchVehicleModels = async (isNext) => {
-    this.setLoading(true);
-    try {
-      const collectionRef = collection(db, "VehicleModel");
-      this.lastPageIndex = await getCountFromServer(collectionRef).then(
-        (resp) => {
-          return Math.ceil(resp.data().count / this.pageSize);
-        },
-      );
-      let queryConstraint = query(
-        collectionRef,
-        limitToLast(this.pageSize),
-        orderBy(this.selectedSort, this.selectedDirection),
-      );
+  fetchVehicleModels = async () => {
+    const { data, error } = await supabase
+      .from("VehicleModel")
+      .select()
+      .order(this.selectedSort, { ascending: this.ascending });
 
-      if (this.selectedMakeID !== "") {
-        queryConstraint = query(
-          queryConstraint,
-          where("makeId", "==", this.selectedMakeID),
-        );
-      }
-      if (this.pageIndex === 1) {
-        queryConstraint = query(queryConstraint, startAt(0));
-      } else {
-        if (isNext) {
-          queryConstraint = query(
-            queryConstraint,
-            startAfter(this.vehicleModelsDocs.docs[this.pageSize - 1]),
-          );
-        } else {
-          queryConstraint = query(
-            queryConstraint,
-            limitToLast(this.vehicleModelsDocs.docs[0]),
-          );
-        }
-      }
-      this.vehicleModelsDocs = await getDocsFromServer(queryConstraint);
-
-      this.replaceModels(
-        this.vehicleModelsDocs.docs.map((doc) => {
-          return { id: doc.id, ...doc.data() };
-        }),
-      );
-    } catch (error) {
-      console.error("Error fetching Vehicle Models:", error);
-    } finally {
-      action(() => {
-        this.setLoading(false);
-      })();
+    if (error) {
+      this.setFetchError("Error");
+      this.replaceModels(null);
+      console.log(error);
+    }
+    if (data) {
+      this.replaceModels(data);
+      this.setFetchError(null);
     }
   };
-
-  stopListeningToChanges() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
-  }
 
   setLoading(boolean) {
     this.isLoading = boolean;
   }
+
+  setFetchError(error) {
+    this.fetchError = error;
+  }
+
   findMakeNameById(makeId) {
     const make = this.vehicleMakes.find((make) => (make.id = makeId));
     return make ? make.name : "Unknown";
   }
 
   replaceMakes(makes) {
-    this.vehicleMakes.replace(makes);
+    this.vehicleMakes.replace(makes || []);
   }
 
   replaceModels(models) {
-    this.vehicleModels.replace(models);
+    this.vehicleModels = models;
   }
 
   changePage(page) {
     this.page = page;
   }
 
-  changeSelectedDirection(sort) {
-    this.selectedDirection = sort;
+  changeSelectedDirection(a) {
+    this.ascending = a;
   }
 
-  changeSelectedMakeID(makeId) {
-    this.selectedMakeID = makeId;
+  changeSelectedSort(a) {
+    this.selectedSort = a;
+  }
+
+  changeFilter(filter) {
+    this.filter = filter;
   }
 
   async incrementPageIndex() {
@@ -184,9 +115,9 @@ class VehicleStore {
     }
   }
 
-  resetPageIndex() {
-    this.pageIndex = 1;
-    vehicleStore.fetchVehicleModels();
+  setSelectedSort(a) {
+    this.selectedSort = a;
+    this.fetchVehicleModels();
   }
 }
 

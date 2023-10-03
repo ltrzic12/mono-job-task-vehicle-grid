@@ -12,17 +12,22 @@ const VehicleModelList = () => {
     vehicleStore.fetchVehicleMakes();
   }, []);
 
-  const handleChangeSort = (e) => {
+  const handleChangeDirection = (e) => {
     const sort = e.target.value;
-    vehicleStore.resetPageIndex();
-    vehicleStore.changeSelectedDirection(sort);
+    console.log(sort);
+
+    if (sort === "true") {
+      vehicleStore.changeSelectedDirection(true);
+    } else {
+      vehicleStore.changeSelectedDirection(false);
+    }
     vehicleStore.fetchVehicleModels();
   };
 
   const handleChangeFilter = (e) => {
-    const makeId = e.target.value;
-    vehicleStore.resetPageIndex();
-    vehicleStore.changeSelectedMakeID(makeId);
+    const filter = e.target.value;
+    console.log(filter);
+    vehicleStore.changeSelectedSort(filter);
     vehicleStore.fetchVehicleModels();
   };
 
@@ -34,39 +39,38 @@ const VehicleModelList = () => {
     <div className='vehicle-model-list'>
       <div className='toolbar'>
         <div>
-          <label htmlFor=''>
+          <label htmlFor='filter'>
             <i className='fa-solid fa-filter' style={style}></i>
           </label>
-          <select name='filterByMake' onChange={handleChangeFilter}>
-            <option value=''>All makes</option>
-            {vehicleStore.vehicleMakes.map((vehicle) => (
-              <option name={vehicle.name} value={vehicle.id} key={vehicle.id}>
-                {vehicle.name}
-              </option>
-            ))}
+          <select name='filter' onChange={handleChangeFilter}>
+            <option value='name'>Name</option>
+            <option value='created_at'>Time</option>
+            <option value='makeId'>Make</option>
           </select>
         </div>
         <div>
           <label htmlFor='orderBy'>
-            {vehicleStore.selectedDirection === "asc" ? (
+            {vehicleStore.ascending === true ? (
               <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
             ) : (
               <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
             )}
           </label>
-          <select name='orderBy' onChange={handleChangeSort}>
-            <option value='asc'>Ascending</option>
-            <option value='desc'>Descending</option>
+          <select name='orderBy' onChange={handleChangeDirection}>
+            <option value='true'>Ascending</option>
+            <option value='false'>Descending</option>
           </select>
         </div>
       </div>
-      <ul className='model-list'>
-        {vehicleStore.vehicleModels.map((vehicle) => (
-          <li key={vehicle.id}>
-            <VehicleModelModal vehicle={vehicle}></VehicleModelModal>
-          </li>
-        ))}
-      </ul>
+      {vehicleStore.vehicleModels && (
+        <ul className='model-list'>
+          {vehicleStore.vehicleModels.map((vehicle) => (
+            <li key={vehicle.id}>
+              <VehicleModelModal vehicle={vehicle}></VehicleModelModal>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <PaginationButton></PaginationButton>
     </div>

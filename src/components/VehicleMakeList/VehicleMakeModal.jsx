@@ -6,6 +6,7 @@ import { useState } from "react";
 import { linkStyle } from "../../utils/mics/styles";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import EditButton from "../EditButton/EditButton";
+import vehicleModelService from "../../services/VehicleModelService";
 
 const VehicleMakeModal = ({ vehicleMake }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
@@ -35,7 +36,10 @@ const VehicleMakeModal = ({ vehicleMake }) => {
 
           <DeleteButton
             id={vehicleMake.id}
-            func={vehicleMakeService.deleteVehicleMake}></DeleteButton>
+            func={vehicleMakeService.deleteVehicleMake}
+            func2={
+              vehicleModelService.deleteVehicleModelsByMakeId
+            }></DeleteButton>
         </div>
       )}
     </div>

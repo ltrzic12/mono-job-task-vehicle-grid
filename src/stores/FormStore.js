@@ -4,6 +4,7 @@ class Form {
   formType = "";
   name = "";
   abrv = "";
+  id = "";
   makeId = "";
   submitSuccessful = false;
   editModelID = null;
@@ -23,6 +24,7 @@ class Form {
       setName: action,
       setAbrv: action,
       setMakeId: action,
+
       populateFormData: action,
       setEditModelId: action,
       setIsLoading: action,
