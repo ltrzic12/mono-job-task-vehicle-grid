@@ -10,6 +10,7 @@ const VehicleMakeList = () => {
   useEffect(() => {
     const fetchData = async () => {
       await vehicleStore.changePage("makes");
+      vehicleStore.resetAllFilters();
       await vehicleStore.fetchVehicleMakes();
     };
     fetchData();
@@ -23,13 +24,9 @@ const VehicleMakeList = () => {
   };
 
   const handleChangeDirection = async (e) => {
-    const sort = e.target.value;
+    const sort = e.target.value === "true";
 
-    if (sort === true) {
-      vehicleStore.changeSelectedSort(true);
-    } else {
-      vehicleStore.changeSelectedSort(false);
-    }
+    vehicleStore.changeSelectedDirection(sort);
     await vehicleStore.fetchVehicleMakes();
   };
 

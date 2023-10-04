@@ -9,6 +9,8 @@ const VehicleModelList = () => {
   useEffect(() => {
     const fetchData = async () => {
       await vehicleStore.changePage("models");
+      vehicleStore.resetAllFilters();
+      await vehicleStore.fetchVehicleMakes();
       await vehicleStore.fetchVehicleModels();
       console.log("Models: ", vehicleStore.vehicleModels);
     };
@@ -16,14 +18,9 @@ const VehicleModelList = () => {
   }, []);
 
   const handleChangeDirection = async (e) => {
-    const sort = e.target.value;
-    console.log(sort);
+    const sort = e.target.value === "true";
 
-    if (sort === "true") {
-      vehicleStore.changeSelectedDirection(true);
-    } else {
-      vehicleStore.changeSelectedDirection(false);
-    }
+    vehicleStore.changeSelectedDirection(sort);
     await vehicleStore.fetchVehicleModels();
   };
 
@@ -32,6 +29,11 @@ const VehicleModelList = () => {
     console.log(filter);
     vehicleStore.changeSelectedSort(filter);
     await vehicleStore.fetchVehicleModels();
+  };
+
+  const handleFilterByMakeId = async (e) => {
+    const makeID = e.target.value;
+    await vehicleStore.changeSelectedMakeID(makeID);
   };
 
   const style = {
@@ -48,7 +50,19 @@ const VehicleModelList = () => {
           <select name='filter' onChange={handleChangeFilter}>
             <option value='name'>Name</option>
             <option value='created_at'>Time</option>
-            <option value='makeId'>Make</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor='filterByMakeId'>MakeID</label>
+          <select name='filterByMakeId' id='' onChange={handleFilterByMakeId}>
+            <option value=''>All</option>
+            {vehicleStore.vehicleMakes.map((make) => {
+              return (
+                <option value={make.id} key={make.id}>
+                  {make.name}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div>

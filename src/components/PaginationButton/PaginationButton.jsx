@@ -5,10 +5,11 @@ import vehicleStore from "../../stores/VehicleStore";
 const PaginationButton = () => {
   const next = async () => {
     console.log("Next");
-    if (vehicleStore.lastPageIndex !== vehicleStore.pageIndex) {
-      await vehicleStore.incrementPageIndex();
-    }
+
+    await vehicleStore.incrementPageIndex();
   };
+
+  const isPrevDisabled = vehicleStore.startAt === 0;
 
   const prev = async () => {
     console.log("Prev");

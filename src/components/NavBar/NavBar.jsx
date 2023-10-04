@@ -15,12 +15,14 @@ const NavBar = () => {
     form.resetForm();
   };
 
-  const handleMakesClick = async () => {
+  const handleMakesClick = () => {
     vehicleStore.changePage("makes");
+    vehicleStore.resetPageIndex();
   };
 
-  const handleModelsClick = async () => {
+  const handleModelsClick = () => {
     vehicleStore.changePage("models");
+    vehicleStore.resetPageIndex();
   };
 
   return (
