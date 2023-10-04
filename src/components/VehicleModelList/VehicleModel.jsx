@@ -53,7 +53,9 @@ const VehicleModelList = () => {
           </select>
         </div>
         <div>
-          <label htmlFor='filterByMakeId'>MakeID</label>
+          <label htmlFor='filterByMakeId'>
+            <i className='fa-solid fa-car' style={style}></i>
+          </label>
           <select name='filterByMakeId' id='' onChange={handleFilterByMakeId}>
             <option value=''>All</option>
             {vehicleStore.vehicleMakes.map((make) => {

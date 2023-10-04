@@ -38,25 +38,27 @@ const VehicleMakeList = () => {
     <div>
       <div className='toolbar'>
         <div>
-          <label htmlFor='sort'>
+          <label htmlFor='filter'>
             <i className='fa-solid fa-filter' style={style}></i>
           </label>
-          <select name='orderBy' onChange={handleChangeFilter}>
+          <select name='filter' onChange={handleChangeFilter}>
             <option value='name'>Name</option>
             <option value='created_at'>Time</option>
           </select>
         </div>
-        <label htmlFor='orderBy'>
-          {vehicleStore.ascending === true ? (
-            <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
-          ) : (
-            <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
-          )}
-        </label>
-        <select name='sort' onChange={handleChangeDirection}>
-          <option value='true'>Ascending</option>
-          <option value='false'>Descending</option>
-        </select>
+        <div>
+          <label htmlFor='orderBy'>
+            {vehicleStore.ascending === true ? (
+              <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
+            ) : (
+              <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
+            )}
+          </label>
+          <select name='orderBy' onChange={handleChangeDirection}>
+            <option value='true'>Ascending</option>
+            <option value='false'>Descending</option>
+          </select>
+        </div>
       </div>
       <div className='list-wrap'>
         {vehicleStore.isLoading ? (
