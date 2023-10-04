@@ -1,18 +1,19 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import "./vehicleMake.css";
-import vehicleStore from "../../stores/VehicleStore";
+
 import VehicleMakeModal from "./VehicleMakeModal";
 
 import Loader from "../Loader/Loader";
 import PaginationButton from "../PaginationButton/PaginationButton";
+import vehicleMakeService from "../../services/VehicleMakeService";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const VehicleMakeList = () => {
   useEffect(() => {
     const fetchData = async () => {
-      await vehicleStore.changePage("makes");
-      vehicleStore.resetAllFilters();
-      await vehicleStore.fetchVehicleMakes();
+      vehicleMakeStore.resetAllFilters();
+      await vehicleMakeService.fetchVehicleMakes();
     };
     fetchData();
   }, []);
@@ -20,15 +21,15 @@ const VehicleMakeList = () => {
   const handleChangeFilter = async (e) => {
     const filter = e.target.value;
 
-    vehicleStore.changeSelectedSort(filter);
-    await vehicleStore.fetchVehicleMakes();
+    vehicleMakeStore.changeSelectedSort(filter);
+    await vehicleMakeService.fetchVehicleMakes();
   };
 
   const handleChangeDirection = async (e) => {
     const sort = e.target.value === "true";
 
-    vehicleStore.changeSelectedDirection(sort);
-    await vehicleStore.fetchVehicleMakes();
+    vehicleMakeStore.changeSelectedDirection(sort);
+    await vehicleMakeService.fetchVehicleMakes();
   };
 
   const style = {
@@ -44,12 +45,12 @@ const VehicleMakeList = () => {
           </label>
           <select name='filter' onChange={handleChangeFilter}>
             <option value='name'>Name</option>
-            <option value='created_at'>Time</option>
+            <option value='created_at'>Time added</option>
           </select>
         </div>
         <div>
           <label htmlFor='orderBy'>
-            {vehicleStore.ascending === true ? (
+            {vehicleMakeStore.ascending === true ? (
               <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
             ) : (
               <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
@@ -62,11 +63,11 @@ const VehicleMakeList = () => {
         </div>
       </div>
       <div className='list-wrap'>
-        {vehicleStore.isLoading ? (
+        {vehicleMakeStore.isLoading ? (
           <Loader></Loader>
         ) : (
           <ul className='make-list'>
-            {vehicleStore.vehicleMakes.map((vehicleMake) => (
+            {vehicleMakeStore.vehicleMakes.map((vehicleMake) => (
               <li key={vehicleMake.id}>
                 <VehicleMakeModal vehicleMake={vehicleMake}></VehicleMakeModal>
               </li>
@@ -74,7 +75,12 @@ const VehicleMakeList = () => {
           </ul>
         )}
       </div>
-      <PaginationButton></PaginationButton>
+      <PaginationButton
+        next={vehicleMakeService.fetchNextPage}
+        prev={vehicleMakeService.fetchPreviousPage}
+        endAt={vehicleMakeStore.endAt}
+        limit={vehicleMakeStore.totalNumberOfData}
+        startAt={vehicleMakeStore.startAt}></PaginationButton>
     </div>
   );
 };

@@ -1,23 +1,38 @@
 import { observer } from "mobx-react";
 import "./paginationButton.css";
-import vehicleStore from "../../stores/VehicleStore";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
-const PaginationButton = () => {
-  const next = async () => {
-    console.log("Next");
-    await vehicleStore.incrementPageIndex();
+const PaginationButton = ({ prev, next, endAt, limit, startAt }) => {
+  const nextPage = async () => {
+    console.log("next", "startAt: ", vehicleMakeStore.startAt);
+    await next();
   };
 
-  const prev = async () => {
+  const prevPage = async () => {
     console.log("Prev");
-    await vehicleStore.decrementPageIndex();
+    await prev();
   };
+
+  let enabledNext;
+  if (endAt <= limit) {
+    enabledNext = true;
+  }
+
+  let enabledPrev;
+
+  if (startAt > 0) {
+    enabledPrev = true;
+  }
 
   return (
     <div className='pagination'>
-      <button onClick={prev}>PREV</button>
+      <button onClick={prevPage} disabled={!enabledPrev}>
+        PREV
+      </button>
 
-      <button onClick={next}>NEXT</button>
+      <button onClick={nextPage} disabled={!enabledNext}>
+        NEXT
+      </button>
     </div>
   );
 };

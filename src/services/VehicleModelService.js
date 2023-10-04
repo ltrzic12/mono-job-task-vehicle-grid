@@ -1,7 +1,62 @@
 import supabase from "../config/supabaseClient";
-import vehicleStore from "../stores/VehicleStore";
+import vehicleModelStore from "../stores/VehicleModelStore";
 
 class VehicleModelService {
+  fetchVehicleModels = async () => {
+    vehicleModelStore.setLoading(true);
+    let query = supabase
+      .from("VehicleModel")
+      .select()
+      .order(vehicleModelStore.selectedSort, {
+        ascending: vehicleModelStore.ascending,
+      })
+      .range(vehicleModelStore.startAt, vehicleModelStore.endAt);
+
+    if (vehicleModelStore.selectedMakeID !== "") {
+      query = query.eq("makeId", vehicleModelStore.selectedMakeID);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      vehicleModelStore.setFetchError("Error");
+      vehicleModelStore.replaceModels(null);
+      console.log(error);
+      vehicleModelStore.setLoading(false);
+    }
+    if (data) {
+      vehicleModelStore.replaceModels(data);
+      await this.calculateNumberOfData("VehicleModel");
+      console.log(
+        "Ukupno modela u bazi: ",
+        vehicleModelStore.totalNumberOfData,
+        "Ukupno stranica: ",
+        vehicleModelStore.numberOfPages,
+        "Povučeni modeli: ",
+        vehicleModelStore.vehicleModels,
+      );
+      vehicleModelStore.setFetchError(null);
+      vehicleModelStore.setLoading(false);
+    }
+  };
+
+  async calculateNumberOfData() {
+    try {
+      const { data, error } = await supabase.from("VehicleModel").select("id");
+
+      if (error) {
+        console.error("Error fetching data:", error);
+      } else {
+        vehicleModelStore.setTotalNumberOfData(data.length);
+        vehicleModelStore.numberOfPages = Math.ceil(
+          data.length / (vehicleModelStore.endAt + 1),
+        );
+      }
+    } catch (error) {
+      console.error("Error calculating total number of items:", error);
+    }
+  }
+
   async createModel(name, abrv, makeId) {
     if (!makeId || !name || !abrv) {
       console.error("Please fill in all the fields!");
@@ -21,7 +76,7 @@ class VehicleModelService {
     }
   }
 
-  async deleteVehicleModel(id) {
+  deleteVehicleModel = async (id) => {
     const { data, error } = await supabase
       .from("VehicleModel")
       .delete()
@@ -33,9 +88,9 @@ class VehicleModelService {
 
     if (data) {
       console.log(data, "ID:", id);
-      vehicleStore.fetchVehicleModels();
+      await this.fetchVehicleModels();
     }
-  }
+  };
 
   async deleteVehicleModelsByMakeId(makeId) {
     const { data, error } = await supabase
@@ -65,6 +120,16 @@ class VehicleModelService {
       console.log(data);
     }
   }
+
+  fetchNextPage = async () => {
+    vehicleModelStore.incrementPageIndex();
+    await this.fetchVehicleModels();
+  };
+
+  fetchPreviousPage = async () => {
+    vehicleModelStore.decrementPageIndex();
+    await this.fetchVehicleModels();
+  };
 }
 
 const vehicleModelService = new VehicleModelService();

@@ -2,7 +2,8 @@ import "./navbar.css";
 import form from "../../stores/FormStore";
 import NavigationLink from "../Link/Link";
 import { navLinkStyle } from "../../utils/mics/styles";
-import vehicleStore from "../../stores/VehicleStore";
+import vehicleModelStore from "../../stores/VehicleModelStore";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const NavBar = () => {
   const handleModelFormClick = () => {
@@ -16,13 +17,12 @@ const NavBar = () => {
   };
 
   const handleMakesClick = () => {
-    vehicleStore.changePage("makes");
-    vehicleStore.resetPageIndex();
+    vehicleMakeStore.resetPageIndex();
   };
 
   const handleModelsClick = () => {
-    vehicleStore.changePage("models");
-    vehicleStore.resetPageIndex();
+    vehicleMakeStore.resetAllFilters();
+    vehicleModelStore.resetPageIndex();
   };
 
   return (

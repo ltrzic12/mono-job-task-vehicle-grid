@@ -1,8 +1,15 @@
 import { observer } from "mobx-react-lite";
 
-const DeleteButton = ({ id, func }) => {
+const DeleteButton = ({ id, func, func2 }) => {
+  const handleDelete = async () => {
+    await func(id);
+    if (func2) {
+      await func2(id);
+    }
+  };
+
   return (
-    <button onClick={() => func(id)}>
+    <button onClick={handleDelete}>
       <i className='fa-solid fa-trash'></i>
     </button>
   );

@@ -6,14 +6,17 @@ import "./app.css";
 import FormPage from "./pages/Form/FormPage";
 import Loader from "./components/Loader/Loader";
 import form from "./stores/FormStore";
-import vehicleStore from "./stores/VehicleStore";
+import vehicleMakeStore from "./stores/VehicleMakeStore";
+import vehicleModelStore from "./stores/VehicleModelStore";
 
 function App() {
   return (
     <div className='app'>
       <div className='vehicle-app'>
         <NavBar></NavBar>
-        {vehicleStore.isLoading || form.isLoading ? (
+        {vehicleMakeStore.isLoading ||
+        vehicleModelStore.isLoading ||
+        form.isLoading ? (
           <Loader></Loader>
         ) : (
           <Routes>

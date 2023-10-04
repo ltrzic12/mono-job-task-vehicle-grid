@@ -1,19 +1,21 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import "./vehicleModel.css";
-import vehicleStore from "../../stores/VehicleStore";
 import VehicleModelModal from "./VehicleModelModal";
 import PaginationButton from "../PaginationButton/PaginationButton";
 import Loader from "../Loader/Loader";
+import vehicleMakeService from "../../services/VehicleMakeService";
+import vehicleModelService from "../../services/VehicleModelService";
+import vehicleModelStore from "../../stores/VehicleModelStore";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const VehicleModelList = () => {
   useEffect(() => {
     const fetchData = async () => {
-      vehicleStore.changePage("models");
-      vehicleStore.resetAllFilters();
-      await vehicleStore.fetchVehicleMakes();
-      await vehicleStore.fetchVehicleModels();
-      console.log("Models: ", vehicleStore.vehicleModels);
+      vehicleModelStore.resetAllFilters();
+      await vehicleModelService.fetchVehicleModels();
+      await vehicleMakeService.fetchVehicleMakes();
+      console.log("Models: ", vehicleModelStore.vehicleModels);
     };
     fetchData();
   }, []);
@@ -21,21 +23,22 @@ const VehicleModelList = () => {
   const handleChangeDirection = async (e) => {
     const sort = e.target.value === "true";
 
-    vehicleStore.changeSelectedDirection(sort);
-    await vehicleStore.fetchVehicleModels();
+    vehicleModelStore.changeSelectedDirection(sort);
+    await vehicleModelService.fetchVehicleModels();
   };
 
   const handleChangeFilter = async (e) => {
     const filter = e.target.value;
     console.log(filter);
-    vehicleStore.changeSelectedSort(filter);
-    await vehicleStore.fetchVehicleModels();
+    vehicleModelStore.changeSelectedSort(filter);
+    await vehicleModelService.fetchVehicleModels();
   };
 
   const handleFilterByMakeId = async (e) => {
     const makeID = e.target.value;
-    vehicleStore.resetPageIndex();
-    await vehicleStore.changeSelectedMakeID(makeID);
+    vehicleModelStore.resetPageIndex();
+    await vehicleModelStore.changeSelectedMakeID(makeID);
+    await vehicleModelService.fetchVehicleModels();
   };
 
   const style = {
@@ -51,7 +54,7 @@ const VehicleModelList = () => {
           </label>
           <select name='filter' onChange={handleChangeFilter}>
             <option value='name'>Name</option>
-            <option value='created_at'>Time</option>
+            <option value='created_at'>Time added</option>
           </select>
         </div>
         <div>
@@ -60,7 +63,7 @@ const VehicleModelList = () => {
           </label>
           <select name='filterByMakeId' id='' onChange={handleFilterByMakeId}>
             <option value=''>All</option>
-            {vehicleStore.vehicleMakes.map((make) => {
+            {vehicleMakeStore.vehicleMakes.map((make) => {
               return (
                 <option value={make.id} key={make.id}>
                   {make.name}
@@ -71,7 +74,7 @@ const VehicleModelList = () => {
         </div>
         <div>
           <label htmlFor='orderBy'>
-            {vehicleStore.ascending === true ? (
+            {vehicleModelStore.ascending === true ? (
               <i className='fa-solid fa-arrow-down-a-z' style={style}></i>
             ) : (
               <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
@@ -85,11 +88,11 @@ const VehicleModelList = () => {
       </div>
 
       <div className='list-wrap'>
-        {vehicleStore.isLoading ? (
+        {vehicleModelStore.isLoading ? (
           <Loader></Loader>
         ) : (
           <ul className='model-list'>
-            {vehicleStore.vehicleModels.map((vehicle) => (
+            {vehicleModelStore.vehicleModels.map((vehicle) => (
               <li key={vehicle.id}>
                 <VehicleModelModal vehicle={vehicle}></VehicleModelModal>
               </li>
@@ -98,7 +101,12 @@ const VehicleModelList = () => {
         )}
       </div>
 
-      <PaginationButton></PaginationButton>
+      <PaginationButton
+        next={vehicleModelService.fetchNextPage}
+        prev={vehicleModelService.fetchPreviousPage}
+        endAt={vehicleModelStore.endAt}
+        limit={vehicleModelStore.totalNumberOfData}
+        startAt={vehicleModelStore.startAt}></PaginationButton>
     </div>
   );
 };

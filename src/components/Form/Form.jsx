@@ -2,15 +2,16 @@ import { observer } from "mobx-react";
 import form from "../../stores/FormStore";
 import "./form.css";
 import FormSuccessul from "./FormSuccessul";
-import vehicleStore from "../../stores/VehicleStore";
 import Loader from "../Loader/Loader";
 import { useEffect } from "react";
+import vehicleMakeService from "../../services/VehicleMakeService";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const Form = () => {
   useEffect(() => {
     if (form.formType === "new model") {
       const fetchMakes = async () => {
-        await vehicleStore.fetchVehicleMakes();
+        await vehicleMakeService.fetchVehicleMakes();
       };
       fetchMakes();
     }
@@ -58,7 +59,7 @@ const Form = () => {
                     onChange={(e) => form.setMakeId(e.target.value)}
                     className='select-form'>
                     <option value=''>Select maker</option>
-                    {vehicleStore.vehicleMakes.map((vehicle) => (
+                    {vehicleMakeStore.vehicleMakes.map((vehicle) => (
                       <option value={vehicle.id} key={vehicle.id}>
                         {vehicle.name}
                       </option>

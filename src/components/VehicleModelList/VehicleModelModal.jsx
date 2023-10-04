@@ -3,10 +3,10 @@ import "./vehicleModelModal.css";
 import vehicleModelService from "../../services/VehicleModelService";
 import { useState } from "react";
 import form from "../../stores/FormStore";
-import vehicleStore from "../../stores/VehicleStore";
 import { linkStyle } from "../../utils/mics/styles";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import EditButton from "../EditButton/EditButton";
+import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const VehicleModelModal = ({ vehicle }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
@@ -16,7 +16,7 @@ const VehicleModelModal = ({ vehicle }) => {
   };
 
   const getVehicleMakerName = (makeId) => {
-    const maker = vehicleStore.vehicleMakes.find(
+    const maker = vehicleMakeStore.vehicleMakes.find(
       (maker) => maker.id === makeId,
     );
     return maker ? maker.name : "Unknown Maker";
