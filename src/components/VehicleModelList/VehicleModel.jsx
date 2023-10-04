@@ -33,6 +33,7 @@ const VehicleModelList = () => {
 
   const handleFilterByMakeId = async (e) => {
     const makeID = e.target.value;
+    vehicleStore.resetPageIndex();
     await vehicleStore.changeSelectedMakeID(makeID);
   };
 

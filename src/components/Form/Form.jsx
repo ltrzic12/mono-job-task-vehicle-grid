@@ -33,7 +33,7 @@ const Form = () => {
                 value={form.name}
                 onChange={(e) => form.setName(e.target.value)}
               />
-              <label htmlFor='abrv'>{`Enter new ${form.formType} abrivation`}</label>
+              <label htmlFor='abrv'>{`Enter new ${form.formType} abbreviation`}</label>
               <input
                 type='text'
                 name='abrv'
