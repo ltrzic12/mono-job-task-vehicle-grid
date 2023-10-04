@@ -99,7 +99,7 @@ class VehicleStore {
     this.selectedSort = a;
   }
 
-  changeFilter(filter) {
+  changeFilter(filter, type) {
     this.filter = filter;
   }
 

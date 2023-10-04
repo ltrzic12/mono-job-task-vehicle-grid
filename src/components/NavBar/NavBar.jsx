@@ -15,11 +15,11 @@ const NavBar = () => {
     form.resetForm();
   };
 
-  const handleMakesClick = () => {
+  const handleMakesClick = async () => {
     vehicleStore.changePage("makes");
   };
 
-  const handleModelsClick = () => {
+  const handleModelsClick = async () => {
     vehicleStore.changePage("models");
   };
 

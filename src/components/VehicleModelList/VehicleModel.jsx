@@ -7,12 +7,15 @@ import PaginationButton from "../PaginationButton/PaginationButton";
 
 const VehicleModelList = () => {
   useEffect(() => {
-    vehicleStore.changePage("models");
-    vehicleStore.fetchVehicleModels();
-    vehicleStore.fetchVehicleMakes();
+    const fetchData = async () => {
+      await vehicleStore.changePage("models");
+      await vehicleStore.fetchVehicleModels();
+      console.log("Models: ", vehicleStore.vehicleModels);
+    };
+    fetchData();
   }, []);
 
-  const handleChangeDirection = (e) => {
+  const handleChangeDirection = async (e) => {
     const sort = e.target.value;
     console.log(sort);
 
@@ -21,14 +24,14 @@ const VehicleModelList = () => {
     } else {
       vehicleStore.changeSelectedDirection(false);
     }
-    vehicleStore.fetchVehicleModels();
+    await vehicleStore.fetchVehicleModels();
   };
 
-  const handleChangeFilter = (e) => {
+  const handleChangeFilter = async (e) => {
     const filter = e.target.value;
     console.log(filter);
     vehicleStore.changeSelectedSort(filter);
-    vehicleStore.fetchVehicleModels();
+    await vehicleStore.fetchVehicleModels();
   };
 
   const style = {

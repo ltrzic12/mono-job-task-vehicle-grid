@@ -8,18 +8,21 @@ import Loader from "../Loader/Loader";
 
 const VehicleMakeList = () => {
   useEffect(() => {
-    // vehicleStore.resetPageLimit();
-    vehicleStore.fetchVehicleMakes();
+    const fetchData = async () => {
+      await vehicleStore.changePage("makes");
+      await vehicleStore.fetchVehicleMakes();
+    };
+    fetchData();
   }, []);
 
-  const handleChangeFilter = (e) => {
+  const handleChangeFilter = async (e) => {
     const filter = e.target.value;
 
     vehicleStore.changeSelectedSort(filter);
-    vehicleStore.fetchVehicleMakes();
+    await vehicleStore.fetchVehicleMakes();
   };
 
-  const handleChangeDirection = (e) => {
+  const handleChangeDirection = async (e) => {
     const sort = e.target.value;
 
     if (sort === true) {
@@ -27,7 +30,7 @@ const VehicleMakeList = () => {
     } else {
       vehicleStore.changeSelectedSort(false);
     }
-    vehicleStore.fetchVehicleMakes();
+    await vehicleStore.fetchVehicleMakes();
   };
 
   const style = {
