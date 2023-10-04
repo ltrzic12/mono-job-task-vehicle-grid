@@ -4,11 +4,12 @@ import "./vehicleModel.css";
 import vehicleStore from "../../stores/VehicleStore";
 import VehicleModelModal from "./VehicleModelModal";
 import PaginationButton from "../PaginationButton/PaginationButton";
+import Loader from "../Loader/Loader";
 
 const VehicleModelList = () => {
   useEffect(() => {
     const fetchData = async () => {
-      await vehicleStore.changePage("models");
+      vehicleStore.changePage("models");
       vehicleStore.resetAllFilters();
       await vehicleStore.fetchVehicleMakes();
       await vehicleStore.fetchVehicleModels();
@@ -82,15 +83,20 @@ const VehicleModelList = () => {
           </select>
         </div>
       </div>
-      {vehicleStore.vehicleModels && (
-        <ul className='model-list'>
-          {vehicleStore.vehicleModels.map((vehicle) => (
-            <li key={vehicle.id}>
-              <VehicleModelModal vehicle={vehicle}></VehicleModelModal>
-            </li>
-          ))}
-        </ul>
-      )}
+
+      <div className='list-wrap'>
+        {vehicleStore.isLoading ? (
+          <Loader></Loader>
+        ) : (
+          <ul className='model-list'>
+            {vehicleStore.vehicleModels.map((vehicle) => (
+              <li key={vehicle.id}>
+                <VehicleModelModal vehicle={vehicle}></VehicleModelModal>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <PaginationButton></PaginationButton>
     </div>

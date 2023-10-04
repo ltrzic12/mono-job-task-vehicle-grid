@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from "mobx";
 
 class Form {
-  formType = "";
+  formType = "new model";
   name = "";
   abrv = "";
   id = "";

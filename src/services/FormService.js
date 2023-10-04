@@ -4,8 +4,8 @@ import form from "../stores/FormStore";
 
 class FormService {
   async submitForm() {
-    form.setIsLoading(true);
     try {
+      form.setIsLoading(true);
       if (form.formType === "new model") {
         if (!form.name || !form.abrv || form.makeId === "") {
           console.error("Please fill in all the fields!");

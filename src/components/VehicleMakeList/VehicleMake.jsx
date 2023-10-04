@@ -5,6 +5,7 @@ import vehicleStore from "../../stores/VehicleStore";
 import VehicleMakeModal from "./VehicleMakeModal";
 
 import Loader from "../Loader/Loader";
+import PaginationButton from "../PaginationButton/PaginationButton";
 
 const VehicleMakeList = () => {
   useEffect(() => {
@@ -73,6 +74,7 @@ const VehicleMakeList = () => {
           </ul>
         )}
       </div>
+      <PaginationButton></PaginationButton>
     </div>
   );
 };

@@ -9,8 +9,6 @@ const PaginationButton = () => {
     await vehicleStore.incrementPageIndex();
   };
 
-  const isPrevDisabled = vehicleStore.startAt === 0;
-
   const prev = async () => {
     console.log("Prev");
     await vehicleStore.decrementPageIndex();

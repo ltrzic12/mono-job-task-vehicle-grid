@@ -5,8 +5,18 @@ import formService from "../../services/FormService";
 import FormSuccessul from "./FormSuccessul";
 import vehicleStore from "../../stores/VehicleStore";
 import Loader from "../Loader/Loader";
+import { useEffect } from "react";
 
 const Form = () => {
+  useEffect(() => {
+    if (form.formType === "new model") {
+      const fetchMakes = async () => {
+        await vehicleStore.fetchVehicleMakes();
+      };
+      fetchMakes();
+    }
+  }, []);
+
   let type = form.formType;
 
   const handleSubmit = async (e) => {

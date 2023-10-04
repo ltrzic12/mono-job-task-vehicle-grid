@@ -11,7 +11,9 @@ class VehicleStore {
   selectedSort = "name";
   selectedMakeID = "";
   startAt = 0;
-  endBefore = 8;
+  endAt = 8;
+  totalNumberOfData = 0;
+  numberOfPages = 0;
 
   constructor() {
     makeObservable(this, {
@@ -21,6 +23,10 @@ class VehicleStore {
       page: observable,
       selectedSort: observable,
       selectedMakeID: observable,
+      startAt: observable,
+      endAt: observable,
+      totalNumberOfData: observable,
+      numberOfPages: observable,
       fetchVehicleMakes: action,
       fetchVehicleModels: action,
       changeSelectedDirection: action,
@@ -30,18 +36,37 @@ class VehicleStore {
       replaceMakes: action,
       changePage: action,
       changeFilter: action,
+      resetPageIndex: action,
+      resetAllFilters: action,
       setSelectedSort: action,
+      setNumberOfPage: action,
+      setTotalNumberOfData: action,
     });
   }
 
+  async calculateNumberOfData(collection) {
+    const { count, error } = await supabase
+      .from(collection)
+      .select("count(*)")
+      .single();
+
+    if (error) {
+      console.error("Error fetching total number of items:", error);
+    } else {
+      this.setTotalNumberOfData = count;
+      this.numberOfPages = Math.ceil(count / (this.endAt + 1));
+    }
+  }
+
   fetchVehicleMakes = async () => {
+    this.setLoading(true);
     let query = supabase
       .from("VehicleMake")
       .select()
       .order(this.selectedSort, { ascending: this.ascending });
 
     if (this.page === "makes") {
-      query = query.range(this.startAt, this.endBefore);
+      query = query.range(this.startAt, this.endAt);
     }
 
     const { data, error } = await query;
@@ -50,20 +75,24 @@ class VehicleStore {
       this.setFetchError("Error");
       this.replaceMakes(null);
       console.log(error);
+      this.setLoading(false);
     }
 
     if (data) {
       this.replaceMakes(data);
+      await this.calculateNumberOfData("VehicleMake");
       this.setFetchError(null);
+      this.setLoading(false);
     }
   };
 
   fetchVehicleModels = async () => {
+    this.setLoading(true);
     let query = supabase
       .from("VehicleModel")
       .select()
       .order(this.selectedSort, { ascending: this.ascending })
-      .range(this.startAt, this.endBefore);
+      .range(this.startAt, this.endAt);
     if (this.selectedMakeID !== "") {
       query = query.eq("makeId", this.selectedMakeID);
     }
@@ -74,10 +103,13 @@ class VehicleStore {
       this.setFetchError("Error");
       this.replaceModels(null);
       console.log(error);
+      this.setLoading(false);
     }
     if (data) {
       this.replaceModels(data);
+      await this.calculateNumberOfData("VehicleModel");
       this.setFetchError(null);
+      this.setLoading(false);
     }
   };
 
@@ -114,7 +146,7 @@ class VehicleStore {
     this.selectedSort = a;
   }
 
-  changeFilter(filter, type) {
+  changeFilter(filter) {
     this.filter = filter;
   }
 
@@ -125,27 +157,27 @@ class VehicleStore {
 
   async incrementPageIndex() {
     this.startAt += 8;
-    this.endBefore += 8;
+    this.endAt += 8;
     if (this.page === "makes") {
       await this.fetchVehicleMakes();
     } else await this.fetchVehicleModels();
-    console.log(this.startAt, this.endBefore);
+    console.log(this.startAt, this.endAt);
   }
 
   async decrementPageIndex() {
     if (this.startAt > 0) {
       this.startAt -= 8;
-      this.endBefore -= 8;
+      this.endAt -= 8;
     }
     if (this.page === "makes") {
       await this.fetchVehicleMakes();
     } else await this.fetchVehicleModels();
-    console.log(this.startAt, this.endBefore);
+    console.log(this.startAt, this.endAt);
   }
 
   resetPageIndex() {
     this.startAt = 0;
-    this.endBefore = 8;
+    this.endAt = 8;
   }
 
   resetAllFilters() {
@@ -154,9 +186,17 @@ class VehicleStore {
     this.changeSelectedMakeID("");
   }
 
-  setSelectedSort(a) {
-    this.selectedSort = a;
+  setSelectedSort(sort) {
+    this.selectedSort = sort;
     this.fetchVehicleModels();
+  }
+
+  setTotalNumberOfData(number) {
+    this.totalNumberOfData = number;
+  }
+
+  setNumberOfPage(pages) {
+    this.numberOfPages = pages;
   }
 }
 
