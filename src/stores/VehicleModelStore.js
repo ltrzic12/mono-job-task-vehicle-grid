@@ -9,6 +9,7 @@ class VehicleModelStore {
   selectedMakeID = "";
   startAt = 0;
   endAt = 8;
+  pageSize = 9;
   totalNumberOfData = 0;
   numberOfPages = 0;
 
@@ -20,6 +21,7 @@ class VehicleModelStore {
       selectedSort: observable,
       selectedMakeID: observable,
       startAt: observable,
+      pageSize: observable,
       endAt: observable,
       totalNumberOfData: observable,
       numberOfPages: observable,

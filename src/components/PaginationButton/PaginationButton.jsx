@@ -12,7 +12,7 @@ const PaginationButton = ({ prev, next, endAt, limit, startAt }) => {
 
   let enabledNext;
 
-  if (endAt <= limit) {
+  if (endAt + 1 < limit) {
     enabledNext = true;
   }
 
