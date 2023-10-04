@@ -1,7 +1,6 @@
 import { observer } from "mobx-react";
 import form from "../../stores/FormStore";
 import "./form.css";
-import formService from "../../services/FormService";
 import FormSuccessul from "./FormSuccessul";
 import vehicleStore from "../../stores/VehicleStore";
 import Loader from "../Loader/Loader";
@@ -22,7 +21,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(form.name);
-    formService.submitForm();
+    form.submitForm();
   };
 
   return !form.isLoading ? (
@@ -37,7 +36,7 @@ const Form = () => {
               {type === "edit make" && <h1>Edit make info</h1>}
             </div>
             <form onSubmit={handleSubmit}>
-              <label htmlFor='name'>{`Enter new ${form.formType} name`}</label>
+              <label htmlFor='name'>{`Enter new ${form.formType} name`} </label>
               <input
                 type='text'
                 value={form.name}
@@ -56,7 +55,8 @@ const Form = () => {
                     name='maker'
                     id=''
                     value={form.makeId}
-                    onChange={(e) => form.setMakeId(e.target.value)}>
+                    onChange={(e) => form.setMakeId(e.target.value)}
+                    className='select-form'>
                     <option value=''>Select maker</option>
                     {vehicleStore.vehicleMakes.map((vehicle) => (
                       <option value={vehicle.id} key={vehicle.id}>

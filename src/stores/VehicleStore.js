@@ -45,16 +45,17 @@ class VehicleStore {
   }
 
   async calculateNumberOfData(collection) {
-    const { count, error } = await supabase
-      .from(collection)
-      .select("count(*)")
-      .single();
+    try {
+      const { data, error } = await supabase.from(collection).select("id");
 
-    if (error) {
-      console.error("Error fetching total number of items:", error);
-    } else {
-      this.setTotalNumberOfData = count;
-      this.numberOfPages = Math.ceil(count / (this.endAt + 1));
+      if (error) {
+        console.error("Error fetching data:", error);
+      } else {
+        this.setTotalNumberOfData(data.length);
+        this.numberOfPages = Math.ceil(data.length / (this.endAt + 1));
+      }
+    } catch (error) {
+      console.error("Error calculating total number of items:", error);
     }
   }
 
@@ -93,6 +94,7 @@ class VehicleStore {
       .select()
       .order(this.selectedSort, { ascending: this.ascending })
       .range(this.startAt, this.endAt);
+
     if (this.selectedMakeID !== "") {
       query = query.eq("makeId", this.selectedMakeID);
     }
@@ -108,6 +110,14 @@ class VehicleStore {
     if (data) {
       this.replaceModels(data);
       await this.calculateNumberOfData("VehicleModel");
+      console.log(
+        "Ukupno modela u bazi: ",
+        this.totalNumberOfData,
+        "Ukupno stranica: ",
+        this.numberOfPages,
+        "Povučeni modeli: ",
+        this.models,
+      );
       this.setFetchError(null);
       this.setLoading(false);
     }
