@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import "./loader.css";
+
 const Loader = () => {
   return (
     <div className='loader-wrapper'>

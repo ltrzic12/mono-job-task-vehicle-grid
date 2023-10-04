@@ -21,20 +21,12 @@ class VehicleModelService {
     if (error) {
       vehicleModelStore.setFetchError("Error");
       vehicleModelStore.replaceModels(null);
-      console.log(error);
+      console.error(error);
       vehicleModelStore.setLoading(false);
     }
     if (data) {
       vehicleModelStore.replaceModels(data);
       await this.calculateNumberOfData("VehicleModel");
-      console.log(
-        "Ukupno modela u bazi: ",
-        vehicleModelStore.totalNumberOfData,
-        "Ukupno stranica: ",
-        vehicleModelStore.numberOfPages,
-        "Povučeni modeli: ",
-        vehicleModelStore.vehicleModels,
-      );
       vehicleModelStore.setFetchError(null);
       vehicleModelStore.setLoading(false);
     }
@@ -42,7 +34,18 @@ class VehicleModelService {
 
   async calculateNumberOfData() {
     try {
-      const { data, error } = await supabase.from("VehicleModel").select("id");
+      let query = supabase
+        .from("VehicleModel")
+        .select("id")
+        .order(vehicleModelStore.selectedSort, {
+          ascending: vehicleModelStore.ascending,
+        });
+
+      if (vehicleModelStore.selectedMakeID !== "") {
+        query = query.eq("makeId", vehicleModelStore.selectedMakeID);
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         console.error("Error fetching data:", error);
@@ -87,7 +90,6 @@ class VehicleModelService {
     }
 
     if (data) {
-      console.log(data, "ID:", id);
       await this.fetchVehicleModels();
     }
   };

@@ -11,6 +11,7 @@ class VehicleMakeStore {
   pageSize = 9;
   totalNumberOfData = 0;
   numberOfPages = 0;
+  fetchError = null;
 
   constructor() {
     makeObservable(this, {
@@ -23,6 +24,7 @@ class VehicleMakeStore {
       endAt: observable,
       totalNumberOfData: observable,
       numberOfPages: observable,
+      fetchError: observable,
       setLoading: action,
       setFetchError: action,
       findMakeNameById: action,

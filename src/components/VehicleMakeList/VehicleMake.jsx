@@ -1,9 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import "./vehicleMake.css";
-
 import VehicleMakeModal from "./VehicleMakeModal";
-
 import Loader from "../Loader/Loader";
 import PaginationButton from "../PaginationButton/PaginationButton";
 import vehicleMakeService from "../../services/VehicleMakeService";
@@ -27,7 +25,6 @@ const VehicleMakeList = () => {
 
   const handleChangeDirection = async (e) => {
     const sort = e.target.value === "true";
-
     vehicleMakeStore.changeSelectedDirection(sort);
     await vehicleMakeService.fetchVehicleMakes();
   };

@@ -21,7 +21,6 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form.name);
     form.submitForm();
   };
 

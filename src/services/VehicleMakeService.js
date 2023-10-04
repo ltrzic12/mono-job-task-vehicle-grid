@@ -21,7 +21,7 @@ class VehicleMakeService {
     if (error) {
       vehicleMakeStore.setFetchError("Error");
       vehicleMakeStore.replaceMakes(null);
-      console.log(error);
+      console.error(error);
       vehicleMakeStore.setLoading(false);
     }
 
@@ -30,14 +30,6 @@ class VehicleMakeService {
       await this.calculateNumberOfData("VehicleMake");
       vehicleMakeStore.setFetchError(null);
       vehicleMakeStore.setLoading(false);
-      console.log(
-        "Ukupno modela u bazi: ",
-        vehicleMakeStore.totalNumberOfData,
-        "Ukupno stranica: ",
-        vehicleMakeStore.numberOfPages,
-        "Povučeni modeli: ",
-        vehicleMakeStore.vehicleMakes,
-      );
     }
   };
 
@@ -69,7 +61,6 @@ class VehicleMakeService {
     }
 
     if (data) {
-      console.log(data, "ID:", id);
       await vehicleModelService.deleteVehicleModelsByMakeId(id);
       this.fetchVehicleMakes();
     }

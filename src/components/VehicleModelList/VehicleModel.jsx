@@ -15,23 +15,22 @@ const VehicleModelList = () => {
       vehicleModelStore.resetAllFilters();
       await vehicleModelService.fetchVehicleModels();
       await vehicleMakeService.fetchVehicleMakes();
-      console.log("Models: ", vehicleModelStore.vehicleModels);
     };
     fetchData();
   }, []);
 
   const handleChangeDirection = async (e) => {
     const sort = e.target.value === "true";
-
     vehicleModelStore.changeSelectedDirection(sort);
     await vehicleModelService.fetchVehicleModels();
+    await vehicleModelService.calculateNumberOfData();
   };
 
   const handleChangeFilter = async (e) => {
     const filter = e.target.value;
-    console.log(filter);
     vehicleModelStore.changeSelectedSort(filter);
     await vehicleModelService.fetchVehicleModels();
+    await vehicleModelService.calculateNumberOfData();
   };
 
   const handleFilterByMakeId = async (e) => {
