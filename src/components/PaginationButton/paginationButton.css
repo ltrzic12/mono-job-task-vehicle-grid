@@ -18,16 +18,16 @@
 
 .pagination button:disabled {
   color: rgba(0, 0, 0, 0.24);
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.293);
 }
 
 .pagination button:disabled:hover {
   color: rgba(0, 0, 0, 0.24);
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.293);
 }
 
 .pagination button:hover {
-  color: grey;
+  background-color: rgba(128, 128, 128, 0.293);
 }
 
 .button-prev {

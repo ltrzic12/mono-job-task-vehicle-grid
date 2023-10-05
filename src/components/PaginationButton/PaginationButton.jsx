@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
 import "./paginationButton.css";
-import vehicleModelStore from "../../stores/VehicleModelStore";
 
 const PaginationButton = ({
   prev,
@@ -20,17 +19,6 @@ const PaginationButton = ({
   let pages = [];
   let data = limit;
   let numOfPages = Math.ceil(data / pageSize);
-
-  console.log(
-    "data: ",
-    data,
-    "pagesize: ",
-    pageSize,
-    "num of pages: ",
-    numOfPages,
-    "pages: ",
-    pages,
-  );
 
   for (let i = 0; i < numOfPages; i++) {
     pages.push(i);
@@ -58,16 +46,25 @@ const PaginationButton = ({
     let newCurrentPage = page + 1;
     setPage(newStartAt, newEndAt, newCurrentPage);
   };
+  const currentPageStyle = (page) => {
+    const buttonStyle = {
+      backgroundColor: "white",
+      color: "black",
+    };
+    if (page + 1 === currentPage) {
+      buttonStyle.backgroundColor = "rgba(128, 128, 128, 0.293)";
+    }
+    return buttonStyle;
+  };
 
-  console.log(
-    "start at: ",
-    vehicleModelStore.startAt,
-    "end at: ",
-    vehicleModelStore.endAt,
-    "page: ",
-    vehicleModelStore.currentPage,
-  );
-  // const currentPageStyle = (page) => {};
+  const pageButtonDisabled = (page) => {
+    let isDisabled = false;
+    if (page + 1 === currentPage) {
+      isDisabled = true;
+    }
+
+    return isDisabled;
+  };
 
   return (
     <div className='pagination'>
@@ -82,7 +79,9 @@ const PaginationButton = ({
             className='page-button'
             key={page}
             value={page + 1}
-            onClick={() => handleChangePage(page)}>
+            style={currentPageStyle(page)}
+            onClick={() => handleChangePage(page)}
+            disabled={pageButtonDisabled(page)}>
             {page + 1}
           </button>
         );

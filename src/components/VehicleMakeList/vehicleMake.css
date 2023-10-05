@@ -83,15 +83,10 @@
   transition: background-color 0.3s ease;
 }
 
-.edit:hover {
-  background-color: rgb(198, 192, 192);
-}
-
 .edit-menu {
   position: absolute;
   background-color: rgb(240, 240, 240);
   right: 0;
-
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
