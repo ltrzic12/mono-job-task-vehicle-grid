@@ -19,9 +19,8 @@ class VehicleModelService {
     const { data, error } = await query;
 
     if (error) {
-      vehicleModelStore.setFetchError("Error");
-      vehicleModelStore.replaceModels(null);
-      console.error(error);
+      vehicleModelStore.setFetchError("Error: ", error);
+      console.error(vehicleModelStore.fetchError);
       vehicleModelStore.setLoading(false);
     }
     if (data) {
@@ -130,6 +129,11 @@ class VehicleModelService {
 
   fetchPreviousPage = async () => {
     vehicleModelStore.decrementPageIndex();
+    await this.fetchVehicleModels();
+  };
+
+  setPage = async (a, b, c) => {
+    vehicleModelStore.setPage(a, b, c);
     await this.fetchVehicleModels();
   };
 }

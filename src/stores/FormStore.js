@@ -1,5 +1,5 @@
-import { action, makeObservable, observable } from "mobx";
-import vehicleMakeService from "../services/VehicleMakeService";
+import { action, makeObservable, observable } from "mobx"; // For Mobx state management
+import vehicleMakeService from "../services/VehicleMakeService"; // Import your services
 import vehicleModelService from "../services/VehicleModelService";
 
 class Form {
@@ -12,6 +12,9 @@ class Form {
   editModelID = null;
   isLoading = false;
   formError = false;
+  nameError = false;
+  abrvError = false;
+  makeIdError = false;
 
   constructor() {
     makeObservable(this, {
@@ -23,25 +26,38 @@ class Form {
       editModelID: observable,
       submitSuccessful: observable,
       formError: observable,
+      nameError: observable,
+      abrvError: observable,
+      makeIdError: observable,
       setName: action,
+      setNameError: action,
       setAbrv: action,
+      setAbrvError: action,
       setMakeId: action,
+      setMakeIdError: action,
       submitForm: action,
       populateFormData: action,
       setEditModelId: action,
       setIsLoading: action,
       setFormError: action,
       setSubmitSuccessful: action,
+      resetForm: action,
     });
   }
 
   async submitForm() {
     try {
       form.setIsLoading(true);
+      let nameError, abrvError, makeIdError;
       if (this.formType === "new model") {
-        if (!form.name || !form.abrv || form.makeId === "") {
-          console.error("Please fill in all the fields!");
-          form.setFormError(true);
+        nameError = this.validateName(form.name);
+        abrvError = this.validateName(form.abrv);
+        makeIdError = this.validateMakeID(form.makeId);
+
+        if (nameError || abrvError || makeIdError) {
+          this.setNameError(nameError);
+          this.setAbrvError(abrvError);
+          this.setMakeIdError(makeIdError);
           return;
         }
         await vehicleModelService.createModel(
@@ -53,9 +69,11 @@ class Form {
         form.setSubmitSuccessful(true);
       }
       if (this.formType === "new make") {
-        if (!form.name || !form.abrv) {
-          console.error("Please fill in all the fields");
-          form.setFormError(true);
+        nameError = this.validateName(form.name);
+        abrvError = this.validateAbrv(form.abrv);
+        if (nameError || abrvError) {
+          this.setNameError(nameError);
+          this.setAbrvError(abrvError);
           return;
         }
         await vehicleMakeService.createMake(form.name, form.abrv);
@@ -63,18 +81,19 @@ class Form {
         form.setSubmitSuccessful(true);
       }
       if (this.formType === "edit model") {
-        if (!form.name || !form.abrv) {
-          console.error("Please fill in all the fields!");
-          form.setFormError(true);
+        nameError = this.validateName(form.name);
+        abrvError = this.validateName(form.abrv);
+        if (nameError || abrvError) {
+          this.setNameError(nameError);
+          this.setAbrvError(abrvError);
+
           return;
         }
-
         await vehicleModelService.editVehicleModel(
           this.name,
           this.abrv,
           this.editModelID,
         );
-        console.log("ID of the model updated:", this.editModelID);
         this.setSubmitSuccessful();
         this.setEditModelId(null);
       }
@@ -102,6 +121,27 @@ class Form {
     }
   }
 
+  validateName(name) {
+    if (!name) {
+      return "Name is required!";
+    }
+    return null;
+  }
+
+  validateAbrv(abrv) {
+    if (!abrv) {
+      return "Abbreviation is required!";
+    }
+    return null;
+  }
+
+  validateMakeID(makeID) {
+    if (!makeID || makeID === "") {
+      return "Make is required!";
+    }
+    return null;
+  }
+
   setFormType(type) {
     this.formType = type;
   }
@@ -110,19 +150,33 @@ class Form {
     this.name = name;
   }
 
+  setNameError(error) {
+    this.nameError = error;
+  }
+
   setAbrv(abrv) {
     this.abrv = abrv;
+  }
+
+  setAbrvError(error) {
+    this.abrvError = error;
   }
 
   setMakeId(makeId) {
     this.makeId = makeId;
   }
 
+  setMakeIdError(error) {
+    this.makeIdError = error;
+  }
+
   resetForm() {
     this.name = "";
     this.abrv = "";
     this.makeId = "";
-    this.setFormError(false);
+    this.abrvError = false;
+    this.nameError = false;
+    this.makeIdError = false;
   }
 
   populateFormData(name, abrv, makeId) {

@@ -40,22 +40,39 @@ const Form = () => {
               <input
                 type='text'
                 value={form.name}
-                onChange={(e) => form.setName(e.target.value)}
+                id='name'
+                name='name'
+                autoComplete='off'
+                onChange={(e) => {
+                  form.setName(e.target.value);
+                  form.setNameError(form.validateName(e.target.value));
+                }}
               />
+              {form.nameError && <span>{form.nameError}</span>}
+
               <label htmlFor='abrv'>{`Enter  ${form.formType} abbreviation`}</label>
               <input
                 type='text'
                 name='abrv'
+                id='abrv'
                 value={form.abrv}
-                onChange={(e) => form.setAbrv(e.target.value)}
+                autoComplete='off'
+                onChange={(e) => {
+                  form.setAbrv(e.target.value);
+                  form.setAbrvError(form.validateAbrv(e.target.value));
+                }}
               />
+              {form.abrvError && <span>{form.abrvError}</span>}
               {form.formType === "new model" && (
                 <div>
                   <select
                     name='maker'
                     id=''
                     value={form.makeId}
-                    onChange={(e) => form.setMakeId(e.target.value)}
+                    onChange={(e) => {
+                      form.setMakeId(e.target.value);
+                      form.setMakeIdError(form.validateMakeID(e.target.value));
+                    }}
                     className='select-form'>
                     <option value=''>Select maker</option>
                     {vehicleMakeStore.vehicleMakes.map((vehicle) => (
@@ -63,12 +80,12 @@ const Form = () => {
                         {vehicle.name}
                       </option>
                     ))}
-                  </select>
+                  </select>{" "}
+                  <br />
+                  {form.makeIdError && <span>{form.makeIdError}</span>}
                 </div>
               )}
-              {form.formError === true && (
-                <span>Please fill in all the fields!</span>
-              )}
+
               <button type='submit'>Submit</button>
             </form>
           </>

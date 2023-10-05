@@ -12,6 +12,7 @@ class VehicleModelStore {
   pageSize = 9;
   totalNumberOfData = 0;
   numberOfPages = 0;
+  currentPage = 1;
 
   constructor() {
     makeObservable(this, {
@@ -25,6 +26,7 @@ class VehicleModelStore {
       endAt: observable,
       totalNumberOfData: observable,
       numberOfPages: observable,
+      currentPage: observable,
       setLoading: action,
       setFetchError: action,
       findMakeNameById: action,
@@ -38,6 +40,8 @@ class VehicleModelStore {
       resetAllFilters: action,
       setTotalNumberOfData: action,
       setNumberOfPage: action,
+      setPage: action,
+      setCurrentPage: action,
     });
   }
 
@@ -75,18 +79,31 @@ class VehicleModelStore {
   async incrementPageIndex() {
     this.startAt += 8;
     this.endAt += 8;
+    this.currentPage += 1;
   }
 
   async decrementPageIndex() {
     if (this.startAt > 0) {
       this.startAt -= 8;
       this.endAt -= 8;
+      this.currentPage -= 1;
     }
   }
 
   resetPageIndex() {
     this.startAt = 0;
     this.endAt = 8;
+    this.currentPage = 1;
+  }
+
+  setPage(startAt, endAt, page) {
+    this.startAt = startAt;
+    this.endAt = endAt;
+    this.setCurrentPage(page);
+  }
+
+  setCurrentPage(page) {
+    this.currentPage = page;
   }
 
   resetAllFilters() {

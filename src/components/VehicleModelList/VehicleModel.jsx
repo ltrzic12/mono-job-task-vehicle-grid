@@ -51,7 +51,7 @@ const VehicleModelList = () => {
           <label htmlFor='filter'>
             <i className='fa-solid fa-filter' style={style}></i>
           </label>
-          <select name='filter' onChange={handleChangeFilter}>
+          <select name='filter' id='filter' onChange={handleChangeFilter}>
             <option value='name'>Name</option>
             <option value='created_at'>Time added</option>
           </select>
@@ -60,7 +60,10 @@ const VehicleModelList = () => {
           <label htmlFor='filterByMakeId'>
             <i className='fa-solid fa-car' style={style}></i>
           </label>
-          <select name='filterByMakeId' id='' onChange={handleFilterByMakeId}>
+          <select
+            name='filterByMakeId'
+            id='filterByMakeId'
+            onChange={handleFilterByMakeId}>
             <option value=''>All</option>
             {vehicleMakeStore.vehicleMakes.map((make) => {
               return (
@@ -79,7 +82,7 @@ const VehicleModelList = () => {
               <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
             )}
           </label>
-          <select name='orderBy' onChange={handleChangeDirection}>
+          <select name='orderBy' id='orderBy' onChange={handleChangeDirection}>
             <option value='true'>Ascending</option>
             <option value='false'>Descending</option>
           </select>
@@ -105,7 +108,11 @@ const VehicleModelList = () => {
         prev={vehicleModelService.fetchPreviousPage}
         endAt={vehicleModelStore.endAt}
         limit={vehicleModelStore.totalNumberOfData}
-        startAt={vehicleModelStore.startAt}></PaginationButton>
+        startAt={vehicleModelStore.startAt}
+        currentPage={vehicleModelStore.currentPage}
+        totalNumberOfData={vehicleModelStore.totalNumberOfData}
+        setPage={vehicleModelService.setPage}
+        pageSize={vehicleModelStore.pageSize}></PaginationButton>
     </div>
   );
 };

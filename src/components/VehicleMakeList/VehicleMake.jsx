@@ -40,7 +40,7 @@ const VehicleMakeList = () => {
           <label htmlFor='filter'>
             <i className='fa-solid fa-filter' style={style}></i>
           </label>
-          <select name='filter' onChange={handleChangeFilter}>
+          <select name='filter' id='filter' onChange={handleChangeFilter}>
             <option value='name'>Name</option>
             <option value='created_at'>Time added</option>
           </select>
@@ -53,7 +53,7 @@ const VehicleMakeList = () => {
               <i className='fa-solid fa-arrow-down-z-a' style={style}></i>
             )}
           </label>
-          <select name='orderBy' onChange={handleChangeDirection}>
+          <select name='orderBy' id='orderBy' onChange={handleChangeDirection}>
             <option value='true'>Ascending</option>
             <option value='false'>Descending</option>
           </select>
