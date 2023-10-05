@@ -12,7 +12,7 @@ class VehicleMakeService {
         ascending: vehicleMakeStore.ascending,
       });
 
-    if (vehicleMakeStore.page === "makes") {
+    if (vehicleMakeStore.pageType === "makes") {
       query = query.range(vehicleMakeStore.startAt, vehicleMakeStore.endAt);
     }
 
@@ -28,6 +28,7 @@ class VehicleMakeService {
     if (data) {
       vehicleMakeStore.replaceMakes(data);
       await this.calculateNumberOfData("VehicleMake");
+      console.log(vehicleMakeStore.totalNumberOfData);
       vehicleMakeStore.setFetchError(null);
       vehicleMakeStore.setLoading(false);
     }
@@ -108,6 +109,11 @@ class VehicleMakeService {
 
   fetchPreviousPage = async () => {
     vehicleMakeStore.decrementPageIndex();
+    await this.fetchVehicleMakes();
+  };
+
+  setPage = async (a, b, c) => {
+    vehicleMakeStore.setPage(a, b, c);
     await this.fetchVehicleMakes();
   };
 }

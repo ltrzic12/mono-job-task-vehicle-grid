@@ -77,15 +77,15 @@ class VehicleModelStore {
   }
 
   async incrementPageIndex() {
-    this.startAt += 8;
-    this.endAt += 8;
+    this.startAt += this.pageSize;
+    this.endAt += this.pageSize;
     this.currentPage += 1;
   }
 
   async decrementPageIndex() {
     if (this.startAt > 0) {
-      this.startAt -= 8;
-      this.endAt -= 8;
+      this.startAt -= this.pageSize;
+      this.endAt -= this.pageSize;
       this.currentPage -= 1;
     }
   }

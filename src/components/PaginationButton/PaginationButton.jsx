@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import "./paginationButton.css";
+import vehicleModelStore from "../../stores/VehicleModelStore";
 
 const PaginationButton = ({
   prev,
@@ -17,8 +18,19 @@ const PaginationButton = ({
   };
 
   let pages = [];
-  let data = totalNumberOfData;
+  let data = limit;
   let numOfPages = Math.ceil(data / pageSize);
+
+  console.log(
+    "data: ",
+    data,
+    "pagesize: ",
+    pageSize,
+    "num of pages: ",
+    numOfPages,
+    "pages: ",
+    pages,
+  );
 
   for (let i = 0; i < numOfPages; i++) {
     pages.push(i);
@@ -41,12 +53,20 @@ const PaginationButton = ({
   }
 
   const handleChangePage = (page) => {
-    let newEndAt = Math.ceil(endAt / currentPage) * (page + 1);
-    let newStartAt = newEndAt - endAt / currentPage;
+    let newStartAt = page * pageSize;
+    let newEndAt = newStartAt + pageSize - 1;
     let newCurrentPage = page + 1;
     setPage(newStartAt, newEndAt, newCurrentPage);
   };
 
+  console.log(
+    "start at: ",
+    vehicleModelStore.startAt,
+    "end at: ",
+    vehicleModelStore.endAt,
+    "page: ",
+    vehicleModelStore.currentPage,
+  );
   // const currentPageStyle = (page) => {};
 
   return (
@@ -61,6 +81,7 @@ const PaginationButton = ({
           <button
             className='page-button'
             key={page}
+            value={page + 1}
             onClick={() => handleChangePage(page)}>
             {page + 1}
           </button>

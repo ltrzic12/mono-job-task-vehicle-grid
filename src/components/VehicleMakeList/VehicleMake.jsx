@@ -1,5 +1,5 @@
-import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
+import { observer } from "mobx-react";
+import React, { useEffect } from "react";
 import "./vehicleMake.css";
 import VehicleMakeModal from "./VehicleMakeModal";
 import Loader from "../Loader/Loader";
@@ -11,9 +11,11 @@ const VehicleMakeList = () => {
   useEffect(() => {
     const fetchData = async () => {
       vehicleMakeStore.resetAllFilters();
+      vehicleMakeStore.setPageType("makes");
       await vehicleMakeService.fetchVehicleMakes();
     };
     fetchData();
+    console.log(vehicleMakeStore.pageType);
   }, []);
 
   const handleChangeFilter = async (e) => {
@@ -72,12 +74,16 @@ const VehicleMakeList = () => {
           </ul>
         )}
       </div>
+
       <PaginationButton
         next={vehicleMakeService.fetchNextPage}
         prev={vehicleMakeService.fetchPreviousPage}
         endAt={vehicleMakeStore.endAt}
         limit={vehicleMakeStore.totalNumberOfData}
-        startAt={vehicleMakeStore.startAt}></PaginationButton>
+        startAt={vehicleMakeStore.startAt}
+        currentPage={vehicleMakeStore.currentPage}
+        setPage={vehicleMakeService.setPage}
+        pageSize={vehicleMakeStore.pageSize}></PaginationButton>
     </div>
   );
 };

@@ -11,8 +11,9 @@ import vehicleMakeStore from "../../stores/VehicleMakeStore";
 
 const VehicleModelList = () => {
   useEffect(() => {
+    vehicleMakeStore.setPageType("models");
+    vehicleModelStore.resetAllFilters();
     const fetchData = async () => {
-      vehicleModelStore.resetAllFilters();
       await vehicleModelService.fetchVehicleModels();
       await vehicleMakeService.fetchVehicleMakes();
     };
@@ -110,7 +111,6 @@ const VehicleModelList = () => {
         limit={vehicleModelStore.totalNumberOfData}
         startAt={vehicleModelStore.startAt}
         currentPage={vehicleModelStore.currentPage}
-        totalNumberOfData={vehicleModelStore.totalNumberOfData}
         setPage={vehicleModelService.setPage}
         pageSize={vehicleModelStore.pageSize}></PaginationButton>
     </div>

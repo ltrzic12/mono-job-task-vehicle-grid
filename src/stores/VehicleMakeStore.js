@@ -5,13 +5,14 @@ class VehicleMakeStore {
   vehicleMakes = [];
   ascending = true;
   selectedSort = "name";
-  page = "makes";
+  pageType = "makes";
   startAt = 0;
-  endAt = 8;
-  pageSize = 9;
+  endAt = 5;
+  pageSize = 6;
   totalNumberOfData = 0;
   numberOfPages = 0;
   fetchError = null;
+  currentPage = 1;
 
   constructor() {
     makeObservable(this, {
@@ -19,12 +20,13 @@ class VehicleMakeStore {
       vehicleMakes: observable,
       ascending: observable,
       selectedSort: observable,
-      page: observable,
+      pageType: observable,
       startAt: observable,
       endAt: observable,
       totalNumberOfData: observable,
       numberOfPages: observable,
       fetchError: observable,
+      currentPage: observable,
       setLoading: action,
       setFetchError: action,
       findMakeNameById: action,
@@ -37,6 +39,8 @@ class VehicleMakeStore {
       resetAllFilters: action,
       setTotalNumberOfData: action,
       setNumberOfPage: action,
+      setPage: action,
+      setCurrentPage: action,
     });
   }
 
@@ -68,20 +72,35 @@ class VehicleMakeStore {
   }
 
   async incrementPageIndex() {
-    this.startAt += 8;
-    this.endAt += 8;
+    this.startAt += this.pageSize;
+    this.endAt += this.pageSize;
   }
 
   async decrementPageIndex() {
     if (this.startAt > 0) {
-      this.startAt -= 8;
-      this.endAt -= 8;
+      this.startAt -= this.pageSize;
+      this.endAt -= this.pageSize;
     }
   }
 
   resetPageIndex() {
     this.startAt = 0;
-    this.endAt = 8;
+    this.endAt = 5;
+    this.currentPage = 1;
+  }
+
+  setPage(startAt, endAt, page) {
+    this.startAt = startAt;
+    this.endAt = endAt;
+    this.setCurrentPage(page);
+  }
+
+  setCurrentPage(page) {
+    this.currentPage = page;
+  }
+
+  setPageType(a) {
+    this.pageType = a;
   }
 
   resetAllFilters() {
