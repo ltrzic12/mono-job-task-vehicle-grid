@@ -51,19 +51,14 @@ class EditModelStore extends Form {
         console.log("Form validation successful");
         console.log("Form values:", form.values());
 
-        try {
-          await vehicleModelService.editVehicleModel(
-            form.values().modelName,
-            form.values().newAbbreviation,
-            this.modelID,
-          );
+        await vehicleModelService.editVehicleModel(
+          form.values().modelName,
+          form.values().newAbbreviation,
+          this.modelID,
+        );
 
-          alert("Model updated successfully!");
-          form.clear();
-        } catch (error) {
-          alert("Error submitting the form. Please check your inputs.");
-          console.error("Form submission error:", error);
-        }
+        alert("Model updated successfully!");
+        form.clear();
       },
       onError(form) {
         console.error("Form validation errors:", form.errors());

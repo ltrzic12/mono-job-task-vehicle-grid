@@ -48,19 +48,14 @@ class EditMakeStore extends Form {
         console.log("Validation successful");
         console.log("Values:", form.values());
 
-        try {
-          await vehicleMakeService.editVehicleMake(
-            form.values().makeName,
-            form.values().makeAbbr,
-            this.makeID,
-          );
+        await vehicleMakeService.editVehicleMake(
+          form.values().makeName,
+          form.values().makeAbbr,
+          this.makeID,
+        );
 
-          alert("Make updated successfully!");
-          form.clear();
-        } catch (error) {
-          alert("Error submitting the form. Please check your inputs.");
-          console.error("Form submission error:", error);
-        }
+        alert("Make updated successfully!");
+        form.clear();
       },
       onError(form) {
         alert("Form has errors!");

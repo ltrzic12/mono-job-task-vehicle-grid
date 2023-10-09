@@ -35,15 +35,11 @@ class AddNewMakeForm extends Form {
       onSuccess: async (form) => {
         console.log("Validation successful");
         console.log("Values:", form.values);
-        try {
-          const { makeName, newAbbreviation } = form.values();
-          await vehicleMakeService.createMake(makeName, newAbbreviation);
-          alert("New make added successfully!");
-          form.clear();
-        } catch (error) {
-          alert("Error submitting the form. Please check your inputs.");
-          console.error("Form submission error:", error);
-        }
+
+        const { makeName, newAbbreviation } = form.values();
+        await vehicleMakeService.createMake(makeName, newAbbreviation);
+        alert("New make added successfully!");
+        form.clear();
       },
       onError(form) {
         alert("Form has errors!");
