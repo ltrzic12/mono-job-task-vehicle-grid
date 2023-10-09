@@ -8,6 +8,7 @@ import Loader from "./components/Loader/Loader";
 import form from "./stores/FormStore";
 import vehicleMakeStore from "./stores/VehicleMakeStore";
 import vehicleModelStore from "./stores/VehicleModelStore";
+import NewMakePage from "./pages/Form/NewMakePage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path='/models' element={<ModelsPage />}></Route>
             <Route path='/form' element={<FormPage />}></Route>
             <Route path='/form/edit-model' element={<FormPage />}></Route>
+            <Route path='/form/new-make' element={<NewMakePage />}></Route>
             <Route path='/form/edit-make' element={<FormPage />}></Route>
           </Routes>
         )}

@@ -68,10 +68,6 @@ class VehicleMakeService {
   };
 
   async createMake(name, abrv) {
-    if (!name || !abrv) {
-      console.error("Please fill in all the fields!");
-      return;
-    }
     const { data, error } = await supabase
       .from("VehicleMake")
       .insert([{ name, abrv }])

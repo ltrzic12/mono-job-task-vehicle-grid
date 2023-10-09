@@ -1,8 +1,7 @@
 import { observer } from "mobx-react";
-import Form from "../../components/Form/Form";
 
 const FormPage = () => {
-  return <Form></Form>;
+  return <h1>ne ovo</h1>;
 };
 
 export default observer(FormPage);

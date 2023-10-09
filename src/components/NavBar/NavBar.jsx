@@ -53,7 +53,7 @@ const NavBar = () => {
         </li>
         <li>
           <NavigationLink
-            path={"/form"}
+            path={"/form/new-make"}
             click={handleMakeFormClick}
             style={navLinkStyle}
             text={"Add make"}></NavigationLink>
