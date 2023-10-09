@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import vehicleMakeStore from "./stores/VehicleMakeStore";
 import vehicleModelStore from "./stores/VehicleModelStore";
-import form from "./stores/FormStore";
 import { newMakeForm } from "./stores/form/AddNewMakeStore";
 import { newModelForm } from "./stores/form/AddNewModelStore";
 import { editModelForm } from "./stores/form/EditModelStore";
@@ -15,7 +14,6 @@ import { BrowserRouter } from "react-router-dom";
 const stores = {
   vehicleMakeStore,
   vehicleModelStore,
-  form,
   newMakeForm,
   newModelForm,
   editModelForm,

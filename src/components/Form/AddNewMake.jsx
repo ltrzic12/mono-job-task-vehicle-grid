@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { newMakeForm } from "../../stores/form/AddNewMakeStore";
-import vehicleMakeService from "../../services/VehicleMakeService";
 import "./form.css";
 
 const AddNewMake = observer(({ form }) => {
@@ -9,25 +8,8 @@ const AddNewMake = observer(({ form }) => {
     form.clear();
   }, [form]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await form.onSubmit();
-      if (form.isValid) {
-        const { makeName, newAbbreviation } = form.values();
-        await vehicleMakeService.createMake(makeName, newAbbreviation);
-        alert("New make added successfully!");
-        form.clear();
-      }
-    } catch (error) {
-      alert("Error submitting the form. Please check your inputs.");
-      console.error("Form submission error:", error);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className='form'>
+    <form onSubmit={form.onSubmit} className='form'>
       <h2>Add new Make</h2>
       <label htmlFor={form.$("makeName").id}>
         {form.$("makeName").label}

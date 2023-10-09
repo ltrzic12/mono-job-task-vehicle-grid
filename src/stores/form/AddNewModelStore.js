@@ -1,6 +1,7 @@
 import Form from "mobx-react-form";
 import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
+import vehicleModelService from "../../services/VehicleModelService";
 
 class AddNewModelForm extends Form {
   plugins() {
@@ -38,8 +39,18 @@ class AddNewModelForm extends Form {
 
   hooks() {
     return {
-      onSuccess(form) {
+      onSuccess: async (form) => {
+        console.log("Validation successful");
         console.log("Values:", form.values);
+        const { modelName, newAbbreviation, modelMaker } = form.values();
+        await vehicleModelService.createModel(
+          modelName,
+          newAbbreviation,
+          modelMaker,
+        );
+
+        alert("New make added successfully!");
+        form.clear();
       },
       onError(form) {
         alert("Form has errors!");

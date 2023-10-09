@@ -4,7 +4,6 @@ import MakesPage from "./pages/MakesPage/MakesPage";
 import ModelsPage from "./pages/ModelsPage/ModelsPage";
 import "./app.css";
 import Loader from "./components/Loader/Loader";
-import form from "./stores/FormStore";
 import vehicleMakeStore from "./stores/VehicleMakeStore";
 import vehicleModelStore from "./stores/VehicleModelStore";
 import NewMakePage from "./pages/Form/NewMakePage";
@@ -17,9 +16,7 @@ function App() {
     <div className='app'>
       <div className='vehicle-app'>
         <NavBar></NavBar>
-        {vehicleMakeStore.isLoading ||
-        vehicleModelStore.isLoading ||
-        form.isLoading ? (
+        {vehicleMakeStore.isLoading || vehicleModelStore.isLoading ? (
           <Loader></Loader>
         ) : (
           <Routes>

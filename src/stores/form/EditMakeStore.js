@@ -2,6 +2,7 @@ import { makeObservable, observable, action } from "mobx";
 import { Form } from "mobx-react-form";
 import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
+import vehicleMakeService from "../../services/VehicleMakeService";
 
 class EditMakeStore extends Form {
   makeID = null;
@@ -43,8 +44,23 @@ class EditMakeStore extends Form {
 
   hooks() {
     return {
-      onSuccess(form) {
+      onSuccess: async (form) => {
+        console.log("Validation successful");
         console.log("Values:", form.values());
+
+        try {
+          await vehicleMakeService.editVehicleMake(
+            form.values().makeName,
+            form.values().makeAbbr,
+            this.makeID,
+          );
+
+          alert("Make updated successfully!");
+          form.clear();
+        } catch (error) {
+          alert("Error submitting the form. Please check your inputs.");
+          console.error("Form submission error:", error);
+        }
       },
       onError(form) {
         alert("Form has errors!");

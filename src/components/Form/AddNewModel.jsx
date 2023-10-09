@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { newModelForm } from "../../stores/form/AddNewModelStore";
 import vehicleMakeService from "../../services/VehicleMakeService";
 import vehicleMakeStore from "../../stores/VehicleMakeStore";
-import vehicleModelService from "../../services/VehicleModelService";
 
 const AddNewModel = observer(({ form }) => {
   useEffect(() => {
@@ -13,29 +12,9 @@ const AddNewModel = observer(({ form }) => {
     };
     fetchMakes();
   }, [form]);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await newModelForm.onSubmit();
-      if (newModelForm.isValid) {
-        const { modelName, newAbbreviation, modelMaker } = form.values();
-        await vehicleModelService.createModel(
-          modelName,
-          newAbbreviation,
-          modelMaker,
-        );
-        alert("New make added successfully!");
-        form.clear();
-      }
-    } catch (error) {
-      alert("Error submitting the form. Please check your inputs.");
-      console.error("Form submission error:", error);
-    }
-  };
 
   return (
-    <form onSubmit={handleSubmit} className='form'>
+    <form onSubmit={form.onSubmit} className='form'>
       <h2>Add new model</h2>
       <label htmlFor={newModelForm.$("modelName").id}>
         {newModelForm.$("modelName").label}

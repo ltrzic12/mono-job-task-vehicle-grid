@@ -2,6 +2,7 @@ import { makeObservable, observable, action } from "mobx";
 import Form from "mobx-react-form";
 import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
+import vehicleModelService from "../../services/VehicleModelService";
 
 class EditModelStore extends Form {
   modelID = null;
@@ -41,6 +42,32 @@ class EditModelStore extends Form {
           value: "",
         },
       ],
+    };
+  }
+
+  hooks() {
+    return {
+      onSuccess: async (form) => {
+        console.log("Form validation successful");
+        console.log("Form values:", form.values());
+
+        try {
+          await vehicleModelService.editVehicleModel(
+            form.values().modelName,
+            form.values().newAbbreviation,
+            this.modelID,
+          );
+
+          alert("Model updated successfully!");
+          form.clear();
+        } catch (error) {
+          alert("Error submitting the form. Please check your inputs.");
+          console.error("Form submission error:", error);
+        }
+      },
+      onError(form) {
+        console.error("Form validation errors:", form.errors());
+      },
     };
   }
 
