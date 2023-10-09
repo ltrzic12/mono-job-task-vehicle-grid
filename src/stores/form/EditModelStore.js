@@ -1,52 +1,56 @@
+import { makeObservable, observable, action } from "mobx";
 import Form from "mobx-react-form";
 import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
 
-class AddNewModelForm extends Form {
+class EditModelStore extends Form {
+  modelID = null;
+  makeID = null;
+
+  constructor() {
+    super();
+    makeObservable(this, {
+      modelID: observable,
+      makeID: observable,
+      setMakeID: action,
+      setModelID: action,
+    });
+  }
+
   plugins() {
     return {
       dvr: dvr(validatorjs),
     };
   }
+
   setup() {
     return {
       fields: [
         {
           name: "modelName",
-          label: "Model Name",
+          label: "name",
           placeholder: "Enter new Model name",
           rules: "required|string|between:1,25",
           value: "",
         },
         {
           name: "newAbbreviation",
-          label: "Abbreviation",
+          label: "abrv",
           placeholder: "Enter new abbreviation",
           rules: "required|string|between:1,25",
-          value: "",
-        },
-        {
-          name: "modelMaker",
-          label: "Model Maker",
-          placeholder: "Select Model Maker",
-          rules: "required",
           value: "",
         },
       ],
     };
   }
 
-  hooks() {
-    return {
-      onSuccess(form) {
-        console.log("Values:", form.values);
-      },
-      onError(form) {
-        alert("Form has errors!");
-        console.log("All form errors", form.errors());
-      },
-    };
+  setModelID(modelID) {
+    this.modelID = modelID;
+  }
+
+  setMakeID(makeID) {
+    this.makeID = makeID;
   }
 }
 
-export const newModelForm = new AddNewModelForm();
+export const editModelForm = new EditModelStore();

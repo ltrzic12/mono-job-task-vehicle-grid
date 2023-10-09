@@ -12,13 +12,12 @@ const AddNewMake = observer(({ form }) => {
     e.preventDefault();
 
     try {
-      await form.onSubmit(); // This will trigger Mobx-React-Form validation
+      await form.onSubmit();
       if (form.isValid) {
-        // The form is valid, proceed to add the new make to your database
-        const { makeName, newAbbreviation } = form.values(); // Destructure the form data
-        await vehicleMakeService.createMake(makeName, newAbbreviation); // Pass the values to the function
-        alert("New make added successfully!"); // Show success message
-        form.clear(); // Clear the form after successful submission
+        const { makeName, newAbbreviation } = form.values();
+        await vehicleMakeService.createMake(makeName, newAbbreviation);
+        alert("New make added successfully!");
+        form.clear();
       }
     } catch (error) {
       alert("Error submitting the form. Please check your inputs.");
@@ -52,4 +51,4 @@ const AddNewMake = observer(({ form }) => {
 });
 
 const AddNewMakeModul = () => <AddNewMake form={newMakeForm} />;
-export default AddNewMakeModul; // Export the variable as the default export
+export default AddNewMakeModul;

@@ -17,17 +17,16 @@ const AddNewModel = observer(({ form }) => {
     e.preventDefault();
 
     try {
-      await newModelForm.onSubmit(); // This will trigger Mobx-React-Form validation
+      await newModelForm.onSubmit();
       if (newModelForm.isValid) {
-        // The form is valid, proceed to add the new model to your database
-        const { modelName, newAbbreviation, modelMaker } = form.values(); // Destructure the form data
+        const { modelName, newAbbreviation, modelMaker } = form.values();
         await vehicleModelService.createModel(
           modelName,
           newAbbreviation,
           modelMaker,
-        ); // Pass the values to the function
-        alert("New make added successfully!"); // Show success message
-        form.clear(); // Clear the form after successful submission
+        );
+        alert("New make added successfully!");
+        form.clear();
       }
     } catch (error) {
       alert("Error submitting the form. Please check your inputs.");
