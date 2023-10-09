@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { newMakeForm } from "../../stores/form/AddNewMakeStore";
 import vehicleMakeService from "../../services/VehicleMakeService";
 
 const AddNewMake = observer(({ form }) => {
+  useEffect(() => {
+    form.clear();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

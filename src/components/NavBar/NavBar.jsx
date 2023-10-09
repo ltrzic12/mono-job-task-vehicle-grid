@@ -46,7 +46,7 @@ const NavBar = () => {
       <ul className='navbar-side'>
         <li>
           <NavigationLink
-            path={"/form"}
+            path={"/form/new-model"}
             text={"Add model"}
             click={handleModelFormClick}
             style={navLinkStyle}></NavigationLink>

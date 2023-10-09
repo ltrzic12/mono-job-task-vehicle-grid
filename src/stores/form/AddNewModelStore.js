@@ -1,8 +1,10 @@
 import Form from "mobx-react-form";
 import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
+import vehicleModelService from "../../services/VehicleModelService";
+import vehicleMakeService from "../../services/VehicleMakeService";
 
-class AddNewMakeForm extends Form {
+class AddNewModelForm extends Form {
   plugins() {
     return {
       dvr: dvr(validatorjs),
@@ -12,18 +14,26 @@ class AddNewMakeForm extends Form {
     return {
       fields: [
         {
-          name: "makeName",
-          label: "name",
-          placeholder: "Enter new Make name",
+          name: "modelName",
+          label: "Model Name",
+          placeholder: "Enter new Model name",
           rules: "required|string|between:1,25",
           value: "",
         },
         {
           name: "newAbbreviation",
-          label: "abrv",
+          label: "Abbreviation",
           placeholder: "Enter new abbreviation",
           rules: "required|string|between:1,25",
           value: "",
+        },
+        {
+          name: "modelMaker",
+          label: "Model Maker",
+          placeholder: "Select Model Maker",
+          rules: "required",
+          value: "", // Initialize with an empty value
+          options: [], // Initialize options as an empty array
         },
       ],
     };
@@ -42,4 +52,4 @@ class AddNewMakeForm extends Form {
   }
 }
 
-export const newMakeForm = new AddNewMakeForm();
+export const newModelForm = new AddNewModelForm();
