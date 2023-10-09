@@ -95,6 +95,7 @@ class VehicleMakeService {
 
     if (data) {
       console.log(data);
+      console.log("bam");
     }
   }
 

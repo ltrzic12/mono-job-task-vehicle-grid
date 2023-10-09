@@ -6,7 +6,7 @@ import vehicleMakeService from "../../services/VehicleMakeService";
 const AddNewMake = observer(({ form }) => {
   useEffect(() => {
     form.clear();
-  }, []);
+  }, [form]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

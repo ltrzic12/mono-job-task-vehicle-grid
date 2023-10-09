@@ -10,6 +10,7 @@ import vehicleModelStore from "./stores/VehicleModelStore";
 import NewMakePage from "./pages/Form/NewMakePage";
 import NewModelPage from "./pages/Form/NewModelPage";
 import EditModelPage from "./pages/Form/EditModelPage";
+import EditMakePage from "./pages/Form/EditMakePage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path='/form/new-model' element={<NewModelPage />}></Route>
             <Route path='/form/edit-model' element={<EditModelPage />}></Route>
             <Route path='/form/new-make' element={<NewMakePage />}></Route>
+            <Route path='/form/edit-make' element={<EditMakePage />}></Route>
           </Routes>
         )}
       </div>

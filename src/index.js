@@ -8,6 +8,7 @@ import form from "./stores/FormStore";
 import { newMakeForm } from "./stores/form/AddNewMakeStore";
 import { newModelForm } from "./stores/form/AddNewModelStore";
 import { editModelForm } from "./stores/form/EditModelStore";
+import { editMakeForm } from "./stores/form/EditMakeStore";
 
 import { Provider } from "mobx-react";
 import { BrowserRouter } from "react-router-dom";
@@ -18,6 +19,7 @@ const stores = {
   newMakeForm,
   newModelForm,
   editModelForm,
+  editMakeForm,
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

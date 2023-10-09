@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { newModelForm } from "../../stores/form/AddNewModelStore";
 import vehicleMakeService from "../../services/VehicleMakeService";
@@ -12,7 +12,7 @@ const AddNewModel = observer(({ form }) => {
       await vehicleMakeService.fetchVehicleMakes();
     };
     fetchMakes();
-  }, []);
+  }, [form]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
