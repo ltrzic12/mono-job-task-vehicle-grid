@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { newMakeForm } from "../../stores/form/AddNewMakeStore";
 import vehicleMakeService from "../../services/VehicleMakeService";
+import "./form.css";
 
 const AddNewMake = observer(({ form }) => {
   useEffect(() => {
@@ -26,25 +27,26 @@ const AddNewMake = observer(({ form }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor={form.$("makeName").id}>{form.$("makeName").label}</label>
+    <form onSubmit={handleSubmit} className='form'>
+      <h2>Add new Make</h2>
+      <label htmlFor={form.$("makeName").id}>
+        {form.$("makeName").label}
+      </label>{" "}
+      <br />
       <input {...form.$("makeName").bind()} />
       <p>{form.$("makeName").error}</p>
-
       <label htmlFor={form.$("newAbbreviation").id}>
         {form.$("newAbbreviation").label}
-      </label>
+      </label>{" "}
+      <br />
       <input {...form.$("newAbbreviation").bind()} />
       <p>{form.$("newAbbreviation").error}</p>
-
-      <button type='submit'>Submit</button>
-      <button type='button' onClick={form.onClear}>
-        Clear
-      </button>
-      <button type='button' onClick={form.onReset}>
-        Reset
-      </button>
-
+      <div className='buttons'>
+        <button type='submit'>Submit</button>
+        <button type='button' onClick={form.onClear}>
+          Clear
+        </button>
+      </div>
       <p>{form.error}</p>
     </form>
   );

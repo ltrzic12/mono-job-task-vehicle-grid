@@ -28,14 +28,14 @@ class EditModelStore extends Form {
       fields: [
         {
           name: "modelName",
-          label: "name",
+          label: "New name",
           placeholder: "Enter new Model name",
           rules: "required|string|between:1,25",
           value: "",
         },
         {
           name: "newAbbreviation",
-          label: "abrv",
+          label: "New abbreviation",
           placeholder: "Enter new abbreviation",
           rules: "required|string|between:1,25",
           value: "",

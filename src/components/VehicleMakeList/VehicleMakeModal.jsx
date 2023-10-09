@@ -35,7 +35,7 @@ const VehicleMakeModal = ({ vehicleMake }) => {
             style={linkStyle}></EditButton>
 
           <DeleteButton
-            ID={vehicleMake.id}
+            id={vehicleMake.id}
             func={vehicleMakeService.deleteVehicleMake}
             func2={
               vehicleModelService.deleteVehicleModelsByMakeId

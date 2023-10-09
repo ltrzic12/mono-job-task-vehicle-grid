@@ -25,14 +25,14 @@ class EditMakeStore extends Form {
       fields: [
         {
           name: "makeName",
-          label: "Make Name",
+          label: "New make Name",
           placeholder: "Enter Make Name",
           rules: "required|string",
           value: "",
         },
         {
           name: "makeAbbr",
-          label: "Abbreviation",
+          label: "New abbreviation",
           placeholder: "Enter Abbreviation",
           rules: "required|string",
           value: "",

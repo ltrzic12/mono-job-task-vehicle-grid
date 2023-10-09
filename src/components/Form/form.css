@@ -1,0 +1,36 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  border: 1px solid grey;
+  width: 50%;
+  align-self: center;
+  margin-top: 5%;
+}
+
+.form label {
+  font-size: xx-large;
+}
+
+.form input {
+  font-size: x-large;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.buttons button {
+  font-size: x-large;
+  border-radius: 7px;
+  gap: 15px;
+}
+
+.form p {
+  color: red;
+}

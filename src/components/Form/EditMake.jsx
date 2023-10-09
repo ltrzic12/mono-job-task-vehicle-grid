@@ -27,27 +27,27 @@ const EditMake = observer(() => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='form'>
+      <h2>Edit make</h2>
       <label htmlFor={editMakeForm.$("makeName").id}>
         {editMakeForm.$("makeName").label}
-      </label>
+      </label>{" "}
+      <br />
       <input {...editMakeForm.$("makeName").bind()} />
       <p>{editMakeForm.$("makeName").error}</p>
-
       <label htmlFor={editMakeForm.$("makeAbbr").id}>
         {editMakeForm.$("makeAbbr").label}
-      </label>
+      </label>{" "}
+      <br />
       <input {...editMakeForm.$("makeAbbr").bind()} />
       <p>{editMakeForm.$("makeAbbr").error}</p>
-
-      <button type='submit'>Submit</button>
-      <button type='button' onClick={editMakeForm.onClear}>
-        Clear
-      </button>
-      <button type='button' onClick={editMakeForm.onReset}>
-        Reset
-      </button>
-
+      <div className='buttons'>
+        {" "}
+        <button type='submit'>Submit</button>
+        <button type='button' onClick={editMakeForm.onClear}>
+          Clear
+        </button>
+      </div>
       <p>{editMakeForm.error}</p>
     </form>
   );

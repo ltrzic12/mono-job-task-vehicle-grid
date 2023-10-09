@@ -27,27 +27,27 @@ const EditModel = observer(() => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='form'>
+      <h2>Edit model</h2>
       <label htmlFor={editModelForm.$("modelName").id}>
         {editModelForm.$("modelName").label}
-      </label>
+      </label>{" "}
+      <br />
       <input {...editModelForm.$("modelName").bind()} />
       <p>{editModelForm.$("modelName").error}</p>
-
       <label htmlFor={editModelForm.$("newAbbreviation").id}>
         {editModelForm.$("newAbbreviation").label}
-      </label>
+      </label>{" "}
+      <br />
       <input {...editModelForm.$("newAbbreviation").bind()} />
       <p>{editModelForm.$("newAbbreviation").error}</p>
-
-      <button type='submit'>Submit</button>
-      <button type='button' onClick={editModelForm.onClear}>
-        Clear
-      </button>
-      <button type='button' onClick={editModelForm.onReset}>
-        Reset
-      </button>
-
+      <div className='buttons'>
+        {" "}
+        <button type='submit'>Submit</button>
+        <button type='button' onClick={editModelForm.onClear}>
+          Clear
+        </button>
+      </div>
       <p>{editModelForm.error}</p>
     </form>
   );

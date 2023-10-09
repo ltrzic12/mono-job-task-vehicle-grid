@@ -35,22 +35,24 @@ const AddNewModel = observer(({ form }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='form'>
+      <h2>Add new model</h2>
       <label htmlFor={newModelForm.$("modelName").id}>
         {newModelForm.$("modelName").label}
       </label>
+      <br />
       <input {...newModelForm.$("modelName").bind()} />
       <p>{newModelForm.$("modelName").error}</p>
-
       <label htmlFor={newModelForm.$("newAbbreviation").id}>
         {newModelForm.$("newAbbreviation").label}
       </label>
+      <br />
       <input {...newModelForm.$("newAbbreviation").bind()} />
       <p>{newModelForm.$("newAbbreviation").error}</p>
-
       <label htmlFor={newModelForm.$("modelMaker").id}>
         {newModelForm.$("modelMaker").label}
       </label>
+      <br />
       <select {...newModelForm.$("modelMaker").bind()}>
         <option value=''>Select Model Maker</option>
         {vehicleMakeStore.vehicleMakes.map((make) => (
@@ -60,15 +62,12 @@ const AddNewModel = observer(({ form }) => {
         ))}
       </select>
       <p>{newModelForm.$("modelMaker").error}</p>
-
-      <button type='submit'>Submit</button>
-      <button type='button' onClick={newModelForm.onClear}>
-        Clear
-      </button>
-      <button type='button' onClick={newModelForm.onReset}>
-        Reset
-      </button>
-
+      <div className='buttons'>
+        <button type='submit'>Submit</button>
+        <button type='button' onClick={newModelForm.onClear}>
+          Clear
+        </button>
+      </div>
       <p>{newModelForm.error}</p>
     </form>
   );

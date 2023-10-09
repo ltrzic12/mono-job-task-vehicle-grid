@@ -13,14 +13,14 @@ class AddNewMakeForm extends Form {
       fields: [
         {
           name: "makeName",
-          label: "name",
+          label: "New make name",
           placeholder: "Enter new Make name",
           rules: "required|string|between:1,25",
           value: "",
         },
         {
           name: "newAbbreviation",
-          label: "abrv",
+          label: "New make abbreviation",
           placeholder: "Enter new abbreviation",
           rules: "required|string|between:1,25",
           value: "",

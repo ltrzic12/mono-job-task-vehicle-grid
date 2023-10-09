@@ -13,14 +13,14 @@ class AddNewModelForm extends Form {
       fields: [
         {
           name: "modelName",
-          label: "Model Name",
+          label: "New model Name",
           placeholder: "Enter new Model name",
           rules: "required|string|between:1,25",
           value: "",
         },
         {
           name: "newAbbreviation",
-          label: "Abbreviation",
+          label: "New abbreviation",
           placeholder: "Enter new abbreviation",
           rules: "required|string|between:1,25",
           value: "",
